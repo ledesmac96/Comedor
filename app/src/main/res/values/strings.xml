@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Comedor</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="camposIncompletos">¡Por favor complete los campos!</string>
+    <string name="noData">Usuario inexistente</string>
+    <string name="campoVacio">¡No puede ser vacío!</string>
+    <string name="campoVacioDNI">¡El DNI no puede ser vacío!</string>
+    <string name="invalidoDNI">¡DNI inválido!</string>
+    <string name="campoVacioPass">¡La contraseña no puede ser vacía!</string>
+    <string name="invalidoContrasenia">La contraseña tiene que tener mínimo 4 caracteres</string>
+    <string name="campoNoGrande">¡Mínimo tres caracteres!</string>
+    <string name="campoNoFormato">Formato incorrecto</string>
+    <string name="numeroTelInvalido">Número de telefono inválido</string>
+    <string name="emailInvalido">Email inválido</string>
+    <string name="contraseniaMinimo">Mínimo cuatro caracteres</string>
+    <string name="contraseniaNoIguales">Las contraseñas no son iguales</string>
+    <string name="usuarioNoExiste">El usuario ingresado no existe</string>
+    <string name="contraseniaIncorrecta">Usuario o contraseña incorrecta</string>
+    <string name="numeroNoValido">Valor inválido</string>
+
+</resources>

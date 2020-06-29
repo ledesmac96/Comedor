@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#AA2F31</color>
+    <color name="colorPrimaryDark">#8F0015</color>
+    <color name="colorAccent">#8F0015</color>
+
+    <color name="colorRedT">#858F0015</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGrey">#E7E7E7</color>
+    <color name="colorGreyT">#C3717171</color>
+    <color name="colorGrey2">#BEBEBE</color>
+    <color name="colorFCEyT">#024979</color>
+    <color name="transparente">#00E7E7E7</color>
+    <color name="blackTransparente">#5B000000</color>
+    <color name="blackTransparente0">#80000000</color>
+    <color name="blackTransparente2">#22000000</color>
+
+    <!--Colores varios-->
+    <color name="colorGreen">#32AC37</color>
+    <color name="colorOrange">#E64A19</color>
+    <color name="colorRed">#D32F2F</color>
+    <color name="colorPink">#C2185B</color>
+    <color name="colorYellow">#FFA000</color>
+    <color name="colorGreeLight">#AFB42B</color>
+    <color name="colorLightBlue">#0097A7</color>
+    <color name="colorSelect">#48000000</color>
+    <color name="colorGreyDark">#777777</color>
+    <color name="colorTextDefault">#808080</color>
+
+
+    <!--colors for profile-->
+    <color name="profilePrimaryDark">#FF3B30</color>
+    <color name="profileAccentColor">#F7F7F7</color>
+    <color name="whiteTextColor">#fff</color>
+    <color name="profileBackground">#fff</color>
+    <color name="blackTextColor">#000</color>
+    <color name="profileEditTextColor">#707070</color>
+
+    <!--  SwipeView  -->
+
+    <color name="colorLevel1">#760000</color>
+    <color name="colorLevel2">#7f0000</color>
+    <color name="colorLevel3">#890f04</color>
+    <color name="colorLevel4">#921b0c</color>
+    <color name="colorMoney">#216C2A</color>
+
+    <color name="black_alpha_40">#66000000</color>
+
+    <color name="green_continue">#1fc055</color>
+    <color name="chip_color">#d4edfa</color>
+    <color name="chip_inner_color">#e0e4e4</color>
+    <color name="chip_yellow_color">#fbe191</color>
+    <color name="chip_yellow_inner_color">#eed280</color>
+
+    <color name="default_color">#363434</color>
+    <color name="default_color_gradient">#434141</color>
+    <color name="text_shadow">#999999</color>
+    <color name="semi_white">#D1D1D1</color>
+    <color name="colorOrange2">#DF291B</color>
+
+</resources>
