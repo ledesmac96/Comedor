@@ -78,10 +78,11 @@ public class Usuario implements Parcelable {
     }
 
     @Ignore
-    public Usuario(int idUsuario, @NonNull String nombre, @NonNull String apellido) {
+    public Usuario(int idUsuario, @NonNull String nombre, @NonNull String apellido, int validez) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.validez = validez;
     }
 
     @Ignore
@@ -153,7 +154,8 @@ public class Usuario implements Parcelable {
                     idUsuario = Integer.parseInt(object.getString("idusuario"));
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
-                    usuario = new Usuario(idUsuario, nombre, apellido);
+                    validez = Integer.parseInt(object.getString("validez"));
+                    usuario = new Usuario(idUsuario, nombre, apellido, validez);
                     break;
                 case MEDIUM:
                     idUsuario = Integer.parseInt(object.getString("idusuario"));

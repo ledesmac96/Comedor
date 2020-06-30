@@ -75,6 +75,25 @@ public class Validador {
         }
     }
 
+    public boolean validarDescripcion(EditText editText) {
+        if (noVacio(editText.getText().toString().trim())) {
+            editText.setError(mContext.getString(R.string.campoVacio));
+            return false;
+        }
+        if (validarNombre2(editText.getText().toString().trim())) {
+
+            if (lengthMore(editText.getText().toString().trim())) {
+                return true;
+            } else {
+                editText.setError(mContext.getString(R.string.campoNoGrande));
+                return false;
+            }
+        } else {
+            editText.setError(mContext.getString(R.string.campoNoFormato));
+            return false;
+        }
+    }
+
     public boolean validarNombres(EditText editText) {
         if (noVacio(editText.getText().toString().trim())) {
             editText.setError(mContext.getString(R.string.campoVacio));
@@ -213,6 +232,11 @@ public class Validador {
             isNumber = false;
         }
         return isNumber && dni.length() >= 7;
+    }
+
+    public boolean validarNombre2(String name) {
+        String regex = "[ a-zA-ZÀ-ÿ\\u00f1\\u00d1-]+";
+        return name.matches(regex);
     }
 
     public boolean validarNombre(String name) {

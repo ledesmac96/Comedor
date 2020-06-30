@@ -106,6 +106,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilFecha"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -128,50 +129,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilContra"
-                android:layout_width="match_parent"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorTextDefault"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edtPass"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Contraseña"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="15dp"
-                    android:inputType="textPassword"
-                    android:background="@drawable/edit_text_logreg"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/montserrat_regular"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilRecontra"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorTextDefault"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edtRepass"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Confirmar contraseña"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:padding="15dp"
-                    android:inputType="textPassword"
-                    android:background="@drawable/edit_text_logreg"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/montserrat_regular"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/linlayAlumno"
@@ -270,7 +227,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnregister"
+                android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_border"

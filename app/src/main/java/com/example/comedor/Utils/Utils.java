@@ -58,6 +58,7 @@ public class Utils {
     public static final String IS_FIRST_TIME_LAUNCH = "is_first";
     public static final String PREF_NAME = "comedor";
     public static final String IS_LOGIN = "login_yes";
+    public static final String IS_LOCK = "lock_user";
     public static final String MY_ID = "my_id_user";
     public static final String TOKEN = "my_token";
     public static final String IS_VISIT = "visit";
@@ -146,16 +147,18 @@ public class Utils {
 
     private static final String IP = "bienestar.unse.edu.ar";
     //USUARIO
-    public static final String URL_USUARIO_INSERTAR = "http://"+IP+"/bienestar/usuario/insertar.php";
+    public static final String URL_USUARIO_INSERTAR = "http://"+IP+"/bienestar/comedor/beneficiario/insertarUsuario.php";
     public static final String URL_USUARIO_ACTUALIZAR = "http://"+IP+"/bienestar/comedor/beneficiario/actualizarUsuario.php";
     public static final String URL_USUARIO_LOGIN = "http://"+IP+"/bienestar/comedor/beneficiario/login.php";
-    public static final String URL_USUARIO_IMAGE = "http://"+IP+"/bienestar/general/uploadImage.php";
-    public static final String URL_USUARIO_IMAGE_LOAD = "http://"+IP+"/bienestar/usuariosImg/";
-    public static final String URL_CAMBIO_CONTRASENIA = "http://"+IP+"/bienestar/usuario/cambiarContrasenia.php";
-    public static final String URL_REC_CONTRASENIA = "http://"+IP+"/bienestar/usuario/recuperarContrasenia.php";
-    public static final String URL_USUARIOS_LISTA = "http://"+IP+"/bienestar/usuario/getUsuarios.php";
-    public static final String URL_USUARIO_BY_ID = "http://"+IP+"/bienestar/usuario/getUser.php";
-    public static final String URL_USUARIO_ELIMINAR = "http://"+IP+"/bienestar/usuario/eliminar.php";
+    public static final String URL_USUARIO_CHECK = "http://"+IP+"/bienestar/comedor/beneficiario/getValid.php";
+    public static final String URL_USUARIOS_LISTA = "http://"+IP+"/bienestar/comedor/beneficiario/getUsuarios.php";
+    public static final String URL_USUARIO_BY_ID = "http://"+IP+"/bienestar/comedor/beneficiario/getUsuario.php";
+    public static final String URL_USUARIO_ELIMINAR = "http://"+IP+"/bienestar/comedor/beneficiario/eliminarUsuario.php";
+
+    public static final String URL_MENU_BY_RANGE = "http://"+IP+"/bienestar/comedor/menu/getMenuByRange.php";
+    public static final String URL_MENU_NUEVO = "http://"+IP+"/bienestar/comedor/menu/insertarMenu.php";
+
+    public static final String URL_RESERVA_HOY = "http://"+IP+"/bienestar/comedor/reserva/getReservaByDay.php";
 
     //ROLES
     public static final String URL_ROLES_LISTA = "http://"+IP+"/bienestar/general/getRoles.php";
@@ -204,6 +207,8 @@ public class Utils {
     public static String dataAlumno = "?idU=%s&nom=%s&ape=%s&fechan=%s&pais=%s&prov=%s&local=%s" +
             "&dom=%s&car=%s&fac=%s&anio=%s&leg=%s" +
             "&mail=%s&tel=%s&barr=%s";
+
+    public static String dataUser = "?idU=%s&nom=%s&ape=%s&car=%s&fac=%s&anio=%s&leg=%s";
 
     public static String dataProfesor = "?idU=%s&nom=%s&ape=%s&fechan=%s&pais=%s&prov=%s&local=%s" +
             "&dom=%s&sex=%s&tipo=%s&mail=%s&tel=%s" +

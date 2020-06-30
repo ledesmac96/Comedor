@@ -40,5 +40,14 @@
     <string name="usuarioHabilitado">¡Usuario habilitado!</string>
     <string name="usuarioEliminar">¿Seguro que desea dar de %s al usuario %s %s ?</string>
     <string name="advertencia">¡Advertencia!</string>
+    <string name="usuarioCreado">¡Usuario creado!</string>
+    <string name="usuarioErrorCrear">¡Error al crear el usuario!</string>
+    <string name="usuarioYaExiste">¡Ya existe el usuario que desea crear!</string>
+    <string name="noMenu">¡No hay menus éste mes!</string>
+    <string name="eligeFecha">¡Elige una fecha!</string>
+    <string name="menuCreado">¡Menú creado!</string>
+    <string name="menuExistente">¡Ya existe un menú para el dia!</string>
+    <string name="menuError">¡Error al crear el menú!</string>
+    <string name="noReservas">¡No existen reservas el dia de hoy!</string>
 
 </resources>

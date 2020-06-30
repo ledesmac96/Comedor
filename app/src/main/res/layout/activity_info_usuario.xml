@@ -284,6 +284,7 @@
                                                     android:fontFamily="@font/montserrat_black"/>
 
                                                 <EditText
+                                                    android:inputType="date"
                                                     android:textIsSelectable="false"
                                                     android:id="@+id/edtFecha"
                                                     android:layout_width="match_parent"
@@ -1007,6 +1008,7 @@
                                                 android:background="@drawable/button_border" />
 
                                             <Button
+                                                android:visibility="invisible"
                                                 android:layout_margin="5dp"
                                                 android:layout_width="0dp"
                                                 android:layout_height="wrap_content"

@@ -79,8 +79,8 @@ public class PerfilActivity extends AppCompatActivity
     FragmentManager manager = null;
     Object tipoUsuario;
 
-    boolean isEditMode = false, isReadyForLoad = false, isAdminMode = false;
-    int facultadUser = 0, carreraUser = 0, mode = 0, tipoUsuer = -1, idUser = 0, validez = -1, position = -1;
+    boolean isEditMode = false, isAdminMode = false;
+    int facultadUser = 0, carreraUser = 0, mode = 0, tipoUsuer = -1, idUser = 0, validez = -1;
 
 
     @Override
@@ -233,6 +233,7 @@ public class PerfilActivity extends AppCompatActivity
             latAdmin.setVisibility(VISIBLE);
             latUser.setVisibility(VISIBLE);
             edtRegistro.setEnabled(false);
+            fabEditar.setVisibility(View.INVISIBLE);
         }
         campos = new EditText[]{edtNombre, edtApellido, edtMail, edtAnioIngresoAlu, edtProvincia,
                 edtPais, edtTelefono, edtLocalidad, edtDomicilio, edtLegajoAlu, edtBarrio};
@@ -286,6 +287,8 @@ public class PerfilActivity extends AppCompatActivity
             idUser = mUsuario.getIdUsuario();
             tipoUsuer = rolViewModel.getAllByUsuario(idUser).size() > 0 ? 1 : 0;
             loadLayout(tipoUsuer);
+
+            changeButton();
 
             //Alumnos
             if (tipoUsuer == 0) {

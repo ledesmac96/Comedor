@@ -9,7 +9,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.comedor.Database.UsuarioViewModel;
+import com.example.comedor.Fragment.GestionMenuFragment;
 import com.example.comedor.Fragment.GestionReservasFragment;
 import com.example.comedor.Fragment.GestionUsuarioFragment;
 import com.example.comedor.Fragment.InicioFragment;
@@ -18,7 +23,11 @@ import com.example.comedor.Modelo.Usuario;
 import com.example.comedor.R;
 import com.example.comedor.Utils.PreferenciasManager;
 import com.example.comedor.Utils.Utils;
+import com.example.comedor.Utils.VolleySingleton;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,13 +56,71 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        loadViews();
+        mPreferenciasManager = new PreferenciasManager(getApplicationContext());
 
-        comprobarNavigationView();
+        if (mPreferenciasManager.getValue(Utils.IS_LOCK)) {
+            startActivity(new Intent(getApplicationContext(), LockedActivity.class));
+            finishAffinity();
+        } else {
 
-        setToolbar();
+            loadViews();
 
-        loadData();
+            comprobarNavigationView();
+
+            setToolbar();
+
+            loadData();
+
+            checkInfo();
+        }
+    }
+
+    private void checkInfo() {
+        PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
+        String key = manager.getValueString(Utils.TOKEN);
+        final int idLocal = manager.getValueInt(Utils.MY_ID);
+        String URL = String.format("%s?key=%s&id=%s&idU=%s", Utils.URL_USUARIO_CHECK, key, idLocal, idLocal);
+        StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                procesarRespuesta(response, idLocal);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+        //Abro dialogo para congelar pantalla
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+
+    private void procesarRespuesta(String response, int idUser) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            int estado = jsonObject.getInt("estado");
+            switch (estado) {
+                case 1:
+                    UsuarioViewModel usuarioViewModel = new UsuarioViewModel(getApplicationContext());
+                    Usuario usuario = usuarioViewModel.getById(idUser);
+                    int validez = jsonObject.getInt("mensaje");
+                    usuario.setValidez(validez);
+                    usuarioViewModel.update(usuario);
+                    if (validez == 0) {
+                        mPreferenciasManager.setValue(Utils.IS_LOCK, true);
+                        startActivity(new Intent(getApplicationContext(), LockedActivity.class));
+                        finishAffinity();
+                    }
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadData() {
@@ -130,11 +197,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item_config:
                 startActivity(new Intent(getApplicationContext(), PerfilActivity.class));
                 break;
-//            case R.id.item_menu:
-//                fragmentoGenerico = new GestionMenuFragment();
-//                ((GestionMenuFragment) fragmentoGenerico).setContext(getApplicationContext());
-//                ((GestionMenuFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
-//                break;
+            case R.id.item_menu:
+                fragmentoGenerico = new GestionMenuFragment();
+                ((GestionMenuFragment) fragmentoGenerico).setContext(getApplicationContext());
+                ((GestionMenuFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
+                break;
 //            case R.id.item_estad:
 //                fragmentoGenerico = new EstadisticasFragment();
 //                ((EstadisticasFragment) fragmentoGenerico).setContext(getApplicationContext());

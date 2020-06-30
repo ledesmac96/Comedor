@@ -42,16 +42,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Evento
         String name = usuario.getNombre() + " " + usuario.getApellido();
         holder.name.setText(name);
         holder.dni.setText(String.valueOf(usuario.getIdUsuario()));
-//        if (usuario.getEstado() == 0){
-//            holder.estado.setText("EN ESPERA");
-//            holder.estado.setTextColor(context.getResources().getColor(R.color.colorOrange));
-//        }else if(usuario.getEstado() == 1){
-//            holder.estado.setText("VERIFICADO");
-//            holder.estado.setTextColor(context.getResources().getColor(R.color.colorGreen));
-//        }else if(usuario.getEstado() == 2){
-//            holder.estado.setText("INACTIVO");
-//            holder.estado.setTextColor(context.getResources().getColor(R.color.colorRed));
-//        }
+        holder.estado.setText(usuario.getValidez() == 1 ? "ACTIVO" : "INACTIVO");
 
     }
 

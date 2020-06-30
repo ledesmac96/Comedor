@@ -3,13 +3,17 @@ package com.example.comedor.Modelo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Menu implements Parcelable {
 
-    private int idMenu, dia, mes, anio, validez, disponible;
+    public static final int COMPLETE = 1;
+    private int idMenu, dia, mes, anio, validez, disponible, porcion;
     private String fechaRegistro, fechaModificacion, descripcion;
 
     public Menu(int idMenu, int dia, int mes, int anio, int validez, int disponible,
-                String fechaRegistro, String fechaModificacion, String descripcion) {
+                String fechaRegistro, String fechaModificacion, String descripcion, int porcion) {
         this.idMenu = idMenu;
         this.dia = dia;
         this.mes = mes;
@@ -19,6 +23,7 @@ public class Menu implements Parcelable {
         this.fechaRegistro = fechaRegistro;
         this.fechaModificacion = fechaModificacion;
         this.descripcion = descripcion;
+        this.porcion = porcion;
     }
 
     public Menu() {
@@ -43,6 +48,36 @@ public class Menu implements Parcelable {
         fechaRegistro = in.readString();
         fechaModificacion = in.readString();
         descripcion = in.readString();
+        porcion = in.readInt();
+    }
+
+    public static Menu mapper(JSONObject datos, int tipo) {
+        Menu menu = new Menu();
+        int idMenu, dia, mes, anio, validez, disponible, porcion;
+        String fechaRegistro, fechaModificacion, descripcion;
+        try {
+            switch (tipo) {
+                case COMPLETE:
+                    idMenu = Integer.parseInt(datos.getString("idmenu"));
+                    dia = Integer.parseInt(datos.getString("dia"));
+                    mes = Integer.parseInt(datos.getString("mes"));
+                    anio = Integer.parseInt(datos.getString("anio"));
+                    validez = Integer.parseInt(datos.getString("validez"));
+                    disponible = Integer.parseInt(datos.getString("disponible"));
+                    porcion = Integer.parseInt(datos.getString("porcion"));
+
+                    descripcion = datos.getString("descripcion");
+                    fechaModificacion = datos.getString("fechamodificacion");
+                    fechaRegistro = datos.getString("fecharegistro");
+                    menu = new Menu(idMenu, dia, mes, anio, validez, disponible, fechaRegistro, fechaModificacion, descripcion, porcion);
+                    break;
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return menu;
     }
 
     public static final Creator<Menu> CREATOR = new Creator<Menu>() {
@@ -121,6 +156,14 @@ public class Menu implements Parcelable {
         this.fechaModificacion = fechaModificacion;
     }
 
+    public int getPorcion() {
+        return porcion;
+    }
+
+    public void setPorcion(int porcion) {
+        this.porcion = porcion;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -145,5 +188,6 @@ public class Menu implements Parcelable {
         dest.writeString(fechaRegistro);
         dest.writeString(fechaModificacion);
         dest.writeString(descripcion);
+        dest.writeInt(porcion);
     }
 }
