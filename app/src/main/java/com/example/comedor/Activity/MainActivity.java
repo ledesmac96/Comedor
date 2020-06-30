@@ -1,13 +1,6 @@
 package com.example.comedor.Activity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,14 +9,24 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.comedor.Fragment.EstadisticasFragment;
-import com.example.comedor.Fragment.GestionMenuFragment;
+import com.example.comedor.Database.UsuarioViewModel;
 import com.example.comedor.Fragment.GestionReservasFragment;
 import com.example.comedor.Fragment.GestionUsuarioFragment;
 import com.example.comedor.Fragment.InicioFragment;
 import com.example.comedor.Fragment.MisReservasFragment;
+import com.example.comedor.Modelo.Usuario;
 import com.example.comedor.R;
+import com.example.comedor.Utils.PreferenciasManager;
+import com.example.comedor.Utils.Utils;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     int itemSelecionado = -1, idUser = 0;
     ImageView imgBienestar;
     TextView txtNombre;
+    UsuarioViewModel mUsuarioViewModel;
+    PreferenciasManager mPreferenciasManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        mPreferenciasManager = new PreferenciasManager(getApplicationContext());
+        mUsuarioViewModel = new UsuarioViewModel(getApplicationContext());
+        int dni = mPreferenciasManager.getValueInt(Utils.MY_ID);
+        Usuario usuario = mUsuarioViewModel.getById(dni);
+        if (usuario != null) {
+            txtNombre.setText(String.format("%s %s", usuario.getNombre(), usuario.getApellido()));
+        }
 
     }
 
@@ -114,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 ((MisReservasFragment) fragmentoGenerico).setContext(getApplicationContext());
                 ((MisReservasFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
                 //
+                break;
+            case R.id.item_config:
+                startActivity(new Intent(getApplicationContext(), PerfilActivity.class));
                 break;
 //            case R.id.item_menu:
 //                fragmentoGenerico = new GestionMenuFragment();

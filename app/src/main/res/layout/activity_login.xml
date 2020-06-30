@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/black_alpha_40">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/backgroundlogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -76,6 +76,7 @@
                         android:fontFamily="@font/montserrat_black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/txtPassMissed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -96,6 +97,7 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+
+    </FrameLayout>
 
 </androidx.core.widget.NestedScrollView>

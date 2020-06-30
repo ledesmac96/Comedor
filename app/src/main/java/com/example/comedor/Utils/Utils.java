@@ -21,6 +21,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.comedor.Database.AlumnoViewModel;
+import com.example.comedor.Database.RolViewModel;
+import com.example.comedor.Database.UsuarioViewModel;
 import com.example.comedor.R;
 
 import org.w3c.dom.Document;
@@ -141,11 +144,11 @@ public class Utils {
     public static final int GET_FROM_GALLERY = 1011;
     public static final int GET_FROM_DNI = 1010;
 
-    private static final String IP = "192.168.1.29";
+    private static final String IP = "bienestar.unse.edu.ar";
     //USUARIO
     public static final String URL_USUARIO_INSERTAR = "http://"+IP+"/bienestar/usuario/insertar.php";
-    public static final String URL_USUARIO_ACTUALIZAR = "http://"+IP+"/bienestar/usuario/actualizar.php";
-    public static final String URL_USUARIO_LOGIN = "http://"+IP+"/bienestar/usuario/login.php";
+    public static final String URL_USUARIO_ACTUALIZAR = "http://"+IP+"/bienestar/comedor/beneficiario/actualizarUsuario.php";
+    public static final String URL_USUARIO_LOGIN = "http://"+IP+"/bienestar/comedor/beneficiario/login.php";
     public static final String URL_USUARIO_IMAGE = "http://"+IP+"/bienestar/general/uploadImage.php";
     public static final String URL_USUARIO_IMAGE_LOAD = "http://"+IP+"/bienestar/usuariosImg/";
     public static final String URL_CAMBIO_CONTRASENIA = "http://"+IP+"/bienestar/usuario/cambiarContrasenia.php";
@@ -199,8 +202,8 @@ public class Utils {
             "Tecnicatura en Educación Intercultural Bilingue"};
 
     public static String dataAlumno = "?idU=%s&nom=%s&ape=%s&fechan=%s&pais=%s&prov=%s&local=%s" +
-            "&dom=%s&sex=%s&car=%s&fac=%s&anio=%s&leg=%s" +
-            "&tipo=%s&mail=%s&tel=%s&barr=%s&fecham=%s";
+            "&dom=%s&car=%s&fac=%s&anio=%s&leg=%s" +
+            "&mail=%s&tel=%s&barr=%s";
 
     public static String dataProfesor = "?idU=%s&nom=%s&ape=%s&fechan=%s&pais=%s&prov=%s&local=%s" +
             "&dom=%s&sex=%s&tipo=%s&mail=%s&tel=%s" +
@@ -704,13 +707,10 @@ public class Utils {
 
     }
 
-    /*public static void resetData(Context context) {
+    public static void resetData(Context context) {
         new UsuarioViewModel(context).deleteAll();
-        new EgresadoViewModel(context).deleteAll();
-        new ProfesorViewModel(context).deleteAll();
         new AlumnoViewModel(context).deleteAll();
         new RolViewModel(context).deleteAll();
-        FileStorageManager.deleteAll(0);
-    }*/
+    }
 }
 

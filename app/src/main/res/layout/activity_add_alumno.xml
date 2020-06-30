@@ -154,7 +154,6 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRecontra"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleDrawable="@drawable/ic_pass_toggle"
                 app:passwordToggleTint="@color/colorTextDefault"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

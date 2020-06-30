@@ -18,5 +18,27 @@
     <string name="usuarioNoExiste">El usuario ingresado no existe</string>
     <string name="contraseniaIncorrecta">Usuario o contraseña incorrecta</string>
     <string name="numeroNoValido">Valor inválido</string>
+    <string name="tokenInvalido">No tiene autorización para procesar la tarea</string>
+    <string name="tokenInexistente">Necesita de un token para operar en el sistema</string>
+    <string name="usuarioInvalido">Usuario o contraseña inválidos</string>
+    <string name="usuarioInhabilitado">Usuario deshabilitado, contacta al Administrador</string>
+    <string name="camposInvalidos">Existen campos inválidos, reintente</string>
+    <string name="sesionIniciada">¡Sesión iniciada!</string>
+    <string name="errorInternoAdmin">Error interno, contacta al Administrador</string>
+    <string name="btnAlta">DAR DE ALTA</string>
+    <string name="btnBaja">DAR DE BAJA</string>
+    <string name="perfilActualizado">¡Perfil actualizado!</string>
+    <string name="actualizadoError">¡Error al actualizar!</string>
+    <string name="servidorOff">Error de conexión o servidor fuera de rango</string>
+    <string name="dniInvalido">Número de DNI inválido</string>
+    <string name="domicilioInvalido">Debe contener al menos una letra y un número</string>
+    <string name="fechaInvalida">La fecha no tiene un formato válido</string>
+    <string name="anioIngesoNoValido">El año de ingreso no es válido</string>
+    <string name="legajoInvalido">Número de legajo inválido. Ej: 12345/10</string>
+    <string name="cambioPrimeroGuardar">Primero debe guardar los cambios</string>
+    <string name="usuarioDeshabilitado">¡Usuario deshabilidado!</string>
+    <string name="usuarioHabilitado">¡Usuario habilitado!</string>
+    <string name="usuarioEliminar">¿Seguro que desea dar de %s al usuario %s %s ?</string>
+    <string name="advertencia">¡Advertencia!</string>
 
 </resources>

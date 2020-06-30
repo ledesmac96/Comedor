@@ -3,17 +3,43 @@ package com.example.comedor.Modelo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "alumno")
 public class Alumno extends Usuario implements Parcelable {
 
-    private int idAlumno;
-    private String carrera, facultad, anio, legajo;
+    @Ignore
+    public static final String TABLE_ALUMNO = "alumno";
+    @Ignore
+    public static final String KEY_ID_ALU = "idAlumno";
 
-    public Alumno(int idUsuario, int validez, String nombre, String apellido, String fechaNac,
-                  String pais, String provincia, String localidad, String domicilio, String barrio,
-                  String telefono, String mail, String fechaRegistro, String fechaModificacion,
-            int idAlumno, String carrera, String facultad, String anio, String legajo) {
-        super(idUsuario, validez, nombre, apellido, fechaNac, pais, provincia, localidad, domicilio,
-                barrio, telefono, mail, fechaRegistro, fechaModificacion);
+    @NonNull
+    private int idAlumno;
+    @NonNull
+    private String carrera;
+    @NonNull
+    private String facultad;
+    @NonNull
+    private String anio;
+    @NonNull
+    private String legajo;
+
+    public Alumno(int idUsuario, @NonNull String nombre, @NonNull String apellido,
+                  @NonNull String fechaNac, @NonNull String pais, @NonNull String provincia,
+                  @NonNull String localidad, @NonNull String domicilio, @NonNull String barrio,
+                  @NonNull String telefono, @NonNull String mail,
+                  @NonNull String fechaRegistro, @NonNull String fechaModificacion,
+                  int validez, int idAlumno, @NonNull String carrera, @NonNull String facultad,
+                  @NonNull String anio, @NonNull String legajo) {
+        super(idUsuario, nombre, apellido, fechaNac, pais, provincia, localidad, domicilio,
+                barrio, telefono, mail, fechaRegistro,
+                fechaModificacion, validez);
         this.idAlumno = idAlumno;
         this.carrera = carrera;
         this.facultad = facultad;
@@ -21,10 +47,12 @@ public class Alumno extends Usuario implements Parcelable {
         this.legajo = legajo;
     }
 
+    @Ignore
     public Alumno() {
 
     }
 
+    @Ignore
     protected Alumno(Parcel in) {
         setIdUsuario(in.readInt());
         setValidez(in.readInt());
@@ -60,12 +88,28 @@ public class Alumno extends Usuario implements Parcelable {
         }
     };
 
-    public int getIdAlumno() {
-        return idAlumno;
-    }
+    public static Alumno mapper(JSONObject o, Usuario usuario) {
+        Alumno alumno = new Alumno();
+        try {
+            if (o.get("datos") != null) {
+                JSONObject object = o.getJSONObject("datos");
+                String carrera = object.getString("carrera");
+                String facultad = object.getString("facultad");
+                String anio = object.getString("anio");
+                String legajo = object.getString("legajo");
 
-    public void setIdAlumno(int idAlumno) {
-        this.idAlumno = idAlumno;
+                alumno = new Alumno(usuario.getIdUsuario(), usuario.getNombre(), usuario.getApellido(),
+                        usuario.getFechaNac(), usuario.getPais(), usuario.getProvincia(), usuario.getLocalidad(),
+                        usuario.getDomicilio(), usuario.getBarrio(), usuario.getTelefono(),
+                        usuario.getMail(), usuario.getFechaRegistro(), usuario.getFechaModificacion(),
+                        usuario.getValidez(), usuario.getIdUsuario(), carrera, facultad, anio, legajo
+                );
+            }
+            return alumno;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return alumno;
     }
 
     public String getCarrera() {
@@ -84,14 +128,6 @@ public class Alumno extends Usuario implements Parcelable {
         this.facultad = facultad;
     }
 
-    public String getAnio() {
-        return anio;
-    }
-
-    public void setAnio(String anio) {
-        this.anio = anio;
-    }
-
     public String getLegajo() {
         return legajo;
     }
@@ -100,6 +136,24 @@ public class Alumno extends Usuario implements Parcelable {
         this.legajo = legajo;
     }
 
+    public String getAnio() {
+        return anio;
+    }
+
+    public void setAnio(String anio) {
+        this.anio = anio;
+    }
+
+    public int getIdAlumno() {
+        return idAlumno;
+    }
+
+    public void setIdAlumno(int idAlumno) {
+        this.idAlumno = idAlumno;
+    }
+
+
+    @Override
     public int describeContents() {
         return 0;
     }
