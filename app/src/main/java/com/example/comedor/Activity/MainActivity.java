@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentoGenerico = new MisReservasFragment();
                 ((MisReservasFragment) fragmentoGenerico).setContext(getApplicationContext());
                 ((MisReservasFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
+                //
                 break;
 //            case R.id.item_menu:
 //                fragmentoGenerico = new GestionMenuFragment();
