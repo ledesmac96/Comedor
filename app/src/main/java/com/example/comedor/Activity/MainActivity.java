@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.comedor.Database.UsuarioViewModel;
+import com.example.comedor.Fragment.EstadisticasFragment;
 import com.example.comedor.Fragment.GestionMenuFragment;
 import com.example.comedor.Fragment.GestionReservasFragment;
 import com.example.comedor.Fragment.GestionUsuarioFragment;
@@ -202,11 +203,11 @@ public class MainActivity extends AppCompatActivity {
                 ((GestionMenuFragment) fragmentoGenerico).setContext(getApplicationContext());
                 ((GestionMenuFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
                 break;
-//            case R.id.item_estad:
-//                fragmentoGenerico = new EstadisticasFragment();
-//                ((EstadisticasFragment) fragmentoGenerico).setContext(getApplicationContext());
-//                ((EstadisticasFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
-//                break;
+            case R.id.item_estad:
+                fragmentoGenerico = new EstadisticasFragment();
+                ((EstadisticasFragment) fragmentoGenerico).setContext(getApplicationContext());
+                ((EstadisticasFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
+                break;
 
         }
 

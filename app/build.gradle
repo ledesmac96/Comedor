@@ -52,13 +52,15 @@ dependencies {
     //implementation 'me.dm7.barcodescanner:zxing:1.9.13'
     //Generador
     //implementation 'com.github.kenglxn.QRGen:android:2.6.0'
+    //Librería para Estadisticas
+    implementation files('libs/MPAndroidChart-v3.0.2.jar')
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.0.0'
     implementation 'androidx.navigation:navigation-ui:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'com.google.firebase:firebase-analytics:17.4.3'
-    implementation 'com.google.firebase:firebase-firestore:21.4.3' //17.1.5
+    //implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    //implementation 'com.google.firebase:firebase-analytics:17.4.3'
+    //implementation 'com.google.firebase:firebase-firestore:21.4.3' //17.1.5
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
