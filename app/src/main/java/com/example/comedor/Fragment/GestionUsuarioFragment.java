@@ -299,7 +299,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
         Alumno alumno = Alumno.mapper(jsonObject, usuario);
         Intent i = new Intent(getContext(), PerfilActivity.class);
         i.putExtra(Utils.IS_ADMIN_MODE, true);
-        i.putExtra(Utils.USER_INFO, alumno != null ? alumno : usuario);
+        i.putExtra(Utils.USER_INFO, alumno.getCarrera() != null ? alumno : usuario);
         startActivity(i);
 
     }

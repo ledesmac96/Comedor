@@ -260,6 +260,7 @@ public class PerfilActivity extends AppCompatActivity
         if (!isAdminMode) {
             //En caso de ser perfil actual, obtengo los datos desde la BD local
             mUsuario = mUsuarioViewModel.getById(idLocal);
+
             // mUsuario = new UsuariosRepo(getApplicationContext()).get(idLocal);
             edtDNI.setEnabled(false);
         }
@@ -289,14 +290,17 @@ public class PerfilActivity extends AppCompatActivity
             changeButton();
 
             //Alumnos
-            if (tipoUsuer == 0 && mUsuario instanceof Alumno) {
+            if (tipoUsuer == 0) {
                 Alumno alumno = null;
                 //Si es modo Admin saco los datos del objeto
-                if (isAdminMode) {
+                if (isAdminMode && mUsuario instanceof Alumno) {
                     edtLegajoAlu.setText(((Alumno) mUsuario).getLegajo());
                     edtAnioIngresoAlu.setText(((Alumno) mUsuario).getAnio());
                     loadCarrera(mUsuario);
-                } else {
+                } else if (isAdminMode && mUsuario instanceof Usuario){
+                    edtLegajoAlu.setText("0/00");
+                    edtAnioIngresoAlu.setText("0000");
+                }else{
                     AlumnoViewModel alumnoViewModel = new AlumnoViewModel(getApplicationContext());
                     alumno = alumnoViewModel.getById(idLocal);
                     if (alumno != null) {
