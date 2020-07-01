@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.comedor.Activity.HistorialReservasActivity;
 import com.example.comedor.Activity.ReservaDiaActivity;
 import com.example.comedor.Adapter.OpcionesAdapter;
 import com.example.comedor.Modelo.Opciones;
@@ -49,7 +50,7 @@ public class GestionReservasFragment extends Fragment {
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
                 switch ((int) id) {
                     case 1:
-                        //startActivity(new Intent(getContext(), BMDeportesActivity.class));
+                        startActivity(new Intent(getContext(), HistorialReservasActivity.class));
                         break;
                     case 2:
                         startActivity(new Intent(getContext(), ReservaDiaActivity.class));

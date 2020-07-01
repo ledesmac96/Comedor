@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.comedor.R;
 import com.example.comedor.Utils.Utils;
 
-public class PerfilReservaActivity extends AppCompatActivity implements View.OnClickListener {
+public class InfoReservaActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imgIcono;
     Button btnCancelar;

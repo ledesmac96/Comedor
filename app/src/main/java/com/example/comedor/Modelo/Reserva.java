@@ -10,9 +10,24 @@ public class Reserva implements Parcelable {
 
     public static final int COMPLETE = 1;
     public static final int MEDIUM = 2;
+    public static final int HISTORIAL = 3;
 
     private int idReserva, idUsuario, idEmpleado, idMenu, estado, validez;
     private String fechaReserva, fechaModificacion, nombre, apellido;
+    private String descripcion, tipoEntrega;
+    private int dia, mes, anio;
+
+    public Reserva(int idReserva, int idMenu, String fechaReserva, String descripcion,
+                   String tipoEntrega, int dia, int mes, int anio) {
+        this.idReserva = idReserva;
+        this.idMenu = idMenu;
+        this.fechaReserva = fechaReserva;
+        this.descripcion = descripcion;
+        this.tipoEntrega = tipoEntrega;
+        this.dia = dia;
+        this.mes = mes;
+        this.anio = anio;
+    }
 
     public Reserva(int idReserva, int idUsuario, int idEmpleado, int idMenu, int estado,
                    String fechaReserva, String fechaModificacion, int validez) {
@@ -57,6 +72,46 @@ public class Reserva implements Parcelable {
         validez = in.readInt();
         nombre = in.readString();
         apellido = in.readString();
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getTipoEntrega() {
+        return tipoEntrega;
+    }
+
+    public void setTipoEntrega(String tipoEntrega) {
+        this.tipoEntrega = tipoEntrega;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
     public static final Creator<Reserva> CREATOR = new Creator<Reserva>() {
@@ -128,8 +183,8 @@ public class Reserva implements Parcelable {
     }
 
     public static Reserva mapper(JSONObject object, int tipo) {
-        int idReserva, idUsuario, idEmpleado, idMenu, estado, validez;
-        String fechaReserva, fechaModificacion, nombre, apellido;
+        int idReserva, idUsuario, idEmpleado, idMenu, estado, validez, dia, mes, anio;
+        String fechaReserva, fechaModificacion, nombre, apellido, estadoDescripcion, tipoEntrega;
         Reserva reserva = new Reserva();
         try {
             switch (tipo) {
@@ -142,6 +197,17 @@ public class Reserva implements Parcelable {
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
                     reserva = new Reserva(idReserva, idUsuario, idMenu, estado, validez, nombre, apellido);
+                    break;
+                case HISTORIAL:
+                    idReserva = Integer.parseInt(object.getString("idreserva"));
+                    idMenu = Integer.parseInt(object.getString("idmenu"));
+                    dia = Integer.parseInt(object.getString("dia"));
+                    mes = Integer.parseInt(object.getString("mes"));
+                    anio = Integer.parseInt(object.getString("anio"));
+                    fechaReserva = object.getString("fechareserva");
+                    estadoDescripcion = object.getString("descripcion");
+                    tipoEntrega = object.getString("tiporeserva");
+                    reserva = new Reserva(idReserva, idMenu, fechaReserva, estadoDescripcion, tipoEntrega, dia, mes, anio);
                     break;
             }
         } catch (JSONException e) {

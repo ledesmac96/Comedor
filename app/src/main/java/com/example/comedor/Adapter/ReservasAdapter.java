@@ -42,19 +42,19 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
     public void onBindViewHolder(@NonNull ReservasAdapter.EventosViewHolder holder, int position) {
         Reserva reserva = mReservas.get(position);
 
-        holder.idReserva.setText(String.valueOf(reserva.getIdReserva()));
+        holder.idReserva.setText(String.format("RESERVA #%s", reserva.getIdReserva()));
         holder.fecha.setText(reserva.getFechaReserva());
-        if (reserva.getEstado() == 0){
-            holder.estado.setText("RESERVADO");
+        holder.estado.setText(reserva.getDescripcion());
+        if (reserva.getDescripcion().equals("RESERVADO")) {
             holder.mBackg.getBackground().setColorFilter(Color.parseColor("#E64A19"), PorterDuff.Mode.SRC_OVER);
-        }else if(reserva.getEstado() == 1){
-            holder.estado.setText("RETIRADO");
-            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#32AC37"), PorterDuff.Mode.SRC_OVER);
-        }else if(reserva.getEstado() == 2){
-            holder.estado.setText("CANCELADO");
-            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#D32F2F"), PorterDuff.Mode.SRC_OVER);
-        }
 
+        } else if (reserva.getDescripcion().equals("RETIRADO")) {
+            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#32AC37"), PorterDuff.Mode.SRC_OVER);
+
+        } else if (reserva.getDescripcion().equals("CANCELADO")) {
+            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#D32F2F"), PorterDuff.Mode.SRC_OVER);
+
+        }
     }
 
     public void filtrar(String txt, int tipo) {
@@ -98,7 +98,7 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
             super(itemView);
 
             idReserva = itemView.findViewById(R.id.txtIdReserva);
-            fecha = itemView.findViewById(R.id.txtFechaRes);
+            fecha = itemView.findViewById(R.id.txtFecha);
             estado = itemView.findViewById(R.id.txtEstado);
             mBackg = itemView.findViewById(R.id.linlay);
         }

@@ -9,8 +9,17 @@ import org.json.JSONObject;
 public class Menu implements Parcelable {
 
     public static final int COMPLETE = 1;
+    public static final int SIMPLE = 2;
+
     private int idMenu, dia, mes, anio, validez, disponible, porcion;
     private String fechaRegistro, fechaModificacion, descripcion;
+
+    public Menu(int idMenu, int dia, int mes, int anio) {
+        this.idMenu = idMenu;
+        this.dia = dia;
+        this.mes = mes;
+        this.anio = anio;
+    }
 
     public Menu(int idMenu, int dia, int mes, int anio, int validez, int disponible,
                 String fechaRegistro, String fechaModificacion, String descripcion, int porcion) {
@@ -70,6 +79,13 @@ public class Menu implements Parcelable {
                     fechaModificacion = datos.getString("fechamodificacion");
                     fechaRegistro = datos.getString("fecharegistro");
                     menu = new Menu(idMenu, dia, mes, anio, validez, disponible, fechaRegistro, fechaModificacion, descripcion, porcion);
+                    break;
+                case SIMPLE:
+                    idMenu = Integer.parseInt(datos.getString("idmenu"));
+                    dia = Integer.parseInt(datos.getString("dia"));
+                    mes = Integer.parseInt(datos.getString("mes"));
+                    anio = Integer.parseInt(datos.getString("anio"));
+                    menu = new Menu(idMenu, dia, mes, anio);
                     break;
 
             }

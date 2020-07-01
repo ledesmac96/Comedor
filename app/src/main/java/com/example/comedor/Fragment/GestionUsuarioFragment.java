@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.comedor.Activity.AddAlumnoActivity;
+import com.example.comedor.Activity.NuevoAlumnoActivity;
 import com.example.comedor.Activity.PerfilActivity;
 import com.example.comedor.Adapter.UsuariosAdapter;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
@@ -327,7 +326,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cardAddAlumno:
-                Intent i = new Intent(getContext(), AddAlumnoActivity.class);
+                Intent i = new Intent(getContext(), NuevoAlumnoActivity.class);
                 startActivity(i);
                 break;
 

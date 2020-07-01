@@ -11,20 +11,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.example.comedor.Activity.AddAlumnoActivity;
-import com.example.comedor.Activity.PerfilReservaActivity;
-import com.example.comedor.Activity.ReservaActivity;
-import com.example.comedor.Adapter.OpcionesAdapter;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.comedor.Activity.InfoReservaActivity;
 import com.example.comedor.Adapter.ReservasAdapter;
-import com.example.comedor.Adapter.UsuariosAdapter;
-import com.example.comedor.Modelo.Opciones;
+import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Modelo.Reserva;
+import com.example.comedor.Modelo.Usuario;
 import com.example.comedor.R;
 import com.example.comedor.RecyclerListener.ItemClickSupport;
+import com.example.comedor.Utils.PreferenciasManager;
 import com.example.comedor.Utils.Utils;
+import com.example.comedor.Utils.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -38,6 +44,7 @@ public class MisReservasFragment extends Fragment {
     FragmentManager mFragmentManager;
     ProgressBar mProgressBar;
     Context mContext;
+    DialogoProcesamiento dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +68,6 @@ public class MisReservasFragment extends Fragment {
 
     private void loadData() {
         mReservas = new ArrayList<>();
-
         mProgressBar.setVisibility(View.VISIBLE);
         mReservasAdapter = new ReservasAdapter(mReservas, getContext());
         mLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -69,15 +75,103 @@ public class MisReservasFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mReservasAdapter);
 
+        loadInfo();
+
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
-                Intent i = new Intent(getContext(), PerfilReservaActivity.class);
+                Intent i = new Intent(getContext(), InfoReservaActivity.class);
                 i.putExtra(Utils.RESERVA, mReservas.get(position));
                 startActivity(i);
             }
         });
+
+    }
+
+    private void loadInfo() {
+        PreferenciasManager manager = new PreferenciasManager(mContext);
+        String key = manager.getValueString(Utils.TOKEN);
+        int id = manager.getValueInt(Utils.MY_ID);
+        String URL = String.format("%s?idU=%s&key=%s&id=%s", Utils.URL_RESERVA_USUARIO, id, key, id);
+        StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                procesarRespuesta(response);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                //mProgressBar.setVisibility(View.GONE);
+                Utils.showToast(mContext, getString(R.string.servidorOff));
+                dialog.dismiss();
+
+            }
+        });
+        //Abro dialogo para congelar pantalla
+        dialog = new DialogoProcesamiento();
+        dialog.setCancelable(false);
+        dialog.show(mFragmentManager, "dialog_process");
+        VolleySingleton.getInstance(mContext).addToRequestQueue(request);
+    }
+
+    private void procesarRespuesta(String response) {
+        try {
+            dialog.dismiss();
+            JSONObject jsonObject = new JSONObject(response);
+            int estado = jsonObject.getInt("estado");
+            switch (estado) {
+                case -1:
+                    Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
+                    break;
+                case 1:
+                    //Exito
+                    mProgressBar.setVisibility(View.GONE);
+                    loadInfo(jsonObject);
+                    break;
+                case 2:
+                    Utils.showToast(getContext(), getString(R.string.noData));
+                    break;
+                case 3:
+                    Utils.showToast(getContext(), getString(R.string.tokenInvalido));
+                    break;
+                case 100:
+                    //No autorizado
+                    Utils.showToast(getContext(), getString(R.string.tokenInexistente));
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
+        }
+    }
+
+    private void loadInfo(JSONObject jsonObject) {
+        try {
+            if (jsonObject.has("mensaje")) {
+
+                JSONArray jsonArray = jsonObject.getJSONArray("mensaje");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject o = jsonArray.getJSONObject(i);
+
+                    Reserva reserva = Reserva.mapper(o, Reserva.HISTORIAL);
+
+                    mReservas.add(reserva);
+
+                }
+                mReservasAdapter.change(mReservas);
+                mReservasAdapter.notifyDataSetChanged();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -35,7 +35,7 @@ import static com.example.comedor.Utils.Utils.fcf;
 import static com.example.comedor.Utils.Utils.fcm;
 import static com.example.comedor.Utils.Utils.fhcys;
 
-public class AddAlumnoActivity extends AppCompatActivity implements View.OnClickListener {
+public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText edtNombre, edtApellido, edtDNI, edtLegajo, edtAnioIngreso;
     Spinner mSpinnerFacultad, mSpinnerCarrera;

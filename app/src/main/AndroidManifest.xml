@@ -13,10 +13,10 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Dialogos.DialogCancelar"></activity>
-        <activity android:name=".Activity.PerfilReservaActivity" />
+        <activity android:name=".Activity.InfoReservaActivity" />
         <activity android:name=".Fragment.MisReservasFragment" />
         <activity android:name=".Activity.ReservaActivity" />
-        <activity android:name=".Activity.AddAlumnoActivity" />
+        <activity android:name=".Activity.NuevoAlumnoActivity" />
         <activity android:name=".Fragment.GestionReservasFragment" />
         <activity android:name=".Fragment.InicioFragment" />
         <activity android:name=".Fragment.EstadisticasFragment" />
@@ -34,6 +34,7 @@
         <activity android:name=".Activity.LockedActivity" />
         <activity android:name=".Activity.NuevoMenuActivity" />
         <activity android:name=".Activity.ReservaDiaActivity" />
+        <activity android:name=".Activity.HistorialReservasActivity" />
     </application>
 
 </manifest>

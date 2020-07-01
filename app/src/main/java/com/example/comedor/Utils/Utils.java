@@ -4,29 +4,23 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
-import android.graphics.pdf.PdfDocument;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.comedor.Database.AlumnoViewModel;
 import com.example.comedor.Database.RolViewModel;
 import com.example.comedor.Database.UsuarioViewModel;
-import com.example.comedor.R;
-
-import org.w3c.dom.Document;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -103,7 +97,7 @@ public class Utils {
     //Constante de nombres de archivos
     public static final String PROFILE_PIC = "%s.jpg";
     //Constantes de permisos
-    public static final int[] LIST_PERMISOS = new int[]{999,998};
+    public static final int[] LIST_PERMISOS = new int[]{999, 998};
 
     public static final int PERMISSION_ALL = 1010;
 
@@ -147,27 +141,29 @@ public class Utils {
 
     private static final String IP = "bienestar.unse.edu.ar";
     //USUARIO
-    public static final String URL_USUARIO_INSERTAR = "http://"+IP+"/bienestar/comedor/beneficiario/insertarUsuario.php";
-    public static final String URL_USUARIO_ACTUALIZAR = "http://"+IP+"/bienestar/comedor/beneficiario/actualizarUsuario.php";
-    public static final String URL_USUARIO_LOGIN = "http://"+IP+"/bienestar/comedor/beneficiario/login.php";
-    public static final String URL_USUARIO_CHECK = "http://"+IP+"/bienestar/comedor/beneficiario/getValid.php";
-    public static final String URL_USUARIOS_LISTA = "http://"+IP+"/bienestar/comedor/beneficiario/getUsuarios.php";
-    public static final String URL_USUARIO_BY_ID = "http://"+IP+"/bienestar/comedor/beneficiario/getUsuario.php";
-    public static final String URL_USUARIO_ELIMINAR = "http://"+IP+"/bienestar/comedor/beneficiario/eliminarUsuario.php";
+    public static final String URL_USUARIO_INSERTAR = "http://" + IP + "/bienestar/comedor/beneficiario/insertarUsuario.php";
+    public static final String URL_USUARIO_ACTUALIZAR = "http://" + IP + "/bienestar/comedor/beneficiario/actualizarUsuario.php";
+    public static final String URL_USUARIO_LOGIN = "http://" + IP + "/bienestar/comedor/beneficiario/login.php";
+    public static final String URL_USUARIO_CHECK = "http://" + IP + "/bienestar/comedor/beneficiario/getValid.php";
+    public static final String URL_USUARIOS_LISTA = "http://" + IP + "/bienestar/comedor/beneficiario/getUsuarios.php";
+    public static final String URL_USUARIO_BY_ID = "http://" + IP + "/bienestar/comedor/beneficiario/getUsuario.php";
+    public static final String URL_USUARIO_ELIMINAR = "http://" + IP + "/bienestar/comedor/beneficiario/eliminarUsuario.php";
 
-    public static final String URL_MENU_BY_RANGE = "http://"+IP+"/bienestar/comedor/menu/getMenuByRange.php";
-    public static final String URL_MENU_NUEVO = "http://"+IP+"/bienestar/comedor/menu/insertarMenu.php";
+    public static final String URL_MENU_BY_RANGE = "http://" + IP + "/bienestar/comedor/menu/getMenuByRange.php";
+    public static final String URL_MENU_NUEVO = "http://" + IP + "/bienestar/comedor/menu/insertarMenu.php";
 
-    public static final String URL_RESERVA_HOY = "http://"+IP+"/bienestar/comedor/reserva/getReservaByDay.php";
+    public static final String URL_RESERVA_HOY = "http://" + IP + "/bienestar/comedor/reserva/getReservaByDay.php";
+    public static final String URL_RESERVA_HISTORIAL = "http://" + IP + "/bienestar/comedor/reserva/getReservas.php";
+    public static final String URL_RESERVA_USUARIO = "http://" + IP + "/bienestar/comedor/reserva/getReservaByUser.php";
 
     //ROLES
-    public static final String URL_ROLES_LISTA = "http://"+IP+"/bienestar/general/getRoles.php";
-    public static final String URL_ROLES_INSERTAR = "http://"+IP+"/bienestar/general/insertarRol.php";
-    public static final String URL_ROLES_USER_LISTA = "http://"+IP+"/bienestar/general/getRolesByUsuario.php";
+    public static final String URL_ROLES_LISTA = "http://" + IP + "/bienestar/general/getRoles.php";
+    public static final String URL_ROLES_INSERTAR = "http://" + IP + "/bienestar/general/insertarRol.php";
+    public static final String URL_ROLES_USER_LISTA = "http://" + IP + "/bienestar/general/getRolesByUsuario.php";
 
     //GENERALES
-    public static final String URL_CATEGORIAS = "http://"+IP+"/bienestar/general/getArchivos.php";
-    public static final String URL_ARCHIVOS = "http://"+IP+"/bienestar/archivos/";
+    public static final String URL_CATEGORIAS = "http://" + IP + "/bienestar/general/getArchivos.php";
+    public static final String URL_ARCHIVOS = "http://" + IP + "/bienestar/archivos/";
 
 
     public static final long SECONS_TIMER = 15000;
@@ -575,6 +571,16 @@ public class Utils {
         return value;
     }
 
+    public static String getInfoDate(int dia, int mes, int anio) {
+        Date fecha = getFechaDate(String.format("%02d-%02d-%02d", dia, mes, anio));
+        if (fecha != null) {
+            String diaSemana = getDayWeek(fecha);
+            return String.format("%s %02d", diaSemana, dia);
+        }
+        return "";
+
+    }
+
     public static String getDayWeek(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -595,6 +601,45 @@ public class Utils {
                 return "Domingo";
         }
         return "";
+    }
+
+    public static String getMonth(int mont) {
+        /*Date date = new Date(System.currentTimeMillis());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.MONTH, mont-1);
+        String mes = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+        char in = mes.charAt(0);
+
+        return String.valueOf(in).toUpperCase() + mes.substring(1);*/
+        switch (mont){
+            case 1:
+                return "Enero";
+            case 2:
+                return "Febrero";
+            case 3:
+                return "Marzo";
+            case 4:
+                return "Abril";
+            case 5:
+                return "Mayo";
+            case 6:
+                return "Junio";
+            case 7:
+                return "Julio";
+            case 8:
+                return "Agosto";
+            case 9:
+                return "Septiembre";
+            case 10:
+                return "Octubre";
+            case 11:
+                return "Noviembre";
+            case 12:
+                return "Diciembre";
+            default:
+                return "Desconocido";
+        }
     }
 
     public static String getMonth(Date date) {
