@@ -99,7 +99,6 @@ public class OpcionesAdapter extends RecyclerView.Adapter<OpcionesAdapter.Opcion
         LinearLayout mLinearLayout;
         View mView;
 
-
         OpcionesViewHolder(View itemView) {
             super(itemView);
 
@@ -108,7 +107,6 @@ public class OpcionesAdapter extends RecyclerView.Adapter<OpcionesAdapter.Opcion
             mCardView = itemView.findViewById(R.id.card);
             mLinearLayout = itemView.findViewById(R.id.layout);
             mView = itemView.findViewById(R.id.view);
-
 
         }
     }

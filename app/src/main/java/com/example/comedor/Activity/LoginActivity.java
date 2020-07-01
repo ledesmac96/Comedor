@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -32,12 +32,11 @@ import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button mInicio;
     ImageView btnBack;
-    LinearLayout layoutFondo;
+    FrameLayout layoutFondo;
     DialogoProcesamiento dialog;
     EditText edtUser, edtPass;
     PreferenciasManager mPreferenciasManager;
@@ -70,7 +69,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
-
 
     }
 
@@ -111,7 +109,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (validador.validarContraseña(edtPass) && validador.validarDNI(edtUser)) {
             sendServer(usuario, pass);
         } else {
-            Utils.showToast(getApplication(), getString(R.string.camposIncompletos));
+            //Utils.showToast(getApplication(), getString(R.string.camposIncompletos));
+            Utils.showCustomToast(LoginActivity.this, getApplicationContext(),
+                    getString(R.string.camposIncompletos), R.drawable.ic_advertencia);
         }
     }
 
@@ -120,17 +120,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 procesarRespuesta(response);
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dialog.dismiss();
                 error.printStackTrace();
-                Utils.showToast(getApplicationContext(), "Error de conexión o servidor fuera de rango");
+                //Utils.showToast(getApplicationContext(), "Error de conexión o servidor fuera de rango");
+                Utils.showCustomToast(LoginActivity.this, getApplicationContext(),
+                        "Error de conexión o servidor fuera de rango", R.drawable.ic_error);
 
             }
         });
@@ -147,11 +146,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    Utils.showCustomToast(LoginActivity.this, getApplicationContext(),
+                            getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
-                    Utils.showToast(getApplicationContext(), getString(R.string.sesionIniciada));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.sesionIniciada));
+                    Utils.showCustomToast(LoginActivity.this, getApplicationContext(),
+                            getString(R.string.sesionIniciada), R.drawable.ic_exito);
                     String token = jsonObject.getJSONObject("token").getString("token");
 
                     //Insertar BD
@@ -169,21 +172,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     break;
                 case 2:
                     //Usuario invalido
-                    Utils.showToast(getApplicationContext(), getString(R.string.usuarioInvalido));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioInvalido));
+                    Utils.showCustomToast(LoginActivity.this, getApplicationContext(),
+                            getString(R.string.usuarioInvalido), R.drawable.ic_error);
                     break;
                 case 5:
                     //Usuario invalido
-                    Utils.showToast(getApplicationContext(), getString(R.string.usuarioInhabilitado));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioInhabilitado));
+                    Utils.showCustomToast(LoginActivity.this, getApplicationContext(),
+                            getString(R.string.usuarioInhabilitado), R.drawable.ic_error);
                     break;
                 case 4:
                     //Usuario invalido
-                    Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+                    Utils.showCustomToast(LoginActivity.this, getApplicationContext(),
+                            getString(R.string.camposInvalidos), R.drawable.ic_error);
                     break;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(LoginActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
     }
 

@@ -62,9 +62,8 @@ public class GestionMenuFragment extends Fragment implements View.OnClickListene
     }
 
     private void loadData() {
-        mesesAdapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_spinner_item, meses);
-        mesesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mesesAdapter = new ArrayAdapter<String>(getContext(), R.layout.style_spinner, meses);
+        mesesAdapter.setDropDownViewResource(R.layout.style_spinner);
         mSpinnerMeses.setAdapter(mesesAdapter);
     }
 
@@ -79,7 +78,6 @@ public class GestionMenuFragment extends Fragment implements View.OnClickListene
         mSpinnerMeses = view.findViewById(R.id.spinner1);
     }
 
-
     private void loadInfo() {
         int mes = mSpinnerMeses.getSelectedItemPosition() + 1;
         PreferenciasManager manager = new PreferenciasManager(getContext());
@@ -91,7 +89,6 @@ public class GestionMenuFragment extends Fragment implements View.OnClickListene
             public void onResponse(String response) {
 
                 procesarRespuesta(response);
-
 
             }
         }, new Response.ErrorListener() {
@@ -156,7 +153,6 @@ public class GestionMenuFragment extends Fragment implements View.OnClickListene
                     JSONObject o = jsonArray.getJSONObject(i);
 
                     Menu menu = Menu.mapper(o, Menu.COMPLETE);
-
 
                     mMenus.add(menu);
 

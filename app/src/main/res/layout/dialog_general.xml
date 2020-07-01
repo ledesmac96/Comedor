@@ -33,7 +33,7 @@
                 android:text="¡Advertencia!"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/montserrat_black"/>
 
         </LinearLayout>
 
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:text="¿Seguro que desea cerrar sesión?"
-                android:textStyle="bold"
+                android:fontFamily="@font/montserrat_regular"
                 android:gravity="center" />
 
             <LinearLayout
@@ -70,7 +70,7 @@
                     android:text="SI"
                     android:background="@drawable/button_border"
                     android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_black"
                     android:textSize="16sp"
                     android:layout_weight="0.45" />
 
@@ -87,7 +87,7 @@
                     android:text="NO"
                     android:background="@drawable/button_border"
                     android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_black"
                     android:textSize="16sp"
                     android:layout_weight="0.45" />
 
@@ -99,8 +99,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
-
 
 </androidx.cardview.widget.CardView>

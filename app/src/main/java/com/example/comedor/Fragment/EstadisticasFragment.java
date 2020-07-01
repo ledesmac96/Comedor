@@ -32,13 +32,11 @@ import androidx.fragment.app.FragmentManager;
 
 public class EstadisticasFragment extends Fragment implements View.OnClickListener {
 
-
     View view;
     BarChart mBarChart;
     PieChart mPieChart;
     Context mContext;
     FragmentManager mFragmentManager;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

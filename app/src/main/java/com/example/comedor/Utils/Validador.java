@@ -61,7 +61,6 @@ public class Validador {
         }
     }
 
-
     public boolean validarDNI(EditText editText) {
         if (noVacio(editText.getText().toString().trim())) {
             editText.setError(mContext.getString(R.string.campoVacio));
@@ -254,12 +253,10 @@ public class Validador {
         return !noVacio(name) && name.matches(regex);
     }
 
-
     public boolean validarMail(String mail) {
         String regex = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         return mail.matches(regex);
     }
-
 
     public boolean validarNumero(String numero) {
         String regex = "^[0-9]+$";
@@ -283,12 +280,10 @@ public class Validador {
         return (num > 0);
     }
 
-
     public boolean isLegajo(String leg) {
         String regex = Utils.PATRON_LEGAJO;
         return leg.matches(regex);
     }
-
 
     public boolean lengthMore(String string) {
         return string.length() >= 3;

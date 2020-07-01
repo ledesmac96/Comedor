@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -28,18 +29,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class NuevoMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txtFecha;
-    EditText edtPorcion, edtDescripcion;
+    EditText edtPorcion, edtAlmuerzo, edtCena, edtPostre, edtFecha;
     Button btnGuardar;
     int diaF = -1, mesF = -1, anioF = -1;
     DialogoProcesamiento dialog;
-
+    ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_menu);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        setToolbar();
 
         loadView();
 
@@ -49,9 +51,13 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    private void setToolbar() {
+        ((TextView) findViewById(R.id.txtTitulo)).setText("Nuevo menú diario");
+    }
+
     private void loadListener() {
         btnGuardar.setOnClickListener(this);
-        txtFecha.setOnClickListener(this);
+        edtFecha.setOnClickListener(this);
     }
 
     private void loadData() {
@@ -59,19 +65,25 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void loadView() {
-        txtFecha = findViewById(R.id.txtFecha);
-        edtDescripcion = findViewById(R.id.edtDescripcion);
+        edtFecha = findViewById(R.id.edtFecha);
         edtPorcion = findViewById(R.id.edtPorcion);
+        edtAlmuerzo = findViewById(R.id.edtAlmuerzo);
+        edtCena = findViewById(R.id.edtCena);
+        edtPostre = findViewById(R.id.edtPostre);
         btnGuardar = findViewById(R.id.btnGuardar);
+        btnBack = findViewById(R.id.imgFlecha);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.imgFlecha:
+                onBackPressed();
+                break;
             case R.id.btnGuardar:
                 save();
                 break;
-            case R.id.txtFecha:
+            case R.id.edtFecha:
                 elegirFechaNacimiento();
                 break;
         }
@@ -95,7 +107,7 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
                 mesF = month;
                 anioF = year;
                 final String selectedDate = year + "-" + mes + "-" + dia;
-                txtFecha.setText(selectedDate);
+                edtFecha.setText(selectedDate);
             }
         });
         newFragment.show(getFragmentManager(), "datePicker");
@@ -103,17 +115,24 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void save() {
-        String descripcion = edtDescripcion.getText().toString();
+        String almuerzo = edtAlmuerzo.getText().toString();
+        String cena = edtCena.getText().toString();
+        String postre = edtPostre.getText().toString();
+        String descripcion = almuerzo + "#" + cena + "#" + postre;
         String porcion = edtPorcion.getText().toString();
         Validador validador = new Validador(getApplicationContext());
-        if (validador.validarDescripcion(edtDescripcion) && validador.validarNumero(edtPorcion)) {
+        if (validador.noVacio(descripcion) && validador.validarNumero(edtPorcion)) {
             if (diaF != -1 && mesF != -1 && anioF != -1) {
                 sendServer(descripcion, porcion, diaF, mesF, anioF);
             } else {
-                Utils.showToast(getApplicationContext(), getString(R.string.eligeFecha));
+                //Utils.showToast(getApplicationContext(), getString(R.string.eligeFecha));
+                Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                        getString(R.string.eligeFecha), R.drawable.ic_advertencia);
             }
         } else {
-            Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+            //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+            Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                    getString(R.string.camposInvalidos), R.drawable.ic_error);
         }
     }
 
@@ -126,16 +145,15 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 procesarRespuesta(response);
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                        getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
 
             }
@@ -155,34 +173,50 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                            getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
-                    Utils.showToast(getApplicationContext(), getString(R.string.menuCreado));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.menuCreado));
+                    Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                            getString(R.string.menuCreado), R.drawable.ic_exito);
                     finish();
                     break;
                 case 2:
-                    Utils.showToast(getApplicationContext(), getString(R.string.menuError));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.menuError));
+                    Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                            getString(R.string.menuError), R.drawable.ic_error);
                     break;
                 case 4:
-                    Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+                    Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                            getString(R.string.camposInvalidos), R.drawable.ic_advertencia);
                     break;
                 case 5:
-                    Utils.showToast(getApplicationContext(), getString(R.string.menuExistente));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.menuExistente));
+                    Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                            getString(R.string.menuExistente), R.drawable.ic_error);
                     break;
                 case 3:
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
     }
 }

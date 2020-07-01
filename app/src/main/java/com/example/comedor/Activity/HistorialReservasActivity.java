@@ -1,17 +1,25 @@
 package com.example.comedor.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.comedor.Adapter.HistorialReservasAdapter;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Modelo.ItemBase;
 import com.example.comedor.Modelo.ItemDato;
 import com.example.comedor.Modelo.ItemFecha;
 import com.example.comedor.Modelo.Menu;
+import com.example.comedor.Modelo.Reserva;
 import com.example.comedor.R;
+import com.example.comedor.RecyclerListener.ItemClickSupport;
 import com.example.comedor.Utils.PreferenciasManager;
 import com.example.comedor.Utils.Utils;
 import com.example.comedor.Utils.VolleySingleton;
@@ -25,13 +33,22 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class HistorialReservasActivity extends AppCompatActivity {
+public class HistorialReservasActivity extends AppCompatActivity implements View.OnClickListener {
 
     DialogoProcesamiento dialog;
     ArrayList<Menu> mMenus;
     ArrayList<ItemBase> mItems;
     ArrayList<ItemBase> mListOficial;
+
+    RecyclerView mRecyclerView;
+    RecyclerView.LayoutManager mLayoutManager;
+    HistorialReservasAdapter adapter;
+
+    ImageView imgIcono;
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +66,18 @@ public class HistorialReservasActivity extends AppCompatActivity {
     }
 
     private void setToolbar() {
-
+        ((TextView) findViewById(R.id.txtTitulo)).setTextColor(getResources().getColor(R.color.colorPrimary));
+        ((TextView) findViewById(R.id.txtTitulo)).setText("Historial de reservas");
+        Utils.changeColorDrawable(imgIcono, getApplicationContext(), R.color.colorPrimary);
     }
 
     private void loadData() {
         loadInfo();
 
+        adapter = new HistorialReservasAdapter(this, mListOficial);
+        mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(adapter);
     }
 
     private void loadInfo() {
@@ -65,17 +88,16 @@ public class HistorialReservasActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 procesarRespuesta(response);
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 //mProgressBar.setVisibility(View.GONE);
-                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
+                        getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
 
             }
@@ -94,7 +116,9 @@ public class HistorialReservasActivity extends AppCompatActivity {
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
+                            getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
@@ -102,20 +126,28 @@ public class HistorialReservasActivity extends AppCompatActivity {
                     loadInfo(jsonObject);
                     break;
                 case 2:
-                    Utils.showToast(getApplicationContext(), getString(R.string.noData));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.noData));
+                    Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
+                            getString(R.string.noData), R.drawable.ic_error);
                     break;
                 case 3:
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
     }
 
@@ -136,7 +168,9 @@ public class HistorialReservasActivity extends AppCompatActivity {
                     mMenus.add(menu);
 
                 }
-                Utils.showToast(getApplicationContext(), "HAY " + mMenus.size());
+                //Utils.showToast(getApplicationContext(), "HAY " + mMenus.size());
+                Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
+                        "HAY " + mMenus.size(), R.drawable.ic_exito);
             }
 
             mItems = new ArrayList<>();
@@ -158,7 +192,9 @@ public class HistorialReservasActivity extends AppCompatActivity {
                     mListOficial.add(generalItem);
                 }
             }
-            Utils.showToast(getApplicationContext(), String.valueOf(mListOficial.size()));
+            //Utils.showToast(getApplicationContext(), String.valueOf(mListOficial.size()));
+            Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
+                    String.valueOf(mListOficial.size()), R.drawable.ic_exito);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -167,9 +203,24 @@ public class HistorialReservasActivity extends AppCompatActivity {
     }
 
     private void loadListener() {
+        imgIcono.setOnClickListener(this);
+
+//        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
+//        itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(RecyclerView parent, View view, int position, long id) {
+//                Intent i = new Intent(getApplicationContext(), InfoReservaActivity.class);
+//                i.putExtra(Utils.RESERVA, mReservas.get(position));
+//                startActivity(i);
+//            }
+//        });
+
     }
 
     private void loadViews() {
+        imgIcono = findViewById(R.id.imgFlecha);
+        mProgressBar = findViewById(R.id.progress_bar);
+        mRecyclerView = findViewById(R.id.recycler);
     }
 
     private HashMap<String, List<ItemBase>> filtrarPorMes(List<ItemBase> list) {
@@ -208,4 +259,12 @@ public class HistorialReservasActivity extends AppCompatActivity {
         return groupedHashMap;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imgFlecha:
+                onBackPressed();
+                break;
+        }
+    }
 }

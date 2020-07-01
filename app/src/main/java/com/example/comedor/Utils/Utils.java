@@ -1,5 +1,6 @@
 package com.example.comedor.Utils;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -15,12 +16,18 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.comedor.Database.AlumnoViewModel;
 import com.example.comedor.Database.RolViewModel;
 import com.example.comedor.Database.UsuarioViewModel;
+import com.example.comedor.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -45,6 +52,7 @@ import java.util.regex.Pattern;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.Fragment;
 
 public class Utils {
 
@@ -259,25 +267,29 @@ public class Utils {
         return Bitmap.createBitmap(bitmapToScale, 0, 0, bitmapToScale.getWidth(), bitmapToScale.getHeight(), matrix, true);
     }
 
-//    public static void showCustomToast(Activity activity, Context context, String text, int icon){
-//        LayoutInflater inflater = activity.getLayoutInflater();
-//        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) activity.findViewById(R.id.toast_layout));
-//
-//        FontChangeUtil fontChanger = new FontChangeUtil(context.getAssets(), "product_sans_regular.ttf");
-//        fontChanger.replaceFonts((ViewGroup) layout);
-//
-//        ImageView image = layout.findViewById(R.id.image);
-//        image.setImageResource(icon);
-//        TextView text2 = layout.findViewById(R.id.text);
-//        text2.setText(text);
-//
-//        Toast toast = new Toast(context);
-//        toast.setGravity(Gravity.BOTTOM, 0, 30);
-//        toast.setDuration(Toast.LENGTH_LONG + 4);
-//        toast.setView(layout);
-//        toast.show();
-//    }
+    /**
+     * Método que muestra un Toast personalizado
+     *
+     * @param activity actividad actual
+     * @param context  contexto de la actividad de donde se lo convoca
+     * @param text     mensaje del toast
+     * @param icon     icono
+     */
+    public static void showCustomToast(Activity activity, Context context, String text, int icon) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) activity.findViewById(R.id.toast_layout));
 
+        ImageView image = layout.findViewById(R.id.image);
+        image.setImageResource(icon);
+        TextView text2 = layout.findViewById(R.id.text);
+        text2.setText(text);
+
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.BOTTOM, 0, 30);
+        toast.setDuration(Toast.LENGTH_LONG + 4);
+        toast.setView(layout);
+        toast.show();
+    }
 
     //Metodo para saber si un permiso esta autorizado o no
     public static boolean isPermissionGranted(Context ctx, String permision) {

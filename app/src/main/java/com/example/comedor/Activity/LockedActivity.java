@@ -43,16 +43,15 @@ public class LockedActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 procesarRespuesta(response, idLocal);
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                Utils.showCustomToast(LockedActivity.this, getApplicationContext(),
+                        getString(R.string.servidorOff), R.drawable.ic_error);
 
             }
         });

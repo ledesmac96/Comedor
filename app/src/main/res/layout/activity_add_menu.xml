@@ -9,22 +9,38 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
 
-        <TextView
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fecha de Menú"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        <include layout="@layout/toolbar_trans" />
 
         <TextView
-            android:id="@+id/txtFecha"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2020-10-10"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="Nuevo menú"
+            android:textSize="22sp"
+            android:fontFamily="@font/montserrat_black"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtFecha"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Fecha de menú"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                android:inputType="date"
+                android:focusable="false"
+                android:clickable="true"
+                android:maxLines="1"
+                android:background="@drawable/edit_text_logreg"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_regular"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -51,28 +67,85 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:gravity="start"
-                android:id="@+id/edtDescripcion"
+                android:id="@+id/edtAlmuerzo"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:hint="Descripcion"
+                android:layout_height="50dp"
+                android:hint="Almuerzo"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 android:padding="15dp"
-                android:inputType="textCapSentences|textPersonName"
+                android:inputType="text|textCapWords"
                 android:background="@drawable/edit_text_logreg"
                 android:textSize="16sp"
                 android:fontFamily="@font/montserrat_regular"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtCena"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Cena"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                android:inputType="text|textCapWords"
+                android:background="@drawable/edit_text_logreg"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_regular"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtPostre"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Postre"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                android:inputType="text|textCapWords"
+                android:background="@drawable/edit_text_logreg"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_regular"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="NOTA: en caso de no ofrecer cena y/o postre, dejar en blanco."
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_regular"/>
+
         <Button
             android:id="@+id/btnGuardar"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GUARDAR" />
+            android:background="@drawable/button_border"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:text="GUARDAR MENÚ"
+            android:fontFamily="@font/montserrat_black"/>
 
     </LinearLayout>
 

@@ -12,23 +12,46 @@
         android:layout_margin="10dp">
 
         <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:spinnerMode="dropdown" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner1" />
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnBuscar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BUSCAR" />
-        <Button
-            android:id="@+id/btnGuardar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NUEVO" />
+            <Button
+                android:id="@+id/btnBuscar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BUSCAR"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_border"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_weight="0.5" />
 
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NUEVO"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_border"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>

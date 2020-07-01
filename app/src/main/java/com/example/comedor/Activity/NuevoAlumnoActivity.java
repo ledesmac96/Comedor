@@ -14,7 +14,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.comedor.Database.UsuarioViewModel;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.R;
 import com.example.comedor.Utils.PreferenciasManager;
@@ -27,7 +26,6 @@ import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static android.view.View.VISIBLE;
 import static com.example.comedor.Utils.Utils.facultad;
 import static com.example.comedor.Utils.Utils.faya;
 import static com.example.comedor.Utils.Utils.fceyt;
@@ -44,7 +42,6 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
     ArrayAdapter<String> facultadAdapter;
     DialogoProcesamiento dialog;
     Button btnRegister;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +122,6 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-
     }
 
     private void loadData() {
@@ -193,16 +189,15 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
             sendServer(processString(dni, nombre, apellido, carrera, faculta, anioIngreso2
                     , legajo));
 
-        } else Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+        } else Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                getString(R.string.camposInvalidos), R.drawable.ic_error);
     }
 
-    public String processString(String dni, String nombre, String apellido,
-                                String carrera, String facultad, String anioIng,
-                                String legajo) {
+    public String processString(String dni, String nombre, String apellido, String carrera,
+                                String facultad, String anioIng, String legajo) {
         String resp = "";
         resp = String.format(Utils.dataUser, dni, nombre, apellido, carrera, facultad,
                 anioIng, legajo);
-
 
         return resp;
     }
@@ -215,16 +210,15 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 procesarRespuesta(response);
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                        getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
 
             }
@@ -244,34 +238,50 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                            getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
-                    Utils.showToast(getApplicationContext(), getString(R.string.usuarioCreado));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioCreado));
+                    Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                            getString(R.string.usuarioCreado), R.drawable.ic_exito);
                     finish();
                     break;
                 case 2:
-                    Utils.showToast(getApplicationContext(), getString(R.string.usuarioErrorCrear));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioErrorCrear));
+                    Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                            getString(R.string.usuarioErrorCrear), R.drawable.ic_error);
                     break;
                 case 4:
-                    Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+                    Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                            getString(R.string.camposInvalidos), R.drawable.ic_error);
                     break;
                 case 5:
-                    Utils.showToast(getApplicationContext(), getString(R.string.usuarioYaExiste));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioYaExiste));
+                    Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                            getString(R.string.usuarioYaExiste), R.drawable.ic_error);
                     break;
                 case 3:
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
     }
 

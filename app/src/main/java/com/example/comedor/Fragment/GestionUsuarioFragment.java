@@ -26,6 +26,7 @@ import com.example.comedor.RecyclerListener.ItemClickSupport;
 import com.example.comedor.Utils.PreferenciasManager;
 import com.example.comedor.Utils.Utils;
 import com.example.comedor.Utils.VolleySingleton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +36,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,7 +44,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class GestionUsuarioFragment extends Fragment implements View.OnClickListener {
 
     View view;
-    CardView cardAddClient;
+    FloatingActionButton fabAdd;
     ArrayList<Usuario> mUsuarios;
     RecyclerView.LayoutManager mLayoutManager;
     DialogoProcesamiento dialog;
@@ -71,7 +71,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
 
 
     private void loadListener() {
-        cardAddClient.setOnClickListener(this);
+        fabAdd.setOnClickListener(this);
         edtBuscar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -94,7 +94,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     private void loadViews() {
         edtBuscar = view.findViewById(R.id.edtBuscar);
         recyclerUsuarios = view.findViewById(R.id.recycler);
-        cardAddClient = view.findViewById(R.id.cardAddAlumno);
+        fabAdd = view.findViewById(R.id.fabAdd);
         mProgressBar = view.findViewById(R.id.progress_bar);
     }
 
@@ -325,7 +325,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.cardAddAlumno:
+            case R.id.fabAdd:
                 Intent i = new Intent(getContext(), NuevoAlumnoActivity.class);
                 startActivity(i);
                 break;

@@ -2,12 +2,15 @@ package com.example.comedor.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.comedor.Modelo.Reserva;
 import com.example.comedor.R;
 import com.example.comedor.Utils.Utils;
 
@@ -15,11 +18,17 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
     ImageView imgIcono;
     Button btnCancelar;
+    TextView txtIdRes, txtPlato, txtFechaRes, txtEstado;
+    Reserva mReserva;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_reserva);
+
+        if (getIntent().getParcelableExtra(Utils.RESERVA) != null) {
+            mReserva = getIntent().getParcelableExtra(Utils.RESERVA);
+        }
 
         loadViews();
 
@@ -38,6 +47,15 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadData() {
+        txtIdRes.setText("#"+ mReserva.getIdReserva());
+        txtPlato.setText(mReserva.getDescripcion());
+        txtFechaRes.setText(mReserva.getFechaReserva());
+        txtEstado.setText(String.valueOf(mReserva.getDescripcion()));
+
+       if (mReserva.getDescripcion().equals("RETIRADO") ||
+               mReserva.getDescripcion().equals("CANCELADO")) {
+           btnCancelar.setVisibility(View.GONE);
+       }
 
     }
 
@@ -47,8 +65,13 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadViews() {
-        btnCancelar = findViewById(R.id.btnReservar);
+        btnCancelar = findViewById(R.id.btnCancelar);
         imgIcono = findViewById(R.id.imgFlecha);
+
+        txtIdRes = findViewById(R.id.txtIdReserva);
+        txtPlato = findViewById(R.id.txtPlato);
+        txtFechaRes = findViewById(R.id.txtFechaRes);
+        txtEstado = findViewById(R.id.txtEstado);
     }
 
     @Override
