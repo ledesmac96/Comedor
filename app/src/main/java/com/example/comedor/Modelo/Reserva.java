@@ -11,6 +11,7 @@ public class Reserva implements Parcelable {
     public static final int COMPLETE = 1;
     public static final int MEDIUM = 2;
     public static final int HISTORIAL = 3;
+    public static final int HISTORIAL_TOTAL = 4;
 
     private int idReserva, idUsuario, idEmpleado, idMenu, estado, validez;
     private String fechaReserva, fechaModificacion, nombre, apellido;
@@ -41,11 +42,11 @@ public class Reserva implements Parcelable {
         this.fechaModificacion = fechaModificacion;
     }
 
-    public Reserva(int idReserva, int idUsuario, int idMenu, int estado, int validez, String nombre, String apellido) {
+    public Reserva(int idReserva, int idUsuario, int idMenu, String estado, int validez, String nombre, String apellido) {
         this.idReserva = idReserva;
         this.idUsuario = idUsuario;
         this.idMenu = idMenu;
-        this.estado = estado;
+        this.descripcion = estado;
         this.validez = validez;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -192,11 +193,11 @@ public class Reserva implements Parcelable {
                     idReserva = Integer.parseInt(object.getString("idreserva"));
                     idUsuario = Integer.parseInt(object.getString("idusuario"));
                     idMenu = Integer.parseInt(object.getString("idmenu"));
-                    estado = Integer.parseInt(object.getString("estado"));
+                    estadoDescripcion = object.getString("descripcion");
                     validez = Integer.parseInt(object.getString("validez"));
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
-                    reserva = new Reserva(idReserva, idUsuario, idMenu, estado, validez, nombre, apellido);
+                    reserva = new Reserva(idReserva, idUsuario, idMenu, estadoDescripcion, validez, nombre, apellido);
                     break;
                 case HISTORIAL:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
@@ -209,6 +210,16 @@ public class Reserva implements Parcelable {
                     tipoEntrega = object.getString("tiporeserva");
                     reserva = new Reserva(idReserva, idMenu, fechaReserva, estadoDescripcion, tipoEntrega, dia, mes, anio);
                     break;
+                case HISTORIAL_TOTAL:
+                    idReserva = Integer.parseInt(object.getString("idreserva"));
+                    idMenu = Integer.parseInt(object.getString("idmenu"));
+                    estadoDescripcion = object.getString("descripcion");
+                    tipoEntrega = object.getString("tiporeserva");
+                    validez = Integer.parseInt(object.getString("validez"));
+                    nombre = object.getString("nombre");
+                    apellido = object.getString("apellido");
+                    reserva = new Reserva(idReserva,idMenu,validez, "", nombre, apellido, estadoDescripcion, tipoEntrega);
+                    break;
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -216,6 +227,17 @@ public class Reserva implements Parcelable {
 
         return reserva;
 
+    }
+
+    public Reserva(int idReserva, int idMenu, int validez, String fechaReserva, String nombre, String apellido, String descripcion, String tipoEntrega) {
+        this.idReserva = idReserva;
+        this.idMenu = idMenu;
+        this.validez = validez;
+        this.fechaReserva = fechaReserva;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.descripcion = descripcion;
+        this.tipoEntrega = tipoEntrega;
     }
 
     public int getValidez() {

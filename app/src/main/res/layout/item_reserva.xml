@@ -69,6 +69,15 @@
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 
+            <TextView
+                android:id="@+id/txtNombreUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blackTextColor"
+                android:text="Denis Lionel Acosta"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -289,7 +289,7 @@ public class PerfilActivity extends AppCompatActivity
             changeButton();
 
             //Alumnos
-            if (tipoUsuer == 0) {
+            if (tipoUsuer == 0 && mUsuario instanceof Alumno) {
                 Alumno alumno = null;
                 //Si es modo Admin saco los datos del objeto
                 if (isAdminMode) {

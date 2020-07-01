@@ -52,7 +52,6 @@ import java.util.regex.Pattern;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
 
 public class Utils {
 
@@ -163,6 +162,7 @@ public class Utils {
     public static final String URL_RESERVA_HOY = "http://" + IP + "/bienestar/comedor/reserva/getReservaByDay.php";
     public static final String URL_RESERVA_HISTORIAL = "http://" + IP + "/bienestar/comedor/reserva/getReservas.php";
     public static final String URL_RESERVA_USUARIO = "http://" + IP + "/bienestar/comedor/reserva/getReservaByUser.php";
+
 
     //ROLES
     public static final String URL_ROLES_LISTA = "http://" + IP + "/bienestar/general/getRoles.php";
@@ -443,6 +443,21 @@ public class Utils {
 
     }
 
+    public static Date getFechaDateDMA(String fecha) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date fechaI = null;
+        if (fecha != null)
+            try {
+                fechaI = simpleDateFormat.parse(fecha);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        return fechaI;
+
+    }
+
     public static Date getFechaDateWithHour(String fecha) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date fechaI = null;
@@ -584,7 +599,7 @@ public class Utils {
     }
 
     public static String getInfoDate(int dia, int mes, int anio) {
-        Date fecha = getFechaDate(String.format("%02d-%02d-%02d", dia, mes, anio));
+        Date fecha = getFechaDateDMA(String.format("%02d-%02d-%02d", dia, mes, anio));
         if (fecha != null) {
             String diaSemana = getDayWeek(fecha);
             return String.format("%s %02d", diaSemana, dia);
@@ -624,7 +639,7 @@ public class Utils {
         char in = mes.charAt(0);
 
         return String.valueOf(in).toUpperCase() + mes.substring(1);*/
-        switch (mont){
+        switch (mont) {
             case 1:
                 return "Enero";
             case 2:

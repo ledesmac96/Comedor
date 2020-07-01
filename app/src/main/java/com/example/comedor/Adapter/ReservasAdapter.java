@@ -22,12 +22,18 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
     private ArrayList<Reserva> mReservas;
     private ArrayList<Reserva> mListCopia;
     private Context context;
+    private int tipo;
 
-    public ReservasAdapter(ArrayList<Reserva> list, Context ctx) {
+    public static final int USER = 1;
+    public static final int ADMIN = 2;
+
+    public ReservasAdapter(ArrayList<Reserva> list, Context ctx, int tipo) {
         this.mReservas = list;
         this.context = ctx;
         this.mListCopia = new ArrayList<>();
         this.mListCopia.addAll(mReservas);
+        this.tipo = tipo;
+
     }
 
     @NonNull
@@ -54,6 +60,14 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
         } else if (reserva.getDescripcion().equals("CANCELADO")) {
             holder.mBackg.getBackground().setColorFilter(Color.parseColor("#D32F2F"), PorterDuff.Mode.SRC_OVER);
 
+        }
+        if (tipo == ADMIN) {
+            holder.fecha.setVisibility(View.GONE);
+            holder.nombre.setVisibility(View.VISIBLE);
+            holder.nombre.setText(String.format("%s %s", reserva.getNombre(), reserva.getApellido()));
+        } else {
+            holder.fecha.setVisibility(View.VISIBLE);
+            holder.nombre.setVisibility(View.GONE);
         }
     }
 
@@ -91,7 +105,7 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
 
     static class EventosViewHolder extends RecyclerView.ViewHolder {
 
-        TextView idReserva, fecha, estado;
+        TextView idReserva, fecha, estado, nombre;
         LinearLayout mBackg;
 
         EventosViewHolder(View itemView) {
@@ -101,6 +115,7 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
             fecha = itemView.findViewById(R.id.txtFecha);
             estado = itemView.findViewById(R.id.txtEstado);
             mBackg = itemView.findViewById(R.id.linlay);
+            nombre = itemView.findViewById(R.id.txtNombreUser);
         }
     }
 

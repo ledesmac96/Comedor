@@ -17,7 +17,6 @@ import com.example.comedor.Modelo.ItemBase;
 import com.example.comedor.Modelo.ItemDato;
 import com.example.comedor.Modelo.ItemFecha;
 import com.example.comedor.Modelo.Menu;
-import com.example.comedor.Modelo.Reserva;
 import com.example.comedor.R;
 import com.example.comedor.RecyclerListener.ItemClickSupport;
 import com.example.comedor.Utils.PreferenciasManager;
@@ -81,6 +80,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     }
 
     private void loadInfo() {
+        mProgressBar.setVisibility(View.VISIBLE);
         PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
         String key = manager.getValueString(Utils.TOKEN);
         int id = manager.getValueInt(Utils.MY_ID);
@@ -94,8 +94,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                //mProgressBar.setVisibility(View.GONE);
-                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                mProgressBar.setVisibility(View.GONE);
                 Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
                         getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
@@ -112,6 +111,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     private void procesarRespuesta(String response) {
         try {
             dialog.dismiss();
+            mProgressBar.setVisibility(View.GONE);
             JSONObject jsonObject = new JSONObject(response);
             int estado = jsonObject.getInt("estado");
             switch (estado) {
@@ -122,7 +122,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
                     break;
                 case 1:
                     //Exito
-                    //mProgressBar.setVisibility(View.GONE);
+
                     loadInfo(jsonObject);
                     break;
                 case 2:
@@ -169,8 +169,6 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
 
                 }
                 //Utils.showToast(getApplicationContext(), "HAY " + mMenus.size());
-                Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
-                        "HAY " + mMenus.size(), R.drawable.ic_exito);
             }
 
             mItems = new ArrayList<>();
@@ -182,9 +180,9 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
             }
             mListOficial = new ArrayList<>();
             HashMap<String, List<ItemBase>> datos = filtrarPorMes(mItems);
-            List<String> anios = new ArrayList<>();
-            anios.addAll(datos.keySet());
-            for (String date : anios) {
+            List<String> meses = new ArrayList<>();
+            meses.addAll(datos.keySet());
+            for (String date : meses) {
                 ItemFecha dateItem = new ItemFecha(Utils.getMonth(Integer.parseInt(date)));
                 mListOficial.add(dateItem);
                 for (ItemBase item : datos.get(date)) {
@@ -192,10 +190,8 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
                     mListOficial.add(generalItem);
                 }
             }
+            adapter.change(mListOficial);
             //Utils.showToast(getApplicationContext(), String.valueOf(mListOficial.size()));
-            Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
-                    String.valueOf(mListOficial.size()), R.drawable.ic_exito);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -205,15 +201,18 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     private void loadListener() {
         imgIcono.setOnClickListener(this);
 
-//        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
-//        itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(RecyclerView parent, View view, int position, long id) {
-//                Intent i = new Intent(getApplicationContext(), InfoReservaActivity.class);
-//                i.putExtra(Utils.RESERVA, mReservas.get(position));
-//                startActivity(i);
-//            }
-//        });
+        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
+        itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View view, int position, long id) {
+                if (mListOficial.get(position) instanceof ItemDato){
+                    Intent i = new Intent(getApplicationContext(), ListadoReservaActivity.class);
+                    i.putExtra(Utils.DATA_RESERVA, ((ItemDato) mListOficial.get(position)).getMenu());
+                    startActivity(i);
+                }
+
+            }
+        });
 
     }
 
@@ -261,7 +260,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imgFlecha:
                 onBackPressed();
                 break;

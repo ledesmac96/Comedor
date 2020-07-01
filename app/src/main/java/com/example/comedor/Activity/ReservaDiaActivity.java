@@ -74,7 +74,7 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
         mReservas = new ArrayList<>();
 
         mProgressBar.setVisibility(View.VISIBLE);
-        mReservasAdapter = new ReservasAdapter(mReservas, getApplicationContext());
+        mReservasAdapter = new ReservasAdapter(mReservas, getApplicationContext(), ReservasAdapter.ADMIN);
         mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         mRecyclerView.setNestedScrollingEnabled(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -95,10 +95,11 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void loadInfo() {
+        mProgressBar.setVisibility(View.VISIBLE);
         PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
         String key = manager.getValueString(Utils.TOKEN);
         int id = manager.getValueInt(Utils.MY_ID);
-        String URL = String.format("%s?idU=%s&key=%s&m=%s", Utils.URL_RESERVA_HOY, id, key, 1);
+        String URL = String.format("%s?idU=%s&key=%s&m=%s", Utils.URL_RESERVA_HOY, id, key, -1);
         StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -108,8 +109,7 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                // mProgressBar.setVisibility(View.GONE);
-                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                mProgressBar.setVisibility(View.GONE);
                 Utils.showCustomToast(ReservaDiaActivity.this, getApplicationContext(),
                         getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
@@ -125,6 +125,7 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
 
     private void procesarRespuesta(String response) {
         try {
+            mProgressBar.setVisibility(View.GONE);
             dialog.dismiss();
             JSONObject jsonObject = new JSONObject(response);
             int estado = jsonObject.getInt("estado");
@@ -136,7 +137,7 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
                     break;
                 case 1:
                     //Exito
-                    mProgressBar.setVisibility(View.GONE);
+
                     loadInfo(jsonObject);
                     break;
                 case 2:
@@ -176,7 +177,7 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
 
                 mMenus = Menu.mapper(jsonObject.getJSONArray("mensaje").getJSONObject(0), Menu.COMPLETE);
 
-                //mReservas = new ArrayList<>();
+                mReservas = new ArrayList<>();
 
                 JSONArray jsonArray = jsonObject.getJSONArray("datos");
 
@@ -189,9 +190,7 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
                     mReservas.add(reserva);
 
                 }
-                //Utils.showToast(getApplicationContext(), "HAY " + mReservas.size());
-                Utils.showCustomToast(ReservaDiaActivity.this, getApplicationContext(),
-                        "HAY " + mReservas.size(), R.drawable.ic_exito);
+                mReservasAdapter.change(mReservas);
             }
         } catch (JSONException e) {
             e.printStackTrace();

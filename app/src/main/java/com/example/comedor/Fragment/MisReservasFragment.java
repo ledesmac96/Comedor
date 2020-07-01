@@ -1,16 +1,12 @@
 package com.example.comedor.Fragment;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
@@ -18,10 +14,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.comedor.Activity.InfoReservaActivity;
+import com.example.comedor.Activity.ReservaActivity;
 import com.example.comedor.Adapter.ReservasAdapter;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Modelo.Reserva;
-import com.example.comedor.Modelo.Usuario;
 import com.example.comedor.R;
 import com.example.comedor.RecyclerListener.ItemClickSupport;
 import com.example.comedor.Utils.PreferenciasManager;
@@ -34,6 +30,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class MisReservasFragment extends Fragment {
 
     View view;
@@ -45,6 +46,7 @@ public class MisReservasFragment extends Fragment {
     ProgressBar mProgressBar;
     Context mContext;
     DialogoProcesamiento dialog;
+    LinearLayout latNoData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +71,8 @@ public class MisReservasFragment extends Fragment {
     private void loadData() {
         mReservas = new ArrayList<>();
         mProgressBar.setVisibility(View.VISIBLE);
-        mReservasAdapter = new ReservasAdapter(mReservas, getContext());
+        latNoData.setVisibility(View.GONE);
+        mReservasAdapter = new ReservasAdapter(mReservas, getContext(), ReservasAdapter.USER);
         mLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         mRecyclerView.setNestedScrollingEnabled(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -119,30 +122,36 @@ public class MisReservasFragment extends Fragment {
     private void procesarRespuesta(String response) {
         try {
             dialog.dismiss();
+            mProgressBar.setVisibility(View.GONE);
             JSONObject jsonObject = new JSONObject(response);
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
+                    latNoData.setVisibility(View.VISIBLE);
                     Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
                     break;
                 case 1:
                     //Exito
-                    mProgressBar.setVisibility(View.GONE);
+                    latNoData.setVisibility(View.GONE);
                     loadInfo(jsonObject);
                     break;
                 case 2:
-                    Utils.showToast(getContext(), getString(R.string.noData));
+                    latNoData.setVisibility(View.VISIBLE);
+                    Utils.showToast(getContext(), getString(R.string.noReservasUser));
                     break;
                 case 3:
+                    latNoData.setVisibility(View.VISIBLE);
                     Utils.showToast(getContext(), getString(R.string.tokenInvalido));
                     break;
                 case 100:
+                    latNoData.setVisibility(View.VISIBLE);
                     //No autorizado
                     Utils.showToast(getContext(), getString(R.string.tokenInexistente));
                     break;
             }
 
         } catch (JSONException e) {
+            latNoData.setVisibility(View.VISIBLE);
             e.printStackTrace();
             Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
         }
@@ -163,8 +172,13 @@ public class MisReservasFragment extends Fragment {
                     mReservas.add(reserva);
 
                 }
-                mReservasAdapter.change(mReservas);
-                mReservasAdapter.notifyDataSetChanged();
+                if (mReservas.size() > 0) {
+                    mReservasAdapter.change(mReservas);
+                    mReservasAdapter.notifyDataSetChanged();
+                } else {
+                    latNoData.setVisibility(View.VISIBLE);
+                }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -175,6 +189,7 @@ public class MisReservasFragment extends Fragment {
     private void loadViews() {
         mProgressBar = view.findViewById(R.id.progress_bar);
         mRecyclerView = view.findViewById(R.id.recycler);
+        latNoData = view.findViewById(R.id.latNoData);
 
     }
 

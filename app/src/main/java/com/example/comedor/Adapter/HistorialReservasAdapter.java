@@ -1,8 +1,6 @@
 package com.example.comedor.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +9,17 @@ import android.widget.TextView;
 import com.example.comedor.Modelo.ItemBase;
 import com.example.comedor.Modelo.ItemDato;
 import com.example.comedor.Modelo.ItemFecha;
+import com.example.comedor.Modelo.Menu;
 import com.example.comedor.R;
 import com.example.comedor.Utils.Utils;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class HistorialReservasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class HistorialReservasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<ItemBase> lista;
 
@@ -28,6 +27,11 @@ public class HistorialReservasAdapter extends RecyclerView.Adapter<RecyclerView.
         this.lista = lista;
         this.mContext = context;
 
+    }
+
+    public void change(ArrayList<ItemBase> list) {
+        this.lista = list;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -38,7 +42,7 @@ public class HistorialReservasAdapter extends RecyclerView.Adapter<RecyclerView.
 
         switch (viewType) {
             case ItemBase.TIPO_DATO:
-                View view = inflater.inflate(R.layout.item_reserva, viewGroup, false);
+                View view = inflater.inflate(R.layout.item_dia, viewGroup, false);
                 viewHolder = new DateViewHolder(view);
                 break;
             case ItemBase.TIPO_FECHA:
@@ -62,26 +66,22 @@ public class HistorialReservasAdapter extends RecyclerView.Adapter<RecyclerView.
                 break;
 
             case ItemBase.TIPO_DATO:
-//                ItemDato dateItem = (ItemDato) lista.get(position);
-//                DateViewHolder dateViewHolder = (DateViewHolder) viewHolder;
-//                dateViewHolder.txtDNI.setText(String.valueOf(dateItem.getReserva().getDni()));
-//                dateViewHolder.txtCategoria.setText(getCategoria(dateItem.getReserva().getCategoria()-1));
-//                dateViewHolder.txtInstalaciones.setText(getInstalaciones(dateItem.getReserva().getInstalacion()));
-//                dateViewHolder.txtPrecio.setText(String.valueOf(dateItem.getReserva().getPrecio()));
-//                dateViewHolder.txtFechaReserva.setText(String.valueOf(dateItem.getReserva().getFechaReserva()));
-//
+                ItemDato dateItem = (ItemDato) lista.get(position);
+                DateViewHolder dateViewHolder = (DateViewHolder) viewHolder;
+                Menu menu = dateItem.getMenu();
+                dateViewHolder.fecha.setText(Utils.getInfoDate(menu.getDia(), menu.getMes(), menu.getAnio()));
+                break;
+
         }
 
     }
 
     class DateViewHolder extends RecyclerView.ViewHolder {
-        private TextView idReserva, fecha, estado;
+        private TextView fecha;
 
         DateViewHolder(View v) {
             super(v);
-            idReserva = itemView.findViewById(R.id.txtIdReserva);
             fecha = itemView.findViewById(R.id.txtFecha);
-            estado = itemView.findViewById(R.id.txtEstado);
 
         }
     }

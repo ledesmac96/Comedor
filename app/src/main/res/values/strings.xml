@@ -49,5 +49,6 @@
     <string name="menuExistente">¡Ya existe un menú para el dia!</string>
     <string name="menuError">¡Error al crear el menú!</string>
     <string name="noReservas">¡No existen reservas el dia de hoy!</string>
+    <string name="noReservasUser">¡No posee reservas!</string>
 
 </resources>
