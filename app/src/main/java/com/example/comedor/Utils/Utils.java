@@ -157,6 +157,7 @@ public class Utils {
     public static final String URL_USUARIO_ELIMINAR = "http://" + IP + "/bienestar/comedor/beneficiario/eliminarUsuario.php";
 
     public static final String URL_MENU_BY_RANGE = "http://" + IP + "/bienestar/comedor/menu/getMenuByRange.php";
+    public static final String URL_MENU_HOY = "http://" + IP + "/bienestar/comedor/menu/getMenuToday.php";
     public static final String URL_MENU_NUEVO = "http://" + IP + "/bienestar/comedor/menu/insertarMenu.php";
 
     public static final String URL_RESERVA_HOY = "http://" + IP + "/bienestar/comedor/reserva/getReservaByDay.php";
@@ -608,6 +609,12 @@ public class Utils {
 
     }
 
+    public static String getDate(int dia, int mes, int anio) {
+        Date fecha = getFechaDateDMA(String.format("%02d-%02d-%02d", dia, mes, anio));
+        return getBirthday(fecha);
+
+    }
+
     public static String getDayWeek(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -788,6 +795,16 @@ public class Utils {
         new UsuarioViewModel(context).deleteAll();
         new AlumnoViewModel(context).deleteAll();
         new RolViewModel(context).deleteAll();
+    }
+
+    public static String[] getComidas(String descripcion) {
+        String[] food = new String[3];
+        int index = descripcion.indexOf("#");
+        int finIndex = descripcion.lastIndexOf("#");
+        food[0] = descripcion.substring(0, index).trim();
+        food[1] = descripcion.substring(index+1, finIndex).trim();
+        food[2] = descripcion.substring(finIndex+1, descripcion.length() - 1).trim();
+        return food;
     }
 }
 

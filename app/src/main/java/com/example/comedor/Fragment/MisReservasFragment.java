@@ -14,7 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.comedor.Activity.InfoReservaActivity;
-import com.example.comedor.Activity.ReservaActivity;
 import com.example.comedor.Adapter.ReservasAdapter;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Modelo.Reserva;

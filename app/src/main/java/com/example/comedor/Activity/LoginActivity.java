@@ -164,6 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     PreferenciasManager preferenceManager = new PreferenciasManager(getApplicationContext());
                     preferenceManager.setValue(Utils.IS_LOGIN, false);
                     int dni = user.getIdUsuario();
+                    preferenceManager.setValue(Utils.IS_LOCK, false);
                     preferenceManager.setValue(Utils.MY_ID, dni);
                     preferenceManager.setValue(Utils.TOKEN, token);
                     //Main

@@ -65,6 +65,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -77,8 +78,9 @@
                                 android:fontFamily="@font/montserrat_black"/>
 
                             <TextView
+                                android:layout_marginStart="4dp"
                                 android:id="@+id/txtPlato"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
                                 android:text="Milanesas con papas fritas + postre "
@@ -87,6 +89,32 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Porción: "
+                                android:textSize="16sp"
+                                android:fontFamily="@font/montserrat_black"/>
+
+                            <TextView
+                                android:layout_marginStart="4dp"
+                                android:id="@+id/txtPorcion"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="2"
+                                android:fontFamily="@font/montserrat_regular"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/latFechaReserva"
+                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -99,6 +127,7 @@
                                 android:fontFamily="@font/montserrat_black"/>
 
                             <TextView
+                                android:layout_marginStart="4dp"
                                 android:id="@+id/txtFechaRes"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -109,6 +138,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -131,6 +161,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/latEstado"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -153,6 +184,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/latQR"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -165,8 +197,9 @@
                                 android:fontFamily="@font/montserrat_black"/>
 
                             <ImageView
+                                android:id="@+id/imgQR"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="300dp"
                                 android:src="@drawable/ic_users"/>
 
                         </LinearLayout>
@@ -174,7 +207,7 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnCancelar"
+                        android:id="@+id/btnReservar"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"

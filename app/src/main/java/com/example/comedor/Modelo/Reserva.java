@@ -6,18 +6,38 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "reserva")
 public class Reserva implements Parcelable {
 
+    @Ignore
     public static final int COMPLETE = 1;
+    @Ignore
     public static final int MEDIUM = 2;
+    @Ignore
     public static final int HISTORIAL = 3;
+    @Ignore
     public static final int HISTORIAL_TOTAL = 4;
+    @Ignore
+    public static final String TABLE = "reserva";
+    @Ignore
+    public static final String KEY_ID_ALU = "idReserva";
+    @Ignore
+    public static final String KEY_MENU = "idMenu";
 
-    private int idReserva, idUsuario, idEmpleado, idMenu, estado, validez;
+    @PrimaryKey
+    @NonNull
+    private int idReserva;
+    private int idUsuario, idEmpleado, idMenu, estado, validez;
     private String fechaReserva, fechaModificacion, nombre, apellido;
     private String descripcion, tipoEntrega;
     private int dia, mes, anio;
 
+    @Ignore
     public Reserva(int idReserva, int idMenu, String fechaReserva, String descripcion,
                    String tipoEntrega, int dia, int mes, int anio) {
         this.idReserva = idReserva;
@@ -31,17 +51,19 @@ public class Reserva implements Parcelable {
     }
 
     public Reserva(int idReserva, int idUsuario, int idEmpleado, int idMenu, int estado,
-                   String fechaReserva, String fechaModificacion, int validez) {
+                   String fechaReserva, String fechaModificacion, int validez, String descripcion) {
         this.idReserva = idReserva;
         this.idUsuario = idUsuario;
         this.idEmpleado = idEmpleado;
         this.idMenu = idMenu;
+        this.descripcion = descripcion;
         this.estado = estado;
         this.validez = validez;
         this.fechaReserva = fechaReserva;
         this.fechaModificacion = fechaModificacion;
     }
 
+    @Ignore
     public Reserva(int idReserva, int idUsuario, int idMenu, String estado, int validez, String nombre, String apellido) {
         this.idReserva = idReserva;
         this.idUsuario = idUsuario;
@@ -52,6 +74,7 @@ public class Reserva implements Parcelable {
         this.apellido = apellido;
     }
 
+    @Ignore
     public Reserva() {
         this.idReserva = -1;
         this.idUsuario = -1;
@@ -62,6 +85,7 @@ public class Reserva implements Parcelable {
         this.fechaModificacion = "";
     }
 
+    @Ignore
     protected Reserva(Parcel in) {
         idReserva = in.readInt();
         idUsuario = in.readInt();
@@ -183,6 +207,7 @@ public class Reserva implements Parcelable {
         this.fechaModificacion = fechaModificacion;
     }
 
+    @Ignore
     public static Reserva mapper(JSONObject object, int tipo) {
         int idReserva, idUsuario, idEmpleado, idMenu, estado, validez, dia, mes, anio;
         String fechaReserva, fechaModificacion, nombre, apellido, estadoDescripcion, tipoEntrega;
@@ -218,7 +243,7 @@ public class Reserva implements Parcelable {
                     validez = Integer.parseInt(object.getString("validez"));
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
-                    reserva = new Reserva(idReserva,idMenu,validez, "", nombre, apellido, estadoDescripcion, tipoEntrega);
+                    reserva = new Reserva(idReserva, idMenu, validez, "", nombre, apellido, estadoDescripcion, tipoEntrega);
                     break;
             }
         } catch (JSONException e) {
@@ -229,6 +254,7 @@ public class Reserva implements Parcelable {
 
     }
 
+    @Ignore
     public Reserva(int idReserva, int idMenu, int validez, String fechaReserva, String nombre, String apellido, String descripcion, String tipoEntrega) {
         this.idReserva = idReserva;
         this.idMenu = idMenu;
@@ -265,11 +291,13 @@ public class Reserva implements Parcelable {
     }
 
     @Override
+    @Ignore
     public int describeContents() {
         return 0;
     }
 
     @Override
+    @Ignore
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(idReserva);
         dest.writeInt(idUsuario);

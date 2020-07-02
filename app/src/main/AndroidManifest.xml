@@ -15,7 +15,6 @@
         <activity android:name=".Dialogos.DialogCancelar"></activity>
         <activity android:name=".Activity.InfoReservaActivity" />
         <activity android:name=".Fragment.MisReservasFragment" />
-        <activity android:name=".Activity.ReservaActivity" />
         <activity android:name=".Activity.NuevoAlumnoActivity" />
         <activity android:name=".Fragment.GestionReservasFragment" />
         <activity android:name=".Fragment.InicioFragment" />

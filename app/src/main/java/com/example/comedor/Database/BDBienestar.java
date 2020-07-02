@@ -3,6 +3,7 @@ package com.example.comedor.Database;
 import android.content.Context;
 
 import com.example.comedor.Modelo.Alumno;
+import com.example.comedor.Modelo.Reserva;
 import com.example.comedor.Modelo.Rol;
 import com.example.comedor.Modelo.Usuario;
 
@@ -17,7 +18,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
-@Database(entities = {Usuario.class, Alumno.class, Rol.class}, version = 1, exportSchema = false)
+@Database(entities = {Usuario.class, Alumno.class, Rol.class, Reserva.class}, version = 1, exportSchema = false)
 abstract class BDBienestar extends RoomDatabase {
 
     public abstract UsuarioDAO getUserDao();
@@ -25,6 +26,8 @@ abstract class BDBienestar extends RoomDatabase {
     public abstract AlumnoDAO getAlumnoDao();
 
     public abstract RolDAO getRolDAO();
+
+    public abstract ReservaDAO getReservaDAO();
 
     private static volatile BDBienestar INSTANCE;
     private static String DATABASE_NAME = "bienestar";

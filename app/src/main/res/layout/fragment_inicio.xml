@@ -15,6 +15,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <include layout="@layout/item_menu_today" />
 
             <androidx.recyclerview.widget.RecyclerView

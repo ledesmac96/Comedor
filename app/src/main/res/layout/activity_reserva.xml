@@ -28,11 +28,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:elevation="2sp"
             app:cardCornerRadius="10dp"
             android:translationY="-60dp"
-            android:outlineAmbientShadowColor="@color/colorGrey2"
-            android:outlineSpotShadowColor="@color/colorGrey2"
             card_view:backgroundTint="@color/colorWhite">
 
             <RelativeLayout
