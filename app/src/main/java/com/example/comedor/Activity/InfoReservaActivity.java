@@ -1,5 +1,7 @@
 package com.example.comedor.Activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,30 +13,34 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
 import com.example.comedor.Database.ReservaViewModel;
 import com.example.comedor.Dialogos.DialogoGeneral;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Modelo.Menu;
 import com.example.comedor.Modelo.Reserva;
 import com.example.comedor.R;
-import com.example.comedor.Utils.FileStorageManager;
 import com.example.comedor.Utils.PreferenciasManager;
 import com.example.comedor.Utils.Utils;
 import com.example.comedor.Utils.VolleySingleton;
 import com.example.comedor.Utils.YesNoDialogListener;
-import com.github.mikephil.charting.formatter.IFillFormatter;
-
-import net.glxn.qrgen.QRCode;
-import net.glxn.qrgen.image.ImageType;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class InfoReservaActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView imgIcono;
+    ImageView imgIcono, imgQR;
     Button btnCancelar;
     TextView txtIdRes, txtPlato, txtFechaRes, txtEstado;
     Reserva mReserva;
@@ -99,7 +105,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                 comida = Utils.getComidas(mMenu.getDescripcion());
                 txtFechaRes.setText(Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaReserva())));
                 estado = 3;//Ya reservada
-               // generateQR(mReserva);
+                generateQR(mReserva);
             }
         }
         txtPlato.setText(String.format("Almuerzo: %s\nCena: %s\nPostre: %s", comida[0], comida[1], comida[2]));
@@ -109,12 +115,13 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     private void loadListener() {
         imgIcono.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
+        latQR.setOnClickListener(this);
     }
 
     private void loadViews() {
         btnCancelar = findViewById(R.id.btnReservar);
         imgIcono = findViewById(R.id.imgFlecha);
-
+        imgQR = findViewById(R.id.imgQR);
         txtIdRes = findViewById(R.id.txtIdReserva);
         txtPlato = findViewById(R.id.txtPlato);
         txtFechaRes = findViewById(R.id.txtFechaRes);
@@ -127,6 +134,9 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.latQR:
+                scanQR();
+                break;
             case R.id.imgFlecha:
                 onBackPressed();
                 break;
@@ -245,7 +255,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     latFecha.setVisibility(View.VISIBLE);
                     latQR.setVisibility(View.INVISIBLE);
 
-                } else if (estado == 1){
+                } else if (estado == 1) {
 
                     Reserva reserva = Reserva.mapper(jsonObject.getJSONObject("dato"), Reserva.COMPLETE);
 
@@ -258,7 +268,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     txtFechaRes.setText(Utils.getFechaName(Utils.getFechaDate(reserva.getFechaReserva())));
                     txtIdRes.setText(String.format("RESERVA #%s", reserva.getIdReserva()));
                     latQR.setVisibility(View.VISIBLE);
-                    //generateQR(reserva);
+                    generateQR(reserva);
                 }
             }
         } catch (JSONException e) {
@@ -267,12 +277,58 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    public void scanQR() {
+        IntentIntegrator intentIntegrator = new IntentIntegrator(InfoReservaActivity.this);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setPrompt("Scan");
+        intentIntegrator.setCameraId(0);
+        intentIntegrator.setBeepEnabled(false);
+        intentIntegrator.setBarcodeImageEnabled(false);
+        intentIntegrator.initiateScan();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult intentIntegrator = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (intentIntegrator != null) {
+            if (intentIntegrator.getContents() == null) {
+                Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(), "Cancelaste", R.drawable.ic_error);
+
+            } else {
+                Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                        intentIntegrator.getContents(), R.drawable.ic_exito);
+            }
+        }else {
+
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     private void generateQR(Reserva reserva) {
-        FileStorageManager.saveQR(
-        QRCode.from(String.format("BIENESTAR ESTUDIANTIL #%s",
-                reserva.getIdReserva()))
-                .withSize(250,250).stream(),
-                getApplicationContext(), "RESERVAS", "R_"+reserva.getIdReserva());
+        MultiFormatWriter formatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix matrix = formatWriter.encode(String.format("BIENESTAR ESTUDIANTIL #%s",
+                    reserva.getIdReserva()), BarcodeFormat.QR_CODE, 500, 500);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+
+            Bitmap bitmap = barcodeEncoder.createBitmap(matrix);
+            if (bitmap != null) {
+                Glide.with(imgQR.getContext()).load(bitmap).into(imgQR);
+            }
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        /*FileStorageManager.saveQR(
+                QRCode.from(String.format("BIENESTAR ESTUDIANTIL #%s",
+                        reserva.getIdReserva()))
+                        .withSize(250, 250).stream(),
+                getApplicationContext(), "RESERVAS", "R_" + reserva.getIdReserva());
+        Bitmap bitmap = FileStorageManager.getBitmap(getApplicationContext(), "RESERVAS", "R_" + reserva.getIdReserva(), false);
+        if (bitmap != null) {
+
+        }*/
+
     }
 
 }
