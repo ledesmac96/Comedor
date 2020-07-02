@@ -1,6 +1,7 @@
 package com.example.comedor.Fragment;
 
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     ProgressBar mProgressBar;
     CardView cardInicio;
     DialogoProcesamiento dialog;
+    Menu mMenu;
 
     public InicioFragment() {
         // Metodo necesario
@@ -142,6 +144,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
     private void loadMenu(Menu menu) {
         if (menu != null){
+            mMenu = menu;
             cardInicio.setVisibility(View.VISIBLE);
             TextView txtFecha = view.findViewById(R.id.txtFecha);
             TextView txtPlato = view.findViewById(R.id.txtPlato);
@@ -161,8 +164,14 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.card_one:
-                startActivity(new Intent(getContext(), InfoReservaActivity.class));
+                openInfo();
                 break;
         }
+    }
+
+    private void openInfo() {
+        Intent intent = new Intent(getContext(), InfoReservaActivity.class);
+        intent.putExtra(Utils.DATA_RESERVA, mMenu);
+        startActivity(intent);
     }
 }

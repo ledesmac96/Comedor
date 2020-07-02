@@ -214,6 +214,16 @@ public class Reserva implements Parcelable {
         Reserva reserva = new Reserva();
         try {
             switch (tipo) {
+                case COMPLETE:
+                    idReserva = Integer.parseInt(object.getString("idreserva"));
+                    idUsuario = Integer.parseInt(object.getString("idusuario"));
+                    idMenu = Integer.parseInt(object.getString("idmenu"));
+                    estado = Integer.parseInt(object.getString("estado"));
+                    fechaReserva = object.getString("fechareserva");
+                    fechaModificacion = object.getString("fechamodificacion");
+                    validez = Integer.parseInt(object.getString("validez"));
+                    reserva = new Reserva(idReserva,idUsuario, 0, idMenu, estado, fechaReserva, fechaModificacion, validez, "");
+                    break;
                 case MEDIUM:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
                     idUsuario = Integer.parseInt(object.getString("idusuario"));

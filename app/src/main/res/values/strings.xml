@@ -50,5 +50,6 @@
     <string name="menuError">¡Error al crear el menú!</string>
     <string name="noReservas">¡No existen reservas el dia de hoy!</string>
     <string name="noReservasUser">¡No posee reservas!</string>
+    <string name="cancelarReserva">¿Está seguro que desea cancelar la reserva? Una vez cancelada no puede ser reservada nuevamente</string>
 
 </resources>

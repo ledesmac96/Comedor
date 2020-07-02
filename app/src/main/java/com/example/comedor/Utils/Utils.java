@@ -161,25 +161,11 @@ public class Utils {
     public static final String URL_MENU_NUEVO = "http://" + IP + "/bienestar/comedor/menu/insertarMenu.php";
 
     public static final String URL_RESERVA_HOY = "http://" + IP + "/bienestar/comedor/reserva/getReservaByDay.php";
+    public static final String URL_RESERVA_INSERTAR = "http://" + IP + "/bienestar/comedor/reserva/insertarReserva.php";
+    public static final String URL_RESERVA_CANCELAR = "http://" + IP + "/bienestar/comedor/reserva/cancelarReserva.php";
     public static final String URL_RESERVA_HISTORIAL = "http://" + IP + "/bienestar/comedor/reserva/getReservas.php";
     public static final String URL_RESERVA_USUARIO = "http://" + IP + "/bienestar/comedor/reserva/getReservaByUser.php";
 
-
-    //ROLES
-    public static final String URL_ROLES_LISTA = "http://" + IP + "/bienestar/general/getRoles.php";
-    public static final String URL_ROLES_INSERTAR = "http://" + IP + "/bienestar/general/insertarRol.php";
-    public static final String URL_ROLES_USER_LISTA = "http://" + IP + "/bienestar/general/getRolesByUsuario.php";
-
-    //GENERALES
-    public static final String URL_CATEGORIAS = "http://" + IP + "/bienestar/general/getArchivos.php";
-    public static final String URL_ARCHIVOS = "http://" + IP + "/bienestar/archivos/";
-
-
-    public static final long SECONS_TIMER = 15000;
-
-    //CARPETAS
-    public static final String FOLDER = "BIENESTAR_ESTUDIANTIL/";
-    public static final String FOLDER_CREDENCIALES = FOLDER + "CREDENCIALES/";
 
     public static String[] facultad = {"FAyA", "FCEyT", "FCF", "FCM", "FHCSyS"};
     public static String[] faya = {"Ingeniería Agronómica", "Ingeniería en Alimentos", "Licenciatura en Biotecnología",
@@ -215,16 +201,6 @@ public class Utils {
 
     public static String dataUser = "?idU=%s&nom=%s&ape=%s&car=%s&fac=%s&anio=%s&leg=%s";
 
-    public static String dataProfesor = "?idU=%s&nom=%s&ape=%s&fechan=%s&pais=%s&prov=%s&local=%s" +
-            "&dom=%s&sex=%s&tipo=%s&mail=%s&tel=%s" +
-            "&prof=%s&fechain=%s&barr=%s&fecham=%s";
-
-    public static String dataEgresado = "?idU=%s&nom=%s&ape=%s&fechan=%s&pais=%s&prov=%s&local=%s" +
-            "&dom=%s&sex=%s&tipo=%s&mail=%s&tel=%s" +
-            "&prof=%s&fechaeg=%s&barr=%s&fecham=%s";
-
-    public static String dataPartiNoDoc = "?idU=%s&nom=%s&ape=%s&fechan=%s&pais=%s&prov=%s&local=%s" +
-            "&dom=%s&sex=%s&tipo=%s&mail=%s&tel=%s&barr=%s&fecham=%s";
 
 
     public static void changeColorDrawable(ImageView view, Context context, int color) {
@@ -306,45 +282,6 @@ public class Utils {
         return df.format(value);
     }
 
-    public static String obtainEstado(String imc) {
-        double auxImc = Double.parseDouble(imc);
-//        String aux = getTwoDecimals(iMC);
-//        double auxImc = Double.parseDouble(aux);
-        String estado = " ";
-        if (auxImc <= 15) {
-            estado = "Delgadez muy severa";
-        } else if (auxImc > 15 && auxImc <= 15.9) {
-            estado = "Delgadez severa";
-        } else if (auxImc >= 16 && auxImc <= 18.4) {
-            estado = "Delgadez";
-        } else if (auxImc >= 18.5 && auxImc <= 24.9) {
-            estado = "Peso saludable";
-        } else if (auxImc >= 25 && auxImc <= 29.9) {
-            estado = "Sobrepeso";
-        } else if (auxImc >= 30 && auxImc <= 34.9) {
-            estado = "Obesidad moderada";
-        } else if (auxImc >= 35 && auxImc <= 39.9) {
-            estado = "Obesidad severa";
-        } else if (auxImc >= 40) {
-            estado = "Obesidad mórbida";
-        }
-
-        return estado;
-    }
-
-    public static String obtainIMC(String peso, String altura) {
-        String imc = " ", aux = " ";
-        double auximc = 0;
-        if (!peso.equals(" ") && !altura.equals(" ")) {
-            double pso = Double.parseDouble(peso);
-            double alt = Double.parseDouble(altura);
-            auximc = pso / (alt * alt);
-            imc = Double.toString(auximc);
-            double iMC = Double.parseDouble(imc);
-            aux = getTwoDecimals(iMC);
-        }
-        return aux;
-    }
 
     public static boolean isOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -379,32 +316,6 @@ public class Utils {
 
     }
 
-    public static String crypt(String text) {
-
-        MessageDigest crypt = null;
-        try {
-            crypt = MessageDigest.getInstance("SHA-1");
-            crypt.reset();
-            crypt.update(text.getBytes("UTF-8"));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return new BigInteger(1, crypt.digest()).toString(16);
-    }
-
-    public static String generateToken(String... data) {
-        String sha = "";
-        if (data.length == 3) {
-            sha = data[0] + data[1] + data[2];
-            return crypt(sha);
-        } else {
-            return sha;
-        }
-
-    }
 
     public static String getDirectoryPath() {
         String directory_path = Environment.getExternalStorageDirectory().getPath() + "/BIENESTAR_ESTUDIANTIL/";
@@ -414,14 +325,6 @@ public class Utils {
         return directory_path;
     }
 
-    /*public static Object[] exist(Archivo archivo) {
-        File file = new File(getDirectoryPath() + archivo.getNombreArchivo());
-        Object[] a = new Object[2];
-        a[0] = file.exists();
-        a[1] = file.exists() ? file.lastModified() : 0;
-
-        return a;
-    }*/
 
     public static Date getFechaDate(String fecha) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -799,8 +702,8 @@ public class Utils {
 
     public static String[] getComidas(String descripcion) {
         String[] food = new String[3];
-        int index = descripcion.indexOf("#");
-        int finIndex = descripcion.lastIndexOf("#");
+        int index = descripcion.indexOf("$");
+        int finIndex = descripcion.lastIndexOf("$");
         food[0] = descripcion.substring(0, index).trim();
         food[1] = descripcion.substring(index+1, finIndex).trim();
         food[2] = descripcion.substring(finIndex+1, descripcion.length() - 1).trim();

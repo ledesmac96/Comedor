@@ -49,8 +49,13 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     //Código de Barras Scanner
     //implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+    //implementation files('libs/zxing.jar')
     //Generador
     //implementation 'com.github.kenglxn.QRGen:android:2.6.0'
+    //implementation files('libs/qrgen-1.2.jar')
+    implementation files('libs/core-3.0.0.jar')
+    implementation files('libs/javase-3.0.0.jar')
+    implementation files('libs/qrgen-1.4.jar')
     //Librería para Estadisticas
     implementation files('libs/MPAndroidChart-v3.0.2.jar')
 

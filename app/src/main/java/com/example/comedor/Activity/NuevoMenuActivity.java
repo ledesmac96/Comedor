@@ -118,7 +118,7 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
         String almuerzo = edtAlmuerzo.getText().toString();
         String cena = edtCena.getText().toString();
         String postre = edtPostre.getText().toString();
-        String descripcion = almuerzo + "#" + cena + "#" + postre;
+        String descripcion = almuerzo + "$" + cena + "$" + postre;
         String porcion = edtPorcion.getText().toString();
         Validador validador = new Validador(getApplicationContext());
         if (!validador.noVacio(descripcion) && validador.validarNumero(edtPorcion)) {
