@@ -51,5 +51,12 @@
     <string name="noReservas">¡No existen reservas el dia de hoy!</string>
     <string name="noReservasUser">¡No posee reservas!</string>
     <string name="cancelarReserva">¿Está seguro que desea cancelar la reserva? Una vez cancelada no puede ser reservada nuevamente</string>
+    <string name="reservaNoExiste">¡Reserva no existente!</string>
+    <string name="yaReservo">¡Ya se reservó en este menú!</string>
+    <string name="errorActualizar">¡Error al intentar confirmar!</string>
+    <string name="confirmado">¡CONFIRMADO!</string>
+    <string name="confirmadoReserva">La reserva fue confirmada exitosamente</string>
+    <string name="noConfirmado">¡Error!</string>
+    <string name="confirmadoReservaError">Hubo un error al intentar confirmar la reserva</string>
 
 </resources>

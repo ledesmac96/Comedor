@@ -14,6 +14,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.comedor.Database.UsuarioViewModel;
+import com.example.comedor.Dialogos.DialogoGeneral;
+import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Fragment.EstadisticasFragment;
 import com.example.comedor.Fragment.GestionMenuFragment;
 import com.example.comedor.Fragment.GestionReservasFragment;
@@ -25,11 +27,15 @@ import com.example.comedor.R;
 import com.example.comedor.Utils.PreferenciasManager;
 import com.example.comedor.Utils.Utils;
 import com.example.comedor.Utils.VolleySingleton;
+import com.example.comedor.Utils.YesNoDialogListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -50,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     TextView txtNombre;
     UsuarioViewModel mUsuarioViewModel;
     PreferenciasManager mPreferenciasManager;
+    DialogoProcesamiento dialog;
+    boolean reservar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +82,123 @@ public class MainActivity extends AppCompatActivity {
 
             checkInfo();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult intentIntegrator = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (intentIntegrator != null) {
+            if (intentIntegrator.getContents() == null) {
+                Utils.showCustomToast(MainActivity.this, getApplicationContext(), "Cancelaste", R.drawable.ic_error);
+
+            } else {
+                String contenido = intentIntegrator.getContents();
+                if (contenido.contains("#")) {
+                    int index = contenido.indexOf("#");
+                    String id = contenido.substring(index + 1);
+                    idUser = Integer.parseInt(id);
+                    reservar = true;
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (reservar) {
+            changeEstado(String.valueOf(idUser));
+            reservar = false;
+        }
+
+    }
+
+    private void changeEstado(String idReserva) {
+        PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
+        String key = manager.getValueString(Utils.TOKEN);
+        int id = manager.getValueInt(Utils.MY_ID);
+        String URL = String.format("%s?idU=%s&key=%s&ir=%s&ie=%s&e=%s", Utils.URL_RESERVA_ACTUALIZAR, id, key, idReserva, id, 3);
+        StringRequest request = new StringRequest(Request.Method.PUT, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                procesarRespuestaActualizar(response);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                dialog.dismiss();
+
+
+            }
+        });
+        //Abro dialogo para congelar pantalla
+        dialog = new DialogoProcesamiento();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), "dialog_process");
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+
+    private void procesarRespuestaActualizar(String response) {
+        try {
+            dialog.dismiss();
+            JSONObject jsonObject = new JSONObject(response);
+            int estado = jsonObject.getInt("estado");
+            switch (estado) {
+                case -1:
+                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    break;
+                case 1:
+                    //Exito
+                    dialogo(true);
+                    break;
+                case 2:
+                    Utils.showToast(getApplicationContext(), getString(R.string.errorActualizar));
+                    dialogo(false);
+                    break;
+                case 4:
+                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+                    break;
+                case 3:
+                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    break;
+                case 100:
+                    //No autorizado
+                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+        }
+    }
+
+    private void dialogo(boolean estado) {
+        DialogoGeneral.Builder builder = new DialogoGeneral.Builder(getApplicationContext())
+                .setTitulo(getString(estado ? R.string.confirmado : R.string.noConfirmado))
+                .setDescripcion(getString(estado ? R.string.confirmadoReserva : R.string.confirmadoReservaError))
+                .setListener(new YesNoDialogListener() {
+                    @Override
+                    public void yes() {
+
+                    }
+
+                    @Override
+                    public void no() {
+
+                    }
+                })
+                .setIcono(estado ? R.drawable.ic_exito : R.drawable.ic_advertencia)
+                .setTipo(DialogoGeneral.TIPO_ACEPTAR);
+        DialogoGeneral dialogoGeneral = builder.build();
+        dialogoGeneral.show(getSupportFragmentManager(), "dialog_ad");
     }
 
     private void checkInfo() {
@@ -176,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
         switch (itemDrawer.getItemId()) {
             case R.id.item_inicio:
                 fragmentoGenerico = new InicioFragment();
+                ((InicioFragment) fragmentoGenerico).setActivity(MainActivity.this);
                 break;
             case R.id.item_reservas:
                 fragmentoGenerico = new GestionReservasFragment();

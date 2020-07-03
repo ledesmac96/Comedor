@@ -62,7 +62,7 @@ public class Utils {
     public static final String IS_LOCK = "lock_user";
     public static final String MY_ID = "my_id_user";
     public static final String TOKEN = "my_token";
-    public static final String IS_VISIT = "visit";
+    public static final String ID_MENU = "id_menu";
     //Constantes para activities
     public static final String USER_INFO = "user_info";
     //public static final String RESERVA = "user_info";
@@ -161,8 +161,10 @@ public class Utils {
     public static final String URL_MENU_NUEVO = "http://" + IP + "/bienestar/comedor/menu/insertarMenu.php";
 
     public static final String URL_RESERVA_HOY = "http://" + IP + "/bienestar/comedor/reserva/getReservaByDay.php";
+    public static final String URL_RESERVA_BY_ID = "http://" + IP + "/bienestar/comedor/reserva/getReserva.php";
     public static final String URL_RESERVA_INSERTAR = "http://" + IP + "/bienestar/comedor/reserva/insertarReserva.php";
-    public static final String URL_RESERVA_CANCELAR = "http://" + IP + "/bienestar/comedor/reserva/cancelarReserva.php";
+    public static final String URL_RESERVA_CANCELAR = "http://" + IP + "/bienestar/comedor/reserva/cancelarReservaById.php";
+    public static final String URL_RESERVA_ACTUALIZAR = "http://" + IP + "/bienestar/comedor/reserva/actualizarReserva.php";
     public static final String URL_RESERVA_HISTORIAL = "http://" + IP + "/bienestar/comedor/reserva/getReservas.php";
     public static final String URL_RESERVA_USUARIO = "http://" + IP + "/bienestar/comedor/reserva/getReservaByUser.php";
 

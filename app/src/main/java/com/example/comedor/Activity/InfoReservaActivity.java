@@ -1,6 +1,5 @@
 package com.example.comedor.Activity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -28,25 +27,22 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class InfoReservaActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imgIcono, imgQR;
     Button btnCancelar;
-    TextView txtIdRes, txtPlato, txtFechaRes, txtEstado;
+    TextView txtIdRes, txtPlato, txtFechaRes, txtEstado, txtFechaRetirada;
     Reserva mReserva;
     ReservaViewModel mReservaViewModel;
     Menu mMenu;
-    LinearLayout latEstado, latQR, latFecha;
+    LinearLayout latEstado, latQR, latFecha, latRetiro;
     int estado = 0;
     DialogoProcesamiento dialog;
 
@@ -71,6 +67,60 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
         setToolbar();
 
+        updateInfo();
+
+    }
+
+    private void updateInfo() {
+        if (estado != 2 && mReserva != null) {
+            PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
+            String key = manager.getValueString(Utils.TOKEN);
+            int id = manager.getValueInt(Utils.MY_ID);
+            String URL = "";
+            URL = String.format("%s?idU=%s&key=%s&ir=%s", Utils.URL_RESERVA_BY_ID, id, key, mReserva.getIdReserva());
+            StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    procesarRespuestaInfo(response);
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+
+                }
+            });
+            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+        }
+    }
+
+    private void procesarRespuestaInfo(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            int estado = jsonObject.getInt("estado");
+            switch (estado) {
+                case 1:
+                    //Exito
+                    Reserva reserva = Reserva.mapper(jsonObject.getJSONObject("mensaje"), Reserva.COMPLETE);
+                    if (reserva.getEstado() == 3) {
+                        latQR.setVisibility(View.GONE);
+                        latRetiro.setVisibility(View.VISIBLE);
+                        txtFechaRetirada.setText(Utils.getFechaName(Utils.getFechaDateWithHour(reserva.getFechaModificacion())));
+                        txtEstado.setText("RETIRADO");
+                        btnCancelar.setVisibility(View.GONE);
+                        mReservaViewModel.update(reserva);
+                    }
+                    break;
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+        }
     }
 
     private void setToolbar() {
@@ -100,12 +150,17 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                 estado = 1; //Nueva
             } else {
                 txtEstado.setText(mReserva.getEstado() == 1 ? "RESERVADO" : mReserva.getEstado() == 2 ? "CANCELADO" : "RETIRADO");
-                txtIdRes.setText(String.format("# %s", mReserva.getIdReserva()));
-                btnCancelar.setText("CANCELAR");
+                txtIdRes.setText(String.format("RESERVA # %s", mReserva.getIdReserva()));
+                if (mReserva.getEstado() == 3) {
+                    latRetiro.setVisibility(View.VISIBLE);
+                    txtFechaRetirada.setText(Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())));
+                }
+                btnCancelar.setText(mReserva.getEstado() == 1 ? "CANCELAR" : "RESERVAR");
                 comida = Utils.getComidas(mMenu.getDescripcion());
                 txtFechaRes.setText(Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaReserva())));
                 estado = 3;//Ya reservada
-                generateQR(mReserva);
+                if (mReserva.getEstado() != 2) generateQR(mReserva);
+                else latQR.setVisibility(View.GONE);
             }
         }
         txtPlato.setText(String.format("Almuerzo: %s\nCena: %s\nPostre: %s", comida[0], comida[1], comida[2]));
@@ -115,10 +170,11 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     private void loadListener() {
         imgIcono.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
-        latQR.setOnClickListener(this);
     }
 
     private void loadViews() {
+        latRetiro = findViewById(R.id.latFechaRetirada);
+        txtFechaRetirada = findViewById(R.id.txtFechaRetiro);
         btnCancelar = findViewById(R.id.btnReservar);
         imgIcono = findViewById(R.id.imgFlecha);
         imgQR = findViewById(R.id.imgQR);
@@ -134,9 +190,6 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.latQR:
-                scanQR();
-                break;
             case R.id.imgFlecha:
                 onBackPressed();
                 break;
@@ -182,13 +235,14 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         int id = manager.getValueInt(Utils.MY_ID);
         String URL = "";
         if (estado == 3) {
-            URL = String.format("%s?idU=%s&key=%s&idR=%s&val=%s", Utils.URL_RESERVA_CANCELAR, id, key, idReserva, 0);
+            int reserva = mReserva.getEstado() == 2 ? 1 : 2;
+            URL = String.format("%s?idU=%s&key=%s&idR=%s&val=%s", Utils.URL_RESERVA_CANCELAR, id, key, idReserva, reserva);
         } else if (estado == 1) {
             URL = String.format("%s?idU=%s&key=%s&i=%s&im=%s&t=%s", Utils.URL_RESERVA_INSERTAR, id, key, id,
                     mMenu.getIdMenu(), 4);
         }
 
-        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(estado == 1 ? Request.Method.POST : Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -228,10 +282,13 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     loadInfo(jsonObject);
                     break;
                 case 2:
-                    Utils.showToast(getApplicationContext(), getString(R.string.noData));
+                    Utils.showToast(getApplicationContext(), getString(R.string.reservaNoExiste));
                     break;
                 case 3:
                     Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    break;
+                case 5:
+                    Utils.showToast(getApplicationContext(), getString(R.string.yaReservo));
                     break;
                 case 100:
                     //No autorizado
@@ -249,13 +306,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         try {
             if (jsonObject.has("mensaje") && jsonObject.has("dato")) {
 
-                if (estado == 3) {
-                    latEstado.setVisibility(View.VISIBLE);
-                    txtEstado.setText("CANCELADO");
-                    latFecha.setVisibility(View.VISIBLE);
-                    latQR.setVisibility(View.INVISIBLE);
-
-                } else if (estado == 1) {
+                if (estado == 1) {
 
                     Reserva reserva = Reserva.mapper(jsonObject.getJSONObject("dato"), Reserva.COMPLETE);
 
@@ -270,6 +321,25 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     latQR.setVisibility(View.VISIBLE);
                     generateQR(reserva);
                 }
+            } else {
+                if (estado == 3 && mReserva.getEstado() == 1) {
+                    latEstado.setVisibility(View.VISIBLE);
+                    txtEstado.setText("CANCELADO");
+                    btnCancelar.setText("RESERVAR");
+                    latFecha.setVisibility(View.VISIBLE);
+                    latQR.setVisibility(View.GONE);
+                    mReserva.setEstado(2);
+                    mReservaViewModel.update(mReserva);
+                } else if (mReserva.getEstado() == 2) {
+                    latEstado.setVisibility(View.VISIBLE);
+                    txtEstado.setText("RESERVADO");
+                    btnCancelar.setText("CANCELAR");
+                    latFecha.setVisibility(View.VISIBLE);
+                    latQR.setVisibility(View.VISIBLE);
+                    generateQR(mReserva);
+                    mReserva.setEstado(1);
+                    mReservaViewModel.update(mReserva);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -277,38 +347,12 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    public void scanQR() {
-        IntentIntegrator intentIntegrator = new IntentIntegrator(InfoReservaActivity.this);
-        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        intentIntegrator.setPrompt("Scan");
-        intentIntegrator.setCameraId(0);
-        intentIntegrator.setBeepEnabled(false);
-        intentIntegrator.setBarcodeImageEnabled(false);
-        intentIntegrator.initiateScan();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        IntentResult intentIntegrator = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (intentIntegrator != null) {
-            if (intentIntegrator.getContents() == null) {
-                Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(), "Cancelaste", R.drawable.ic_error);
-
-            } else {
-                Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
-                        intentIntegrator.getContents(), R.drawable.ic_exito);
-            }
-        }else {
-
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
 
     private void generateQR(Reserva reserva) {
         MultiFormatWriter formatWriter = new MultiFormatWriter();
         try {
             BitMatrix matrix = formatWriter.encode(String.format("BIENESTAR ESTUDIANTIL #%s",
-                    reserva.getIdReserva()), BarcodeFormat.QR_CODE, 500, 500);
+                    reserva.getIdReserva()), BarcodeFormat.QR_CODE, 300, 300);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
 
             Bitmap bitmap = barcodeEncoder.createBitmap(matrix);
@@ -318,16 +362,6 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         } catch (WriterException e) {
             e.printStackTrace();
         }
-
-        /*FileStorageManager.saveQR(
-                QRCode.from(String.format("BIENESTAR ESTUDIANTIL #%s",
-                        reserva.getIdReserva()))
-                        .withSize(250, 250).stream(),
-                getApplicationContext(), "RESERVAS", "R_" + reserva.getIdReserva());
-        Bitmap bitmap = FileStorageManager.getBitmap(getApplicationContext(), "RESERVAS", "R_" + reserva.getIdReserva(), false);
-        if (bitmap != null) {
-
-        }*/
 
     }
 

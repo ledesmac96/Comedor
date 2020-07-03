@@ -6,14 +6,30 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "menu")
 public class Menu implements Parcelable {
 
+    @Ignore
     public static final int COMPLETE = 1;
+    @Ignore
     public static final int SIMPLE = 2;
+    @Ignore
+    public static final String TABLE = "menu";
+    @Ignore
+    public static final String KEY_ID = "idMenu";
 
-    private int idMenu, dia, mes, anio, validez, disponible, porcion;
+    @PrimaryKey
+    @NonNull
+    private int idMenu;
+    private int dia, mes, anio, validez, disponible, porcion;
     private String fechaRegistro, fechaModificacion, descripcion;
 
+    @Ignore
     public Menu(int idMenu, int dia, int mes, int anio) {
         this.idMenu = idMenu;
         this.dia = dia;
@@ -35,6 +51,7 @@ public class Menu implements Parcelable {
         this.porcion = porcion;
     }
 
+    @Ignore
     public Menu() {
         this.idMenu = -1;
         this.dia = -1;
@@ -47,6 +64,7 @@ public class Menu implements Parcelable {
         this.descripcion = "";
     }
 
+    @Ignore
     protected Menu(Parcel in) {
         idMenu = in.readInt();
         dia = in.readInt();
@@ -60,6 +78,7 @@ public class Menu implements Parcelable {
         porcion = in.readInt();
     }
 
+    @Ignore
     public static Menu mapper(JSONObject datos, int tipo) {
         Menu menu = new Menu();
         int idMenu, dia, mes, anio, validez, disponible, porcion;
@@ -96,6 +115,7 @@ public class Menu implements Parcelable {
         return menu;
     }
 
+    @Ignore
     public static final Creator<Menu> CREATOR = new Creator<Menu>() {
         @Override
         public Menu createFromParcel(Parcel in) {
@@ -189,11 +209,13 @@ public class Menu implements Parcelable {
     }
 
     @Override
+    @Ignore
     public int describeContents() {
         return 0;
     }
 
     @Override
+    @Ignore
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(idMenu);
         dest.writeInt(dia);
