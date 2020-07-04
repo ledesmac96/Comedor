@@ -23,6 +23,8 @@ public class Reserva implements Parcelable {
     @Ignore
     public static final int HISTORIAL_TOTAL = 4;
     @Ignore
+    public static final int ESTADISTICA = 5;
+    @Ignore
     public static final String TABLE = "reserva";
     @Ignore
     public static final String KEY_ID_ALU = "idReserva";
@@ -222,7 +224,7 @@ public class Reserva implements Parcelable {
                     fechaReserva = object.getString("fechareserva");
                     fechaModificacion = object.getString("fechamodificacion");
                     validez = Integer.parseInt(object.getString("validez"));
-                    reserva = new Reserva(idReserva,idUsuario, 0, idMenu, estado, fechaReserva, fechaModificacion, validez, "");
+                    reserva = new Reserva(idReserva, idUsuario, 0, idMenu, estado, fechaReserva, fechaModificacion, validez, "");
                     break;
                 case MEDIUM:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
@@ -254,6 +256,16 @@ public class Reserva implements Parcelable {
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
                     reserva = new Reserva(idReserva, idMenu, validez, "", nombre, apellido, estadoDescripcion, tipoEntrega);
+                    break;
+                case ESTADISTICA:
+                    idReserva = Integer.parseInt(object.getString("idreserva"));
+                    idUsuario = Integer.parseInt(object.getString("idusuario"));
+                    idMenu = Integer.parseInt(object.getString("idmenu"));
+                    fechaReserva = object.getString("fechareserva");
+                    fechaModificacion = object.getString("fechamodificacion");
+                    estado = Integer.parseInt(object.getString("estado"));
+                    reserva = new Reserva(idReserva, idUsuario, 0,
+                            idMenu, estado, fechaReserva, fechaModificacion, -1, "");
                     break;
             }
         } catch (JSONException e) {

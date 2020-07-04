@@ -21,6 +21,8 @@ public class Usuario implements Parcelable {
     @Ignore
     public static final int MEDIUM = 3;
     @Ignore
+    public static final int ESTADISTICA = 4;
+    @Ignore
     public static final String TABLE_USER = "usuario";
     @Ignore
     public static final String KEY_ID_USER = "idUsuario";
@@ -156,6 +158,13 @@ public class Usuario implements Parcelable {
                     apellido = object.getString("apellido");
                     validez = Integer.parseInt(object.getString("validez"));
                     usuario = new Usuario(idUsuario, nombre, apellido, validez);
+                    break;
+                case ESTADISTICA:
+                    idUsuario = Integer.parseInt(object.getString("idusuario"));
+                    fechaModificacion = object.getString("fechamodificacion");
+                    usuario = new Usuario();
+                    usuario.setIdUsuario(idUsuario);
+                    usuario.setFechaModificacion(fechaModificacion);
                     break;
                 case MEDIUM:
                     idUsuario = Integer.parseInt(object.getString("idusuario"));

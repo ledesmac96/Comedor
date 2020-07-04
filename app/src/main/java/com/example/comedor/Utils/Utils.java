@@ -34,18 +34,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -168,8 +171,10 @@ public class Utils {
     public static final String URL_RESERVA_HISTORIAL = "http://" + IP + "/bienestar/comedor/reserva/getReservas.php";
     public static final String URL_RESERVA_USUARIO = "http://" + IP + "/bienestar/comedor/reserva/getReservaByUser.php";
 
+    public static final String URL_DATOS = "http://" + IP + "/bienestar/comedor/getReportes.php";
 
-    public static String[] facultad = {"FAyA", "FCEyT", "FCF", "FCM", "FHCSyS"};
+
+    public static final String[] facultad = {"FAyA", "FCEyT", "FCF", "FCM", "FHCSyS"};
     public static String[] faya = {"Ingeniería Agronómica", "Ingeniería en Alimentos", "Licenciatura en Biotecnología",
             "Licenciatura en Química", "Profesorado en Química", "Tecnicatura en Apicultura"};
     public static String[] fceyt = {"Ingeniería Civil", "Ingeniería Electromecánica", "Ingeniería Electrónica",
@@ -203,6 +208,23 @@ public class Utils {
 
     public static String dataUser = "?idU=%s&nom=%s&ape=%s&car=%s&fac=%s&anio=%s&leg=%s";
 
+    public static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
+        Collections.sort(list, new Comparator<Object>() {
+            @SuppressWarnings("unchecked")
+            public int compare(Object o1, Object o2) {
+                return ((Comparable<V>) ((Map.Entry<K, V>) (o1)).getValue()).compareTo(((Map.Entry<K, V>) (o2)).getValue());
+            }
+        });
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Iterator<Map.Entry<K, V>> it = list.iterator(); it.hasNext(); ) {
+            Map.Entry<K, V> entry = (Map.Entry<K, V>) it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
+    }
 
 
     public static void changeColorDrawable(ImageView view, Context context, int color) {
@@ -707,8 +729,8 @@ public class Utils {
         int index = descripcion.indexOf("$");
         int finIndex = descripcion.lastIndexOf("$");
         food[0] = descripcion.substring(0, index).trim();
-        food[1] = descripcion.substring(index+1, finIndex).trim();
-        food[2] = descripcion.substring(finIndex+1, descripcion.length() - 1).trim();
+        food[1] = descripcion.substring(index + 1, finIndex).trim();
+        food[2] = descripcion.substring(finIndex + 1, descripcion.length() - 1).trim();
         return food;
     }
 }

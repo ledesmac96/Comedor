@@ -58,5 +58,6 @@
     <string name="confirmadoReserva">La reserva fue confirmada exitosamente</string>
     <string name="noConfirmado">¡Error!</string>
     <string name="confirmadoReservaError">Hubo un error al intentar confirmar la reserva</string>
+    <string name="sinDatos">¡No existen datos!</string>
 
 </resources>
