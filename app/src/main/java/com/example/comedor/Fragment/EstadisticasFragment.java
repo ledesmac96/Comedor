@@ -47,14 +47,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class EstadisticasFragment extends Fragment implements View.OnClickListener {
 
     View view;
-    LinearLayout latProcesamiento, latDatos, latAlumno, latReserva;
+    LinearLayout latProcesamiento, latDatos, latAlumno, latReserva, latVacio;
     BarChart barSieteDias, barMeses;
     PieChart mPieChart, pieDatos;
     Context mContext;
@@ -80,7 +79,10 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
     }
 
     private void loadData() {
+        latVacio.setVisibility(View.GONE);
         latDatos.setVisibility(View.GONE);
+        barMeses.setVisibility(View.GONE);
+        barSieteDias.setVisibility(View.GONE);
         loadInfo();
     }
 
@@ -103,6 +105,7 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 latProcesamiento.setVisibility(View.GONE);
+                latVacio.setVisibility(View.VISIBLE);
                 Utils.showToast(mContext, getString(R.string.servidorOff));
                 dialog.dismiss();
 
@@ -124,6 +127,7 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
                 case -1:
                     Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
                     latProcesamiento.setVisibility(View.GONE);
+                    latVacio.setVisibility(View.VISIBLE);
                     break;
                 case 1:
                     //Exito
@@ -132,21 +136,25 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
                 case 2:
                     Utils.showToast(getContext(), getString(R.string.sinDatos));
                     latProcesamiento.setVisibility(View.GONE);
+                    latVacio.setVisibility(View.VISIBLE);
                     break;
                 case 3:
                     Utils.showToast(getContext(), getString(R.string.tokenInvalido));
                     latProcesamiento.setVisibility(View.GONE);
+                    latVacio.setVisibility(View.VISIBLE);
                     break;
                 case 100:
                     //No autorizado
                     Utils.showToast(getContext(), getString(R.string.tokenInexistente));
                     latProcesamiento.setVisibility(View.GONE);
+                    latVacio.setVisibility(View.VISIBLE);
                     break;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
             latProcesamiento.setVisibility(View.GONE);
+            latVacio.setVisibility(View.VISIBLE);
             Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
         }
     }
@@ -197,6 +205,8 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
 
                 loadEstadisticas();
 
+            } else {
+                latVacio.setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -246,11 +256,11 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
         HashMap<String, Integer> reservasPorMenu = new HashMap<>();
         for (Reserva reserva : mReservas) {
             int indexHora = reserva.getFechaReserva().indexOf(":");
-            String hora = reserva.getFechaReserva().substring(indexHora-2, indexHora+3);
+            String hora = reserva.getFechaReserva().substring(indexHora - 2, indexHora + 3);
             horasReserva.add(hora);
 
             int indexHoraRet = reserva.getFechaModificacion().indexOf(":");
-            String horaRet = reserva.getFechaModificacion().substring(indexHoraRet-2, indexHoraRet+3);
+            String horaRet = reserva.getFechaModificacion().substring(indexHoraRet - 2, indexHoraRet + 3);
             horasRetirada.add(horaRet);
 
             if (!reservasPorMenu.containsKey(String.valueOf(reserva.getIdMenu()))) {
@@ -302,11 +312,19 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
 
         loadCapacidadInformacion(completo, incompleto);
 
-        loadReservasSieteDias(fechas, reservasMenu, menus);
+        if (!fechas[0].equals("") && reservasMenu.size() > 0)
+            loadReservasSieteDias(fechas, reservasMenu, menus);
 
-        loadReservasPorMeses(reservasMensuales);
+        boolean isData = false;
+        for (Integer integer : reservasMensuales) {
+            if (integer != 0)
+                isData = true;
+        }
+        if (isData)
+            loadReservasPorMeses(reservasMensuales);
 
-        loadHoraPromedio(horaReserva, horaRetirada);
+        if (horaReserva.size() > 0 && horaRetirada.size() > 0)
+            loadHoraPromedio(horaReserva, horaRetirada);
 
 
         txtCarreras.setText(carrerasInfo.toString());
@@ -325,35 +343,36 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
     private int[] loadHoraPromedio(ArrayList<String> horaReserva, ArrayList<String> horaRetirada) {
         int[] numeros = new int[2];
         ArrayList<Integer> horas = new ArrayList<>();
-        for (String s : horaReserva){
-            s = s.replace(":","");
+        for (String s : horaReserva) {
+            s = s.replace(":", "");
             try {
                 horas.add(Integer.parseInt(s));
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
 
             }
         }
         int total = 0;
-        for (Integer integer : horas){
-            total = total+integer;
+        for (Integer integer : horas) {
+            total = total + integer;
         }
         int prom = total / horas.size();
         numeros[0] = prom;
 
         horas.clear();
-        for (String s : horaRetirada){
-            s = s.replace(":","");
+        for (String s : horaRetirada) {
+            s = s.replace(":", "");
             try {
                 horas.add(Integer.parseInt(s));
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
 
             }
         }
         total = 0;
-        for (Integer integer : horas){
-            total = total+integer;
+        for (Integer integer : horas) {
+            total = total + integer;
         }
-        prom = total / horas.size();   numeros[1] = prom;
+        prom = total / horas.size();
+        numeros[1] = prom;
         return numeros;
     }
 
@@ -414,6 +433,8 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
             }
         });
 
+        barMeses.setVisibility(View.VISIBLE);
+
     }
 
     private void loadReservasSieteDias(String[] fechas,
@@ -426,6 +447,7 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
         BarData barData;
         XAxis xAxis;
         YAxis leftAxis, rightAxis;
+
 
         barSieteDias.getDescription().setEnabled(false);
         barSieteDias.getLegend().setEnabled(false);
@@ -478,6 +500,8 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
             }
         });
 
+        barSieteDias.setVisibility(View.VISIBLE);
+
     }
 
     private void loadCapacidadInformacion(int completo, int incompleto) {
@@ -505,6 +529,8 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
         pieDataDatos.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         pieDataDatos.setValueTextColor(Color.BLACK);
         pieDatos.setData(pieDataDatos);
+
+        pieDatos.setVisibility(View.VISIBLE);
 
     }
 
@@ -555,7 +581,7 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
     }
 
     private void loadView() {
-
+        latVacio = view.findViewById(R.id.latVacio);
         barMeses = view.findViewById(R.id.barMeses);
         txtPorciones = view.findViewById(R.id.txtCantidadPorciones);
         txtCantidadReservas = view.findViewById(R.id.txtCantidadReservas);

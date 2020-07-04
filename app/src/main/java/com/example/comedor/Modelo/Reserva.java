@@ -99,6 +99,12 @@ public class Reserva implements Parcelable {
         validez = in.readInt();
         nombre = in.readString();
         apellido = in.readString();
+        descripcion = in.readString();
+        tipoEntrega = in.readString();
+        dia = in.readInt();
+        mes = in.readInt();
+        anio = in.readInt();
+
     }
 
     public String getDescripcion() {
@@ -243,9 +249,11 @@ public class Reserva implements Parcelable {
                     mes = Integer.parseInt(object.getString("mes"));
                     anio = Integer.parseInt(object.getString("anio"));
                     fechaReserva = object.getString("fechareserva");
+                    fechaModificacion = object.getString("fechamodificacion");
                     estadoDescripcion = object.getString("descripcion");
                     tipoEntrega = object.getString("tiporeserva");
                     reserva = new Reserva(idReserva, idMenu, fechaReserva, estadoDescripcion, tipoEntrega, dia, mes, anio);
+                    reserva.setFechaModificacion(fechaModificacion);
                     break;
                 case HISTORIAL_TOTAL:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
@@ -331,5 +339,10 @@ public class Reserva implements Parcelable {
         dest.writeInt(validez);
         dest.writeString(nombre);
         dest.writeString(apellido);
+        dest.writeString(descripcion);
+        dest.writeString(tipoEntrega);
+        dest.writeInt(dia);
+        dest.writeInt(mes);
+        dest.writeInt(anio);
     }
 }

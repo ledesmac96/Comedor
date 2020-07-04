@@ -282,12 +282,6 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
         cardEstadisticas.setVisibility(View.VISIBLE);
     }
 
-
-    public boolean isInterval(int max, int min, float val) {
-        return val > min && val < max;
-    }
-
-
     private void loadViews() {
         barCantidad = findViewById(R.id.barCantidad);
         latVacio = findViewById(R.id.latVacio);

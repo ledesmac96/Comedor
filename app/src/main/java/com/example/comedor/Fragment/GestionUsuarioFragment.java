@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
@@ -48,6 +49,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     ArrayList<Usuario> mUsuarios;
     RecyclerView.LayoutManager mLayoutManager;
     DialogoProcesamiento dialog;
+    LinearLayout latVacio;
     RecyclerView recyclerUsuarios;
     UsuariosAdapter mUsuariosAdapter;
     FragmentManager mFragmentManager;
@@ -92,6 +94,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     }
 
     private void loadViews() {
+        latVacio = view.findViewById(R.id.latVacio);
         edtBuscar = view.findViewById(R.id.edtBuscar);
         recyclerUsuarios = view.findViewById(R.id.recycler);
         fabAdd = view.findViewById(R.id.fabAdd);
@@ -136,6 +139,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                latVacio.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 Utils.showToast(mContext, getString(R.string.servidorOff));
                 dialog.dismiss();
@@ -151,32 +155,37 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
 
     private void procesarRespuesta(String response) {
         try {
+            mProgressBar.setVisibility(View.GONE);
             dialog.dismiss();
             JSONObject jsonObject = new JSONObject(response);
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
+                    latVacio.setVisibility(View.VISIBLE);
                     Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
                     break;
                 case 1:
                     //Exito
-                    mProgressBar.setVisibility(View.GONE);
+
                     loadInfo(jsonObject);
                     break;
                 case 2:
-                    Utils.showToast(getContext(), getString(R.string.noData));
+                    latVacio.setVisibility(View.VISIBLE);
                     break;
                 case 3:
+                    latVacio.setVisibility(View.VISIBLE);
                     Utils.showToast(getContext(), getString(R.string.tokenInvalido));
                     break;
                 case 100:
                     //No autorizado
+                    latVacio.setVisibility(View.VISIBLE);
                     Utils.showToast(getContext(), getString(R.string.tokenInexistente));
                     break;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
+            latVacio.setVisibility(View.VISIBLE);
             Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
         }
     }
@@ -198,6 +207,8 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
                 }
                 mUsuariosAdapter.change(mUsuarios);
                 mUsuariosAdapter.notifyDataSetChanged();
+            }else{
+                latVacio.setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -206,6 +217,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     }
 
     private void loadData() {
+        latVacio.setVisibility(View.GONE);
         mUsuarios = new ArrayList<>();
         mProgressBar.setVisibility(View.VISIBLE);
         mUsuariosAdapter = new UsuariosAdapter(mUsuarios, getContext());
@@ -252,6 +264,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+
                 Utils.showToast(getContext(), getString(R.string.servidorOff));
                 dialog.dismiss();
 

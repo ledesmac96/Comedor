@@ -725,12 +725,14 @@ public class Utils {
     }
 
     public static String[] getComidas(String descripcion) {
-        String[] food = new String[3];
-        int index = descripcion.indexOf("$");
-        int finIndex = descripcion.lastIndexOf("$");
-        food[0] = descripcion.substring(0, index).trim();
-        food[1] = descripcion.substring(index + 1, finIndex).trim();
-        food[2] = descripcion.substring(finIndex + 1, descripcion.length() - 1).trim();
+        String[] food = new String[]{"NO INFO", "NO INFO", "NO INFO"};
+        if (descripcion != null && descripcion.contains("$")) {
+            int index = descripcion.indexOf("$");
+            int finIndex = descripcion.lastIndexOf("$");
+            food[0] = descripcion.substring(0, index).trim();
+            food[1] = descripcion.substring(index + 1, finIndex).trim();
+            food[2] = descripcion.substring(finIndex + 1, descripcion.length() - 1).trim();
+        }
         return food;
     }
 }

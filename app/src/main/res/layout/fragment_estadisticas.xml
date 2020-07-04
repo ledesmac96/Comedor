@@ -36,6 +36,30 @@
         </LinearLayout>
 
         <LinearLayout
+            android:gravity="center"
+            android:id="@+id/latVacio"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/ic_estadisticas" />
+            <TextView
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="No existen datos actualmente" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/latDatos"
             android:orientation="vertical"
             android:layout_width="match_parent"
