@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="¿Seguro que deseas cancelar la reserva?"
                 android:textSize="20sp"
+                android:layout_margin="10dp"
                 android:gravity="center"
                 android:fontFamily="@font/montserrat_black"/>
 

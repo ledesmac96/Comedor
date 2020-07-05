@@ -6,6 +6,7 @@
     android:padding="15dp"
     android:textColor="@color/blackTextColor"
     android:layout_gravity="center"
+    android:fontFamily="@font/montserrat_regular"
     android:gravity="left">
 
 </TextView>

@@ -36,7 +36,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="center"
                     android:textColor="@color/whiteTextColor"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:fontFamily="@font/montserrat_regular"/>
 
             </LinearLayout>

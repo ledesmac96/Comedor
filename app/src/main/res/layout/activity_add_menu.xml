@@ -128,7 +128,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="NOTA: en caso de no ofrecer cena y/o postre, dejar en blanco."
+            android:textColor="@color/blackTextColor"
+            android:text="@string/txtNotaMenu"
             android:textSize="16sp"
             android:fontFamily="@font/montserrat_regular"/>
 

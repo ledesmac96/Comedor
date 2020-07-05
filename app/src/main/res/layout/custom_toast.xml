@@ -39,7 +39,9 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@color/colorPrimary" />
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/blackTextColor" />
 
         </LinearLayout>
 

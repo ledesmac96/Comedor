@@ -31,7 +31,8 @@
                 android:textColor="@color/blackTextColor"
                 android:text="26/06/2020"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat_black"/>
 
         </LinearLayout>
 

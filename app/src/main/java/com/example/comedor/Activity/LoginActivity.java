@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,16 +31,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button mInicio;
-    ImageView btnBack;
-    FrameLayout layoutFondo;
     DialogoProcesamiento dialog;
     EditText edtUser, edtPass;
     PreferenciasManager mPreferenciasManager;
+    TextView txtWelcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,25 +53,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             setContentView(R.layout.activity_login);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-          /*  Glide.with(this).load(R.drawable.img_unse2)
-                    .into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                            layoutFondo.setBackground(resource);
-                        }
-                    });
-*/
             loadViews();
 
             loadListener();
 
             loadData();
 
+            changeTextWelcome();
+
         } else {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
 
+    }
+
+    public void changeTextWelcome() {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        if (timeOfDay >= 6 && timeOfDay <= 12) {
+            txtWelcome.setText("¡Buen día!");
+        } else if (timeOfDay >= 13 && timeOfDay <= 19) {
+            txtWelcome.setText("¡Buenas tardes!");
+        } else if (timeOfDay >= 20)
+            txtWelcome.setText("¡Buenas noches!");
     }
 
     private void loadData() {
@@ -84,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mInicio = findViewById(R.id.sesionOn);
         edtPass = findViewById(R.id.edtPass);
         edtUser = findViewById(R.id.edtUser);
-        layoutFondo = findViewById(R.id.backgroundlogin);
+        txtWelcome = findViewById(R.id.txtWelcome);
     }
 
 

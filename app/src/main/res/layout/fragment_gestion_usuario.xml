@@ -41,6 +41,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_margin="5dp"
+                        android:background="@null"
+                        android:fontFamily="@font/montserrat_regular"
                         android:textColor="@color/colorTextDefault"
                         android:layout_gravity="center"
                         android:drawableLeft="@drawable/ic_search"

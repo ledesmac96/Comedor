@@ -58,6 +58,7 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
     private void loadListener() {
         btnGuardar.setOnClickListener(this);
         edtFecha.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
     }
 
     private void loadData() {

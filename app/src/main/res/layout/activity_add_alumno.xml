@@ -29,7 +29,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Complete OBLIGATORIAMENTE todos los datos del alumno."
+            android:text="@string/txtAddAlumno"
+            android:textColor="@color/blackTextColor"
             android:textSize="16sp"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
@@ -142,7 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,9 +155,11 @@
                     <Spinner
                         android:id="@+id/spinner1"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:overlapAnchor="false"
-                        android:background="@drawable/border_spinner"
+                        android:layout_height="55dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:spinnerMode="dropdown"
                         android:fontFamily="@font/montserrat_regular"/>
 
@@ -166,10 +169,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Carrera: "
                         android:textSize="16sp"
@@ -178,9 +181,11 @@
                     <Spinner
                         android:id="@+id/spinner2"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:overlapAnchor="false"
-                        android:background="@drawable/border_spinner"
+                        android:layout_height="55dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:spinnerMode="dropdown"
                         android:fontFamily="@font/montserrat_regular"/>
 

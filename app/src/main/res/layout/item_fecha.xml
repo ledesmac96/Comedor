@@ -28,7 +28,8 @@
             android:text="01/07/2020"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_black"/>
 
     </LinearLayout>
 

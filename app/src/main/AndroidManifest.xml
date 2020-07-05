@@ -25,7 +25,8 @@
         <activity android:name=".Fragment.GestionUsuarioFragment" />
         <activity android:name=".Fragment.GestionMenuFragment" />
         <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.LoginActivity">
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.SlideWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

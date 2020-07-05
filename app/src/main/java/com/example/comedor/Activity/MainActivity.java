@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     Fragment mFragment;
     int itemSelecionado = -1, idUser = 0;
     ImageView imgBienestar;
-    TextView txtNombre;
+    TextView txtNombre, txtTitulo;
     UsuarioViewModel mUsuarioViewModel;
     PreferenciasManager mPreferenciasManager;
     DialogoProcesamiento dialog;
@@ -123,18 +123,15 @@ public class MainActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.PUT, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 procesarRespuestaActualizar(response);
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                        getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
-
 
             }
         });
@@ -152,31 +149,37 @@ public class MainActivity extends AppCompatActivity {
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                            getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
                     dialogo(true);
                     break;
                 case 2:
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorActualizar));
+                    Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                            getString(R.string.errorActualizar), R.drawable.ic_error);
                     dialogo(false);
                     break;
                 case 4:
                     //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
                     break;
                 case 3:
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
+
         }
     }
 
@@ -260,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         mToolbar = findViewById(R.id.toolbar);
+        txtTitulo = findViewById(R.id.txtTitulo);
         navigationView.removeHeaderView(navigationView.getHeaderView(0));
         headerView = navigationView.inflateHeaderView(R.layout.cabecera_drawer);
         imgBienestar = headerView.findViewById(R.id.logoBienestar);
@@ -351,9 +355,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.imgFlecha).setVisibility(View.GONE);
         final ActionBar ab = getSupportActionBar();
         if (ab != null) {
-            ab.setHomeAsUpIndicator(R.drawable.ic_menu_black);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
             ab.setDisplayHomeAsUpEnabled(true);
-            ab.setTitle("Bienestar Estudiantíl");
+            txtTitulo.setText("Comedor Universitario");
             mToolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         }
 

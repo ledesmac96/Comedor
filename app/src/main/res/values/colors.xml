@@ -59,4 +59,10 @@
     <color name="semi_white">#D1D1D1</color>
     <color name="colorOrange2">#DF291B</color>
 
+    <color name="bienestarVerde">#00923f</color>
+    <color name="bienestarNaranja">#e67817</color>
+    <color name="bienestarRojo">#da251c</color>
+    <color name="bienestarCeleste">#0093dd</color>
+    <color name="bienestarAmarillo">#fff500</color>
+
 </resources>

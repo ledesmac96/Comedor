@@ -6,14 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.EstadisticasFragment">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
 
         <androidx.cardview.widget.CardView
             style="@style/CardView"
@@ -31,7 +28,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp">
                 </com.github.mikephil.charting.charts.BarChart>
-
 
             </LinearLayout>
 
@@ -56,11 +52,9 @@
 
                 </com.github.mikephil.charting.charts.PieChart>
 
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
 
     </LinearLayout>
 
