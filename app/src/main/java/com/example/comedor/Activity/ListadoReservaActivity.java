@@ -123,7 +123,8 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
                 error.printStackTrace();
                 latVacio.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                Utils.showCustomToast(ListadoReservaActivity.this, getApplicationContext(),
+                        getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
 
             }
@@ -144,7 +145,8 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
             switch (estado) {
                 case -1:
                     latVacio.setVisibility(View.VISIBLE);
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    Utils.showCustomToast(ListadoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
@@ -155,19 +157,22 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
                     break;
                 case 3:
                     latVacio.setVisibility(View.VISIBLE);
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    Utils.showCustomToast(ListadoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     latVacio.setVisibility(View.VISIBLE);
                     //No autorizado
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    Utils.showCustomToast(ListadoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
             }
 
         } catch (JSONException e) {
             latVacio.setVisibility(View.VISIBLE);
             e.printStackTrace();
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(ListadoReservaActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
     }
 

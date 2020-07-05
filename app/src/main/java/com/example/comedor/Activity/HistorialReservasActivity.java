@@ -116,7 +116,6 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
                     Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
                             getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
@@ -126,18 +125,15 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
                     loadInfo(jsonObject);
                     break;
                 case 2:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.noData));
                     Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
                             getString(R.string.noData), R.drawable.ic_error);
                     break;
                 case 3:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
                     Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
                             getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
                     Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
                             getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
@@ -145,7 +141,6 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
 
         } catch (JSONException e) {
             e.printStackTrace();
-            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
             Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
                     getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
@@ -210,10 +205,8 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
                     i.putExtra(Utils.DATA_RESERVA, ((ItemDato) mListOficial.get(position)).getMenu());
                     startActivity(i);
                 }
-
             }
         });
-
     }
 
     private void loadViews() {
@@ -252,7 +245,6 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
                     }
                 }
             }
-
 
         }
         return groupedHashMap;

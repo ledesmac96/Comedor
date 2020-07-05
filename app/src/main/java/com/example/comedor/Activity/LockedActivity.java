@@ -49,7 +49,6 @@ public class LockedActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
                 Utils.showCustomToast(LockedActivity.this, getApplicationContext(),
                         getString(R.string.servidorOff), R.drawable.ic_error);
 

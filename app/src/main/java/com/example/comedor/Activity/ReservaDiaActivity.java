@@ -131,7 +131,6 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
                     Utils.showCustomToast(ReservaDiaActivity.this, getApplicationContext(),
                             getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
@@ -141,23 +140,19 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
                     loadInfo(jsonObject);
                     break;
                 case 2:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.noReservas));
                     Utils.showCustomToast(ReservaDiaActivity.this, getApplicationContext(),
                             getString(R.string.noReservas), R.drawable.ic_error);
                     break;
                 case 4:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
                     Utils.showCustomToast(ReservaDiaActivity.this, getApplicationContext(),
                             getString(R.string.camposInvalidos), R.drawable.ic_error);
                     break;
                 case 3:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
                     Utils.showCustomToast(ReservaDiaActivity.this, getApplicationContext(),
                             getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
                     Utils.showCustomToast(ReservaDiaActivity.this, getApplicationContext(),
                             getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
@@ -165,7 +160,6 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
 
         } catch (JSONException e) {
             e.printStackTrace();
-            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
             Utils.showCustomToast(ReservaDiaActivity.this, getApplicationContext(),
                     getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }

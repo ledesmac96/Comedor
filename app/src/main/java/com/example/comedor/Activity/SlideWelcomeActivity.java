@@ -1,12 +1,10 @@
 package com.example.comedor.Activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -17,16 +15,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.comedor.R;
 import com.example.comedor.Utils.PreferenciasManager;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.PagerAdapter;
@@ -43,6 +36,7 @@ public class SlideWelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnNext;
     private PreferenciasManager prefManager;
+    private TextView txtTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +56,7 @@ public class SlideWelcomeActivity extends AppCompatActivity {
             viewPager = findViewById(R.id.view_pager);
             dotsLayout = findViewById(R.id.layoutBars);
             btnNext = findViewById(R.id.next);
+            txtTitle = findViewById(R.id.txtTitulo);
 
             layouts = new int[]{
                     R.layout.intro_screen1,
@@ -177,14 +172,23 @@ public class SlideWelcomeActivity extends AppCompatActivity {
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
 
-//            FontChangeUtil fontChanger = new FontChangeUtil(container.getContext().getAssets(), "product_sans_regular.ttf");
-//            fontChanger.replaceFonts((ViewGroup) view);
-
             //onPageSelected(position);
 
             switch (position) {
+                case 0:
+                    txtTitle.setText("¡BIENVENIDO/A!");
+                    break;
+                case 1:
+                    txtTitle.setText("RESERVAS");
+                    break;
+                case 2:
+                    txtTitle.setText("RETIRÁ EL MENÚ");
+                    break;
                 case 3:
-                    loadPermiso();
+                    txtTitle.setText("SIN REGISTRARSE");
+                    break;
+                case 4:
+                    txtTitle.setText("VAMOS A CUIDARNOS");
                     break;
             }
 
@@ -252,7 +256,7 @@ public class SlideWelcomeActivity extends AppCompatActivity {
         }
     }
 
-    private void loadPermiso() {
+    /*private void loadPermiso() {
         String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         if (!hasPermissions(getApplicationContext(), PERMISSIONS)) {
             ActivityCompat.requestPermissions(SlideWelcomeActivity.this, PERMISSIONS, PERMISSION_ALL);
@@ -268,6 +272,6 @@ public class SlideWelcomeActivity extends AppCompatActivity {
                 //No me interesa si acepto o no, total luego lo obligare.
             }
         }
-    }
+    }*/
 
 }

@@ -10,16 +10,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="vertical"
-        android:background="@drawable/back_slides">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="¡BIENVENIDO/A!"
+            android:text="RETIRÁ EL MENÚ"
             android:gravity="center"
             android:textSize="30sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:textColor="@color/whiteTextColor"
             android:fontFamily="@font/montserrat_black"/>
 
@@ -27,7 +26,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="540dp"
         android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="center"
@@ -37,7 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BIENESTAR ESTUDIANTIL"
+            android:text="CON SOLO ESCANEAR EL CÓDIGO QR"
             android:textColor="@android:color/black"
             android:textSize="24dp"
             android:gravity="center"
@@ -48,17 +47,14 @@
             android:fontFamily="@font/montserrat_black"/>
 
         <ImageView
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_logo_bienestar_01"
-            android:id="@+id/imageView" />
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_qr"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Esta es la nueva aplicación de Bienestar Estudiantil para las reservas del comedor universitario."
+            android:text="Cuando vayas a retirar el menú del día, procurá tener a mano el código QR que se asignó luego de la reserva."
             android:textColor="@android:color/black"
             android:textSize="20dp"
             android:gravity="center"
@@ -69,9 +65,11 @@
             android:fontFamily="@font/montserrat_regular"/>
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_menu_2"/>
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_logo_bienestar_01" />
 
     </LinearLayout>
 

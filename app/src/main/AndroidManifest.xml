@@ -39,6 +39,7 @@
         <activity android:name=".Activity.ReservaDiaActivity" />
         <activity android:name=".Activity.HistorialReservasActivity" />
         <activity android:name=".Activity.ListadoReservaActivity" />
+        <activity android:name=".Activity.AboutActivity" />
     </application>
 
 </manifest>

@@ -312,7 +312,8 @@ public class PerfilActivity extends AppCompatActivity
                 error.printStackTrace();
                 latVacio.setVisibility(VISIBLE);
                 latEstadisticas.setVisibility(View.GONE);
-                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
+                        getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
 
             }
@@ -333,7 +334,8 @@ public class PerfilActivity extends AppCompatActivity
                 case -1:
                     latVacio.setVisibility(VISIBLE);
                     latEstadisticas.setVisibility(View.GONE);
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
+                            getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     loadInfoReserva(jsonObject);
@@ -345,13 +347,15 @@ public class PerfilActivity extends AppCompatActivity
                 case 3:
                     latVacio.setVisibility(VISIBLE);
                     latEstadisticas.setVisibility(View.GONE);
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     latVacio.setVisibility(VISIBLE);
                     latEstadisticas.setVisibility(View.GONE);
                     //No autorizado
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
             }
 
@@ -359,7 +363,8 @@ public class PerfilActivity extends AppCompatActivity
             e.printStackTrace();
             latVacio.setVisibility(VISIBLE);
             latEstadisticas.setVisibility(View.GONE);
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
     }
 
@@ -378,9 +383,7 @@ public class PerfilActivity extends AppCompatActivity
                     Reserva reserva = Reserva.mapper(o, Reserva.HISTORIAL);
 
                     mReservas.add(reserva);
-
                 }
-
 
                 if (mReservas.size() > 0) {
                     mReservasAdapter = new ReservasAdapter(mReservas, getApplicationContext(), ReservasAdapter.USER);
@@ -641,7 +644,6 @@ public class PerfilActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
                 Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                         getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
@@ -660,7 +662,6 @@ public class PerfilActivity extends AppCompatActivity
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
@@ -671,29 +672,24 @@ public class PerfilActivity extends AppCompatActivity
                         texto = getString(R.string.usuarioDeshabilitado);
                     else
                         texto = getString(R.string.usuarioHabilitado);
-                    //Utils.showToast(getApplicationContext(), texto);
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             texto, R.drawable.ic_exito);
                     changeButton();
                     break;
                 case 2:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioNoExiste));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.usuarioNoExiste), R.drawable.ic_error);
                     break;
                 case 4:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.camposInvalidos), R.drawable.ic_error);
                     break;
                 case 3:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
@@ -701,7 +697,6 @@ public class PerfilActivity extends AppCompatActivity
 
         } catch (JSONException e) {
             e.printStackTrace();
-            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
             Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                     getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
@@ -726,7 +721,6 @@ public class PerfilActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         if (isEditMode) {
-            //Utils.showToast(getApplicationContext(), getString(R.string.cambioPrimeroGuardar));
             Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                     getString(R.string.cambioPrimeroGuardar), R.drawable.ic_advertencia);
         } else
@@ -848,7 +842,6 @@ public class PerfilActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
                 Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                         getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
@@ -870,13 +863,11 @@ public class PerfilActivity extends AppCompatActivity
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
-                    //Utils.showToast(getApplicationContext(), getString(R.string.perfilActualizado));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.perfilActualizado), R.drawable.ic_exito);
                     isEditMode = false;
@@ -885,29 +876,24 @@ public class PerfilActivity extends AppCompatActivity
                         updateInBD(mUsuario, tipoUsuario);
                     break;
                 case 2:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.actualizadoError));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.actualizadoError), R.drawable.ic_error);
                     break;
                 case 4:
                     //Ya existe
-                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.camposInvalidos), R.drawable.ic_error);
                     break;
                 case 5:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioNoExiste));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.usuarioNoExiste), R.drawable.ic_error);
                     break;
                 case 3:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
                     Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                             getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
@@ -915,7 +901,6 @@ public class PerfilActivity extends AppCompatActivity
 
         } catch (JSONException e) {
             e.printStackTrace();
-            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
             Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                     getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
@@ -943,7 +928,6 @@ public class PerfilActivity extends AppCompatActivity
 
     @Override
     public void afterTextChanged(Editable s) {
-
 
     }
 

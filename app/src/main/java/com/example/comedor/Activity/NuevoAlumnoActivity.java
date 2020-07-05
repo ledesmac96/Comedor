@@ -216,7 +216,6 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                //Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
                 Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                         getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
@@ -238,40 +237,33 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
                     Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                             getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
-                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioCreado));
                     Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                             getString(R.string.usuarioCreado), R.drawable.ic_exito);
                     finish();
                     break;
                 case 2:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioErrorCrear));
                     Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                             getString(R.string.usuarioErrorCrear), R.drawable.ic_error);
                     break;
                 case 4:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
                     Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                             getString(R.string.camposInvalidos), R.drawable.ic_error);
                     break;
                 case 5:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.usuarioYaExiste));
                     Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                             getString(R.string.usuarioYaExiste), R.drawable.ic_error);
                     break;
                 case 3:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
                     Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                             getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
                     Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                             getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
@@ -279,7 +271,6 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
 
         } catch (JSONException e) {
             e.printStackTrace();
-            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
             Utils.showCustomToast(NuevoAlumnoActivity.this, getApplicationContext(),
                     getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }

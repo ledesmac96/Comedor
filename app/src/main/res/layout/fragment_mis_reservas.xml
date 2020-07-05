@@ -37,12 +37,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/montserrat_black"
                 android:text="NO EXISTEN RESERVAS REALIZADAS" />
 
-
         </LinearLayout>
-
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"

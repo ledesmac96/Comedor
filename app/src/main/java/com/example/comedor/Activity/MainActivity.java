@@ -162,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
                     dialogo(false);
                     break;
                 case 4:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
+                    Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                            getString(R.string.camposIncompletos), R.drawable.ic_error);
                     break;
                 case 3:
                     Utils.showCustomToast(MainActivity.this, getApplicationContext(),
@@ -333,6 +334,9 @@ public class MainActivity extends AppCompatActivity {
                 fragmentoGenerico = new EstadisticasFragment();
                 ((EstadisticasFragment) fragmentoGenerico).setContext(getApplicationContext());
                 ((EstadisticasFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
+                break;
+            case R.id.item_about:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 break;
             case R.id.item_logout:
                 logout();

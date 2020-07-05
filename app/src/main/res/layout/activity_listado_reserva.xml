@@ -92,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:text="NO EXISTEN RESERVAS ACTUALMENTE"
                 android:textColor="@color/colorAccent"
+                android:fontFamily="@font/montserrat_black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -139,9 +140,10 @@
                             android:background="@color/colorGreen" />
 
                         <TextView
-                            android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/montserrat_regular"
                             android:text="Total" />
 
                     </LinearLayout>
@@ -164,6 +166,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
                             android:text="Reservados" />
 
                     </LinearLayout>
@@ -186,6 +189,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
                             android:text="Retirados" />
 
                     </LinearLayout>
@@ -208,12 +212,12 @@
                             android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
                             android:text="Cancelados" />
 
                     </LinearLayout>
 
                 </LinearLayout>
-
 
             </LinearLayout>
 

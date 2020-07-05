@@ -61,7 +61,15 @@
                         android:layout_margin="10dp"
                         android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Menú: "
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat_black"/>
+
                         <LinearLayout
+                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -69,16 +77,65 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Plato: "
+                                android:text=" Almuerzo: "
                                 android:textSize="16sp"
                                 android:fontFamily="@font/montserrat_black"/>
 
                             <TextView
-                                android:id="@+id/txtPlato"
-                                android:layout_width="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:id="@+id/txtAlmuerzo"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
-                                android:text="Milanesas con papas fritas + postre "
+                                android:text="Milanesas con papas fritas"
+                                android:fontFamily="@font/montserrat_regular"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" Cena: "
+                                android:textSize="16sp"
+                                android:fontFamily="@font/montserrat_black"/>
+
+                            <TextView
+                                android:layout_marginStart="4dp"
+                                android:id="@+id/txtCena"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="Bife a la criolla"
+                                android:fontFamily="@font/montserrat_regular"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" Postre: "
+                                android:textSize="16sp"
+                                android:fontFamily="@font/montserrat_black"/>
+
+                            <TextView
+                                android:layout_marginStart="4dp"
+                                android:id="@+id/txtPostre"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:text="Flan o fruta"
                                 android:fontFamily="@font/montserrat_regular"/>
 
                         </LinearLayout>

@@ -174,40 +174,33 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
                     Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
                             getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
-                    //Utils.showToast(getApplicationContext(), getString(R.string.menuCreado));
                     Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
                             getString(R.string.menuCreado), R.drawable.ic_exito);
                     finish();
                     break;
                 case 2:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.menuError));
                     Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
                             getString(R.string.menuError), R.drawable.ic_error);
                     break;
                 case 4:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
                     Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
                             getString(R.string.camposInvalidos), R.drawable.ic_advertencia);
                     break;
                 case 5:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.menuExistente));
                     Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
                             getString(R.string.menuExistente), R.drawable.ic_error);
                     break;
                 case 3:
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
                     Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
                             getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    //Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
                     Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
                             getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
@@ -215,7 +208,6 @@ public class NuevoMenuActivity extends AppCompatActivity implements View.OnClick
 
         } catch (JSONException e) {
             e.printStackTrace();
-            //Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
             Utils.showCustomToast(NuevoMenuActivity.this, getApplicationContext(),
                     getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }

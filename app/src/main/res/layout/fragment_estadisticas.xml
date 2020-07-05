@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.EstadisticasFragment">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_margin="10dp"
@@ -24,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/progress_bar" />
+
             <TextView
                 android:layout_marginTop="5dp"
                 android:gravity="center"
@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="16sp"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="Calculando estadisticas..." />
 
         </LinearLayout>
@@ -47,6 +48,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:srcCompat="@drawable/ic_estadisticas" />
+
             <TextView
                 android:padding="10dp"
                 android:layout_marginTop="5dp"
@@ -55,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="20sp"
+                android:fontFamily="@font/montserrat_black"
                 android:text="No existen datos actualmente" />
 
         </LinearLayout>
@@ -93,6 +96,7 @@
                             android:background="@color/colorAccent"
                             android:textColor="@color/colorWhite"
                             android:padding="5dp"
+                            android:fontFamily="@font/montserrat_black"
                             android:textStyle="bold"
                             android:textSize="20sp"/>
 
@@ -106,12 +110,14 @@
                                 android:layout_width="match_parent"
                                 android:text="Cantidad de Alumnos"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:layout_height="wrap_content" />
 
                             <TextView
                                 android:id="@+id/txtCantidad"
                                 android:layout_width="match_parent"
                                 android:text="40"
+                                android:fontFamily="@font/montserrat_black"
                                 android:gravity="center"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="22sp"
@@ -121,13 +127,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="Alumnos por Facultad" />
+
                         </LinearLayout>
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pieFacultad"
                             android:layout_margin="10dp"
                             android:layout_width="match_parent"
+                            android:fontFamily="@font/montserrat_black"
                             android:layout_height="300dp">
 
                         </com.github.mikephil.charting.charts.PieChart>
@@ -137,10 +146,12 @@
                             android:layout_margin="7dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="Cantidad por Carrera" />
 
                             <TextView
@@ -148,8 +159,10 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:textStyle="italic"
                                 android:text="10 - Licenciatura en Sistemas de Información" />
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -157,22 +170,24 @@
                             android:layout_margin="7dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="Porcentaje de Información" />
-                        </LinearLayout>
 
+                        </LinearLayout>
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pieDatos"
                             android:layout_margin="10dp"
                             android:layout_width="match_parent"
+                            android:fontFamily="@font/montserrat_black"
                             android:layout_height="300dp">
 
                         </com.github.mikephil.charting.charts.PieChart>
-
 
                     </LinearLayout>
 
@@ -209,6 +224,7 @@
                             android:textColor="@color/colorWhite"
                             android:padding="5dp"
                             android:textStyle="bold"
+                            android:fontFamily="@font/montserrat_black"
                             android:textSize="20sp"/>
 
                         <LinearLayout
@@ -219,9 +235,10 @@
 
                             <TextView
                                 android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="Cantidad Total de Reservas"
-                                android:textStyle="bold"
-                                android:layout_height="wrap_content" />
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/txtCantidadReservas"
@@ -231,6 +248,7 @@
                                 android:textColor="@color/colorAccent"
                                 android:textSize="22sp"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_black"
                                 android:layout_height="wrap_content" />
 
                             <TextView
@@ -238,6 +256,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="Cantidad Total de Porciones Entregadas" />
 
                             <TextView
@@ -248,6 +267,7 @@
                                 android:textColor="@color/colorAccent"
                                 android:textSize="22sp"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_black"
                                 android:layout_height="wrap_content" />
 
                             <TextView
@@ -255,7 +275,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="Cantidad de Reservas Últimos 7 Días" />
+
                         </LinearLayout>
 
                         <com.github.mikephil.charting.charts.BarChart
@@ -270,11 +292,14 @@
                             android:layout_margin="7dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_regular"
                                 android:text="Cantidad de Reservas por Meses" />
+
                         </LinearLayout>
 
                         <com.github.mikephil.charting.charts.BarChart
@@ -290,15 +315,7 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
-
-
-
-
-
-
-
 
     </LinearLayout>
 

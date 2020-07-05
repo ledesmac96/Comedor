@@ -38,7 +38,8 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
     ImageView imgIcono, imgQR;
     Button btnCancelar;
-    TextView txtIdRes, txtPlato, txtFechaRes, txtEstado, txtFechaRetirada, txtPorcion;
+    TextView txtIdRes, txtAlmuerzo, txtCena, txtPostre, txtFechaRes, txtEstado,
+            txtFechaRetirada, txtPorcion;
     Reserva mReserva;
     ReservaViewModel mReservaViewModel;
     Menu mMenu;
@@ -81,16 +82,12 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-
                     procesarRespuestaInfo(response);
-
-
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
-
                 }
             });
             VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
@@ -119,7 +116,8 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
     }
 
@@ -179,7 +177,10 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                 else latQR.setVisibility(View.GONE);
             }
         }
-        txtPlato.setText(String.format("Almuerzo: %s\nCena: %s\nPostre: %s", comida[0], comida[1], comida[2]));
+        //txtPlato.setText(String.format("Almuerzo: %s\nCena: %s\nPostre: %s", comida[0], comida[1], comida[2]));
+        txtAlmuerzo.setText(comida[0]);
+        txtCena.setText(comida[1]);
+        txtPostre.setText(comida[2]);
 
     }
 
@@ -196,7 +197,9 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         imgIcono = findViewById(R.id.imgFlecha);
         imgQR = findViewById(R.id.imgQR);
         txtIdRes = findViewById(R.id.txtIdReserva);
-        txtPlato = findViewById(R.id.txtPlato);
+        txtAlmuerzo = findViewById(R.id.txtAlmuerzo);
+        txtCena = findViewById(R.id.txtCena);
+        txtPostre = findViewById(R.id.txtPostre);
         txtFechaRes = findViewById(R.id.txtFechaRes);
         txtEstado = findViewById(R.id.txtEstado);
         latEstado = findViewById(R.id.latEstado);
@@ -272,7 +275,8 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 btnCancelar.setEnabled(true);
-                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                        getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
 
             }
@@ -292,30 +296,36 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             int estado = jsonObject.getInt("estado");
             switch (estado) {
                 case -1:
-                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.errorInternoAdmin), R.drawable.ic_error);
                     break;
                 case 1:
                     //Exito
                     loadInfo(jsonObject);
                     break;
                 case 2:
-                    Utils.showToast(getApplicationContext(), getString(R.string.reservaNoExiste));
+                    Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.reservaNoExiste), R.drawable.ic_error);
                     break;
                 case 3:
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
                 case 5:
-                    Utils.showToast(getApplicationContext(), getString(R.string.yaReservo));
+                    Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.yaReservo), R.drawable.ic_error);
                     break;
                 case 100:
                     //No autorizado
-                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInexistente), R.drawable.ic_error);
                     break;
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+            Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                    getString(R.string.errorInternoAdmin), R.drawable.ic_error);
         }
     }
 

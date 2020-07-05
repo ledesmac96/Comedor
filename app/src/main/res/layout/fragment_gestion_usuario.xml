@@ -75,6 +75,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:srcCompat="@drawable/ic_user" />
+
                 <TextView
                     android:padding="10dp"
                     android:layout_marginTop="5dp"
@@ -83,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="20sp"
+                    android:fontFamily="@font/montserrat_black"
                     android:text="No existen usuarios actualmente" />
 
             </LinearLayout>
