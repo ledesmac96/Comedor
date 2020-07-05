@@ -23,42 +23,42 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¡BIENVENIDO/A!"
+        android:gravity="center"
+        android:textSize="28sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:textColor="@color/whiteTextColor"
+        android:fontFamily="@font/montserrat_black"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="540dp"
+        android:layout_height="500dp"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:gravity="center"
         android:layout_margin="20dp"
         android:background="@drawable/corners_rounded_green">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BIENESTAR ESTUDIANTIL"
-            android:textColor="@android:color/black"
-            android:textSize="24dp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_below="@+id/imageView"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
-            android:fontFamily="@font/montserrat_black"/>
-
         <ImageView
-            android:layout_width="350dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_weight="0.2"
+            android:layout_margin="20dp"
             android:src="@drawable/ic_logo_bienestar_01"
             android:id="@+id/imageView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Esta es la nueva aplicación de Bienestar Estudiantil para las reservas del comedor universitario."
+            android:text="@string/slide1"
             android:textColor="@android:color/black"
-            android:textSize="20dp"
+            android:layout_weight="0.4"
+            android:textSize="18dp"
             android:gravity="center"
             android:textStyle="bold"
             android:layout_below="@+id/imageView"
@@ -66,10 +66,38 @@
             android:layout_margin="20dp"
             android:fontFamily="@font/montserrat_regular"/>
 
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:src="@drawable/ic_menu_2"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                android:paddingTop="20dp"
+                android:src="@drawable/aniversario47"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                android:paddingTop="20dp"
+                android:src="@drawable/doscientos"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="0.4"
+                android:layout_gravity="center"
+                android:paddingTop="20dp"
+                android:src="@drawable/logo_unse"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -135,8 +135,10 @@ public class SlideWelcomeActivity extends AppCompatActivity {
 
             if (position == layouts.length - 1) {
                 btnNext.setText("COMENZAR");
+                btnNext.setTextColor(getResources().getColor(R.color.blackTextColor));
             } else {
                 btnNext.setText("SIGUIENTE");
+                btnNext.setTextColor(getResources().getColor(R.color.whiteTextColor));
             }
         }
 
@@ -173,24 +175,6 @@ public class SlideWelcomeActivity extends AppCompatActivity {
             container.addView(view);
 
             //onPageSelected(position);
-
-            switch (position) {
-                case 0:
-                    txtTitle.setText("¡BIENVENIDO/A!");
-                    break;
-                case 1:
-                    txtTitle.setText("RESERVAS");
-                    break;
-                case 2:
-                    txtTitle.setText("RETIRÁ EL MENÚ");
-                    break;
-                case 3:
-                    txtTitle.setText("SIN REGISTRARSE");
-                    break;
-                case 4:
-                    txtTitle.setText("VAMOS A CUIDARNOS");
-                    break;
-            }
 
             return view;
         }

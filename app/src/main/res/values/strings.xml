@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Comedor</string>
+    <string name="app_name">Comedor Univertario</string>
 
     <string name="home_second">Home Second</string>
     <string name="camposIncompletos">¡Por favor complete los campos!</string>
@@ -62,5 +62,10 @@
 
     <string name="txtAddAlumno">Complete OBLIGATORIAMENTE todos los datos del alumno.</string>
     <string name="txtNotaMenu">NOTA: en caso de no ofrecer cena y/o postre, dejar en blanco.</string>
+    <string name="slide1">Esta es la nueva aplicación de Bienestar Estudiantil para las reservas del Comedor Universitario de la Universidad Nacional de Santiago del Estero.</string>
+    <string name="slide2">Entrá y mirá el menú del día, y al mismo tiempo vas a poder realizar la reserva y también cancelarla en caso de ser necesario.</string>
+    <string name="slide3">Cuando vayas a retirar el menú del día, procurá tener a mano el código QR que se asignó luego de la reserva.</string>
+    <string name="slide4">Si ya estás inscripto es las Becas Comedor, ya estás registrado en la aplicación. Se te enviarán los datos necesarios para acceder o solicitalos a la Secretaría de Bienestar Estudiantil.</string>
+    <string name="slide5">Usar siempre el tapabocas sobre mentón y nariz. El distanciamiento a 2m de cada persona. Desinfectá tú celular con frecuencia y no olvides lavar bien tus manos con jabón.</string>
 
 </resources>

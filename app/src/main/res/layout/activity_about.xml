@@ -17,7 +17,7 @@
             android:id="@+id/backgroundAbout"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@mipmap/img_unse2"
+            android:background="@drawable/fondo_secretaria"
             android:orientation="vertical">
 
             <LinearLayout
@@ -249,9 +249,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="10dp"
+                            android:gravity="center"
                             android:textSize="14sp"
                             android:fontFamily="@font/montserrat_black"
-                            android:text="becas_unse"/>
+                            android:text="bienestarestudiantilunse"/>
 
                     </LinearLayout>
 
@@ -280,6 +281,29 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/mozzafiato2_logo_black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Versión: "
+                android:fontFamily="@font/montserrat_regular"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="0.1"
+                android:fontFamily="@font/montserrat_regular"/>
 
         </LinearLayout>
 
