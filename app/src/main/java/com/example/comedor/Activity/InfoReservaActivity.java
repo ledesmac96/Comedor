@@ -38,7 +38,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
     ImageView imgIcono, imgQR;
     Button btnCancelar;
-    TextView txtIdRes, txtPlato, txtFechaRes, txtEstado, txtFechaRetirada;
+    TextView txtIdRes, txtPlato, txtFechaRes, txtEstado, txtFechaRetirada, txtPorcion;
     Reserva mReserva;
     ReservaViewModel mReservaViewModel;
     Menu mMenu;
@@ -133,10 +133,24 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         String[] comida = null;
         mReservaViewModel = new ReservaViewModel(getApplicationContext());
         if (mReserva != null) {
-            txtIdRes.setText(String.format("# %s", mReserva.getIdReserva()));
+            txtIdRes.setText(String.format("RESERVA # %s", mReserva.getIdReserva()));
             comida = Utils.getComidas(mReserva.getDescripcion());
             txtFechaRes.setText(mReserva.getFechaReserva());
-            txtEstado.setText(String.valueOf(mReserva.getDescripcion()));
+            txtEstado.setText(mReserva.getDescripcion());
+            //txtEstado.setText(mReserva.getEstado() == 1 ? "RESERVADO" : mReserva.getEstado() == 2 ? "CANCELADO" : "RETIRADO");
+            btnCancelar.setText(mReserva.getDescripcion().equals("RESERVADO") ? "CANCELAR" : "RESERVAR");
+            if (mReserva.getDescripcion().equals("RETIRADO")) {
+                latRetiro.setVisibility(View.VISIBLE);
+                txtFechaRetirada.setText(mReserva.getFechaModificacion() != null ?
+                        Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())):
+                        "NO FECHA");
+                btnCancelar.setVisibility(View.GONE);
+                latQR.setVisibility(View.GONE);
+            }else{
+                generateQR(mReserva);
+            }
+            btnCancelar.setEnabled(false);
+            txtPorcion.setText(mMenu != null ? String.valueOf(mMenu.getPorcion()) : "NO INFO");
             estado = 2; //Del alumno
         } else {
             mReserva = mReservaViewModel.getAllByMenuID(mMenu.getIdMenu());
@@ -144,6 +158,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                 txtIdRes.setText("INFO");
                 btnCancelar.setText("RESERVAR");
                 comida = Utils.getComidas(mMenu.getDescripcion());
+                txtPorcion.setText(String.valueOf(mMenu.getPorcion()));
                 latQR.setVisibility(View.GONE);
                 latFecha.setVisibility(View.GONE);
                 latEstado.setVisibility(View.GONE);
@@ -157,6 +172,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                 }
                 btnCancelar.setText(mReserva.getEstado() == 1 ? "CANCELAR" : "RESERVAR");
                 comida = Utils.getComidas(mMenu.getDescripcion());
+                txtPorcion.setText(String.valueOf(mMenu.getPorcion()));
                 txtFechaRes.setText(Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaReserva())));
                 estado = 3;//Ya reservada
                 if (mReserva.getEstado() != 2) generateQR(mReserva);
@@ -173,6 +189,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadViews() {
+        txtPorcion = findViewById(R.id.txtPorcion);
         latRetiro = findViewById(R.id.latFechaRetirada);
         txtFechaRetirada = findViewById(R.id.txtFechaRetiro);
         btnCancelar = findViewById(R.id.btnReservar);

@@ -851,6 +851,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="visible"
                     android:id="@+id/latAdmin"
                     android:layout_marginTop="-10dp"
                     android:layout_marginStart="3dp"
@@ -1004,20 +1005,20 @@
                                         <LinearLayout
                                             android:layout_gravity="center"
                                             android:gravity="center"
-                                            android:weightSum="1"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:orientation="horizontal">
 
                                             <Button
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
                                                 android:id="@+id/btnAltaBaja"
                                                 android:layout_margin="5dp"
-                                                android:layout_width="0dp"
+                                                android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:text="DAR DE BAJA"
                                                 android:textStyle="bold"
                                                 android:padding="12dp"
-                                                android:layout_weight="0.5"
                                                 android:textColor="@color/colorWhite"
                                                 android:background="@drawable/button_border" />
 
@@ -1060,6 +1061,215 @@
                             android:background="@color/transparente" />
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/latReserva"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="5dp"
+                            android:layout_margin="2dp"
+                            app:cardCornerRadius="20dp">
+                            <LinearLayout
+                                android:visibility="visible"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="10dp"
+                                    android:background="@color/colorGrey"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:text="RESERVAS"
+                                        android:fontFamily="@font/montserrat_black"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <LinearLayout
+                                        android:id="@+id/latVacio"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="10dp">
+
+                                        <TextView
+                                            android:gravity="center"
+                                            android:padding="10dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="NO EXISTEN RESERVAS ACTUALMENTE"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="20sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/latEstadisticas"
+                                        android:layout_margin="5dp"
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <com.github.mikephil.charting.charts.BarChart
+                                            android:id="@+id/barCantidad"
+                                            android:layout_width="match_parent"
+                                            android:layout_marginBottom="10dp"
+                                            android:layout_height="300dp">
+                                        </com.github.mikephil.charting.charts.BarChart>
+
+                                        <LinearLayout
+                                            android:gravity="center"
+                                            android:layout_gravity="center"
+                                            android:orientation="horizontal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+
+                                            <LinearLayout
+                                                android:layout_gravity="center"
+                                                android:gravity="start"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="horizontal">
+
+                                                <View
+                                                    android:layout_gravity="center"
+                                                    android:layout_width="10dp"
+                                                    android:layout_height="10dp"
+                                                    android:background="@color/colorGreen" />
+
+                                                <TextView
+                                                    android:layout_marginStart="5dp"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Total" />
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_marginStart="10dp"
+                                                android:layout_gravity="center"
+                                                android:gravity="start"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="horizontal">
+
+                                                <View
+                                                    android:layout_gravity="center"
+                                                    android:layout_width="10dp"
+                                                    android:layout_height="10dp"
+                                                    android:background="@color/colorOrange" />
+
+                                                <TextView
+                                                    android:layout_marginStart="5dp"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Reservados" />
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_marginStart="10dp"
+                                                android:layout_gravity="center"
+                                                android:gravity="start"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="horizontal">
+
+                                                <View
+                                                    android:layout_gravity="center"
+                                                    android:layout_width="10dp"
+                                                    android:layout_height="10dp"
+                                                    android:background="@color/colorYellow" />
+
+                                                <TextView
+                                                    android:layout_marginStart="5dp"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Retirados" />
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_marginStart="10dp"
+                                                android:layout_gravity="center"
+                                                android:gravity="start"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="horizontal">
+
+                                                <View
+                                                    android:layout_gravity="center"
+                                                    android:layout_width="10dp"
+                                                    android:layout_height="10dp"
+                                                    android:background="@color/colorPink" />
+
+                                                <TextView
+                                                    android:layout_marginStart="5dp"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Cancelados" />
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/recycler"
+                                        android:layout_margin="5dp" />
+
+
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:background="@color/transparente" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 

@@ -334,6 +334,9 @@ public class MainActivity extends AppCompatActivity {
                 ((EstadisticasFragment) fragmentoGenerico).setContext(getApplicationContext());
                 ((EstadisticasFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
                 break;
+            case R.id.item_logout:
+                logout();
+                break;
 
         }
 
@@ -348,6 +351,16 @@ public class MainActivity extends AppCompatActivity {
 
         itemSelecionado = itemDrawer.getItemId();
 
+    }
+
+    private void logout() {
+        Utils.resetData(getApplicationContext());
+        mPreferenciasManager.setValue(Utils.IS_LOGIN, true);
+        mPreferenciasManager.setValue(Utils.IS_LOCK, true);
+        mPreferenciasManager.setValue(Utils.MY_ID, 0);
+        mPreferenciasManager.setValue(Utils.TOKEN, "");
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finishAffinity();
     }
 
     private void setToolbar() {

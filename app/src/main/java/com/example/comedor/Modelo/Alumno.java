@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
 @Entity(tableName = "alumno")
 public class Alumno extends Usuario implements Parcelable {
@@ -91,7 +90,7 @@ public class Alumno extends Usuario implements Parcelable {
     public static Alumno mapper(JSONObject o, Usuario usuario) {
         Alumno alumno = new Alumno();
         try {
-            if (o.get("datos") != null) {
+            if (o.has("datos")) {
                 JSONObject object = o.getJSONObject("datos");
                 String carrera = object.getString("carrera");
                 String facultad = object.getString("facultad");
@@ -104,6 +103,17 @@ public class Alumno extends Usuario implements Parcelable {
                         usuario.getMail(), usuario.getFechaRegistro(), usuario.getFechaModificacion(),
                         usuario.getValidez(), usuario.getIdUsuario(), carrera, facultad, anio, legajo
                 );
+            } else {
+                String carrera = o.getString("carrera");
+                String facultad = o.getString("facultad");
+                String anio = o.getString("anio");
+                String legajo = o.getString("legajo");
+
+                alumno = new Alumno(usuario.getIdUsuario(), usuario.getNombre(), usuario.getApellido(),
+                        usuario.getFechaNac(), usuario.getPais(), usuario.getProvincia(), usuario.getLocalidad(),
+                        usuario.getDomicilio(), usuario.getBarrio(), usuario.getTelefono(),
+                        usuario.getMail(), usuario.getFechaRegistro(), usuario.getFechaModificacion(),
+                        usuario.getValidez(), usuario.getIdUsuario(), carrera, facultad, anio, legajo);
             }
             return alumno;
         } catch (JSONException e) {

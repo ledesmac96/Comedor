@@ -105,7 +105,8 @@ public class MisReservasFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                //mProgressBar.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
+                latNoData.setVisibility(View.VISIBLE);
                 Utils.showToast(mContext, getString(R.string.servidorOff));
                 dialog.dismiss();
 
@@ -178,6 +179,8 @@ public class MisReservasFragment extends Fragment {
                     latNoData.setVisibility(View.VISIBLE);
                 }
 
+            }else{
+                latNoData.setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -3,6 +3,8 @@ package com.example.comedor.Activity;
 import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.comedor.Adapter.ReservasAdapter;
 import com.example.comedor.Database.AlumnoViewModel;
 import com.example.comedor.Database.RolViewModel;
 import com.example.comedor.Database.UsuarioViewModel;
@@ -28,6 +31,7 @@ import com.example.comedor.Dialogos.DatePickerFragment;
 import com.example.comedor.Dialogos.DialogoGeneral;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Modelo.Alumno;
+import com.example.comedor.Modelo.Reserva;
 import com.example.comedor.Modelo.Usuario;
 import com.example.comedor.R;
 import com.example.comedor.Utils.PreferenciasManager;
@@ -35,16 +39,28 @@ import com.example.comedor.Utils.Utils;
 import com.example.comedor.Utils.Validador;
 import com.example.comedor.Utils.VolleySingleton;
 import com.example.comedor.Utils.YesNoDialogListener;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.View.VISIBLE;
@@ -60,7 +76,7 @@ public class PerfilActivity extends AppCompatActivity
 
     ImageView btnBack;
     CircleImageView imgUser;
-    LinearLayout latGeneral, latAlumno, latAdmin, latUser;
+    LinearLayout latGeneral, latAlumno, latAdmin, latUser, latVacio, latEstadisticas, latReserva;
     FloatingActionButton fabEditar;
     EditText edtNombre, edtApellido, edtDNI, edtMail, edtAnioIngresoAlu, edtLegajoAlu, edtDomicilio,
             edtProvincia, edtTelefono, edtPais, edtLocalidad, edtBarrio, edtRegistro, edtModificacion,
@@ -70,6 +86,11 @@ public class PerfilActivity extends AppCompatActivity
     EditText[] campos;
     ArrayAdapter<String> carreraAdapter;
     ArrayAdapter<String> facultadAdapter;
+    RecyclerView mRecyclerView;
+    RecyclerView.LayoutManager mLayoutManager;
+    ReservasAdapter mReservasAdapter;
+    ArrayList<Reserva> mReservas;
+    BarChart barCantidad;
 
     DialogoProcesamiento dialog;
     UsuarioViewModel mUsuarioViewModel;
@@ -87,9 +108,10 @@ public class PerfilActivity extends AppCompatActivity
         setContentView(R.layout.activity_info_usuario);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        loadViews();
+
         isAdmin();
 
-        loadViews();
 
         setToolbar();
 
@@ -109,6 +131,14 @@ public class PerfilActivity extends AppCompatActivity
             if (getIntent().getParcelableExtra(Utils.USER_INFO) != null) {
                 mUsuario = getIntent().getParcelableExtra(Utils.USER_INFO);
             }
+            mRecyclerView.setVisibility(VISIBLE);
+            latVacio.setVisibility(View.GONE);
+            latReserva.setVisibility(VISIBLE);
+        } else {
+            latEstadisticas.setVisibility(View.GONE);
+            latVacio.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.GONE);
+            latReserva.setVisibility(View.GONE);
         }
     }
 
@@ -195,6 +225,11 @@ public class PerfilActivity extends AppCompatActivity
     }
 
     private void loadViews() {
+        barCantidad = findViewById(R.id.barCantidad);
+        latReserva = findViewById(R.id.latReserva);
+        latEstadisticas = findViewById(R.id.latEstadisticas);
+        latVacio = findViewById(R.id.latVacio);
+        mRecyclerView = findViewById(R.id.recycler);
         edtNombre = findViewById(R.id.edtNombre);
         edtApellido = findViewById(R.id.edtApellido);
         edtDNI = findViewById(R.id.edtDNI);
@@ -223,15 +258,21 @@ public class PerfilActivity extends AppCompatActivity
     }
 
     private void loadData() {
+        mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(true);
         mUsuarioViewModel = new UsuarioViewModel(getApplicationContext());
         if (!isAdminMode) {
             latAdmin.setVisibility(View.GONE);
             latUser.setVisibility(VISIBLE);
+            latReserva.setVisibility(View.GONE);
         } else {
             latAdmin.setVisibility(VISIBLE);
             latUser.setVisibility(VISIBLE);
             edtRegistro.setEnabled(false);
             fabEditar.setVisibility(View.INVISIBLE);
+            loadInfoReservas();
         }
         campos = new EditText[]{edtNombre, edtApellido, edtMail, edtAnioIngresoAlu, edtProvincia,
                 edtPais, edtTelefono, edtLocalidad, edtDomicilio, edtLegajoAlu, edtBarrio};
@@ -250,6 +291,182 @@ public class PerfilActivity extends AppCompatActivity
             }
         }).start();
         loadInfo();
+    }
+
+    private void loadInfoReservas() {
+        PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
+        String key = manager.getValueString(Utils.TOKEN);
+        int id = manager.getValueInt(Utils.MY_ID);
+        String URL = String.format("%s?idU=%s&key=%s&id=%s", Utils.URL_RESERVA_USUARIO, id, key, mUsuario.getIdUsuario());
+        StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                procesarRespuestaReserva(response);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                latVacio.setVisibility(VISIBLE);
+                latEstadisticas.setVisibility(View.GONE);
+                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                dialog.dismiss();
+
+            }
+        });
+        //Abro dialogo para congelar pantalla
+        dialog = new DialogoProcesamiento();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), "dialog_process");
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+
+    private void procesarRespuestaReserva(String response) {
+        try {
+            dialog.dismiss();
+            JSONObject jsonObject = new JSONObject(response);
+            int estado = jsonObject.getInt("estado");
+            switch (estado) {
+                case -1:
+                    latVacio.setVisibility(VISIBLE);
+                    latEstadisticas.setVisibility(View.GONE);
+                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    break;
+                case 1:
+                    loadInfoReserva(jsonObject);
+                    break;
+                case 2:
+                    latVacio.setVisibility(VISIBLE);
+                    latEstadisticas.setVisibility(View.GONE);
+                    break;
+                case 3:
+                    latVacio.setVisibility(VISIBLE);
+                    latEstadisticas.setVisibility(View.GONE);
+                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    break;
+                case 100:
+                    latVacio.setVisibility(VISIBLE);
+                    latEstadisticas.setVisibility(View.GONE);
+                    //No autorizado
+                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            latVacio.setVisibility(VISIBLE);
+            latEstadisticas.setVisibility(View.GONE);
+            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+        }
+    }
+
+    private void loadInfoReserva(JSONObject jsonObject) {
+        try {
+            if (jsonObject.has("mensaje")) {
+
+                JSONArray jsonArray = jsonObject.getJSONArray("mensaje");
+
+                mReservas = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject o = jsonArray.getJSONObject(i);
+
+                    Reserva reserva = Reserva.mapper(o, Reserva.HISTORIAL);
+
+                    mReservas.add(reserva);
+
+                }
+
+
+                if (mReservas.size() > 0) {
+                    mReservasAdapter = new ReservasAdapter(mReservas, getApplicationContext(), ReservasAdapter.USER);
+                    mRecyclerView.setAdapter(mReservasAdapter);
+                    mRecyclerView.setVisibility(VISIBLE);
+                    loadEstadisticas();
+                } else {
+                    latVacio.setVisibility(View.VISIBLE);
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void loadEstadisticas() {
+        final ArrayList<BarEntry> entries;
+        final ArrayList<String> entryLabels;
+        XAxis xAxis2;
+        YAxis leftAxis, rightAxis;
+
+        barCantidad.getDescription().setEnabled(false);
+        barCantidad.getLegend().setEnabled(false);
+        xAxis2 = barCantidad.getXAxis();
+        xAxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis2.setTextSize(12f);
+        //Habilita los labels
+        xAxis2.setDrawAxisLine(true);
+        xAxis2.setDrawGridLines(false);
+
+        leftAxis = barCantidad.getAxisLeft();
+        rightAxis = barCantidad.getAxisRight();
+
+        leftAxis.setTextSize(12f);
+        leftAxis.setDrawAxisLine(true);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawLabels(false);
+
+        rightAxis.setDrawAxisLine(false);
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setDrawLabels(false);
+
+
+        entries = new ArrayList<>();
+        entryLabels = new ArrayList<String>();
+        int cantidadRes = 0, cantidadReti = 0, cantidadCancelado = 0;
+        for (Reserva reserva : mReservas) {
+            if (reserva.getDescripcion().equals("RESERVADO")) {
+                cantidadRes++;
+            } else if (reserva.getDescripcion().equals("CANCELADO")) {
+                cantidadCancelado++;
+            } else if (reserva.getDescripcion().equals("RETIRADO")) {
+
+                cantidadReti++;
+            }
+        }
+        entries.add(new BarEntry(1, mReservas.size()));
+        entryLabels.add("Total");
+        entries.add(new BarEntry(2, cantidadRes));
+        entryLabels.add("Reservas");
+        entries.add(new BarEntry(3, cantidadReti));
+        entryLabels.add("Retiros");
+        entries.add(new BarEntry(4, cantidadCancelado));
+        entryLabels.add("Cancelos");
+        BarDataSet barDataSet2 = new BarDataSet(entries, "");
+        barDataSet2.setColors(new int[]{R.color.colorGreen, R.color.colorOrange, R.color.colorYellow, R.color.colorPink}, getApplicationContext());
+        barDataSet2.setValueTextSize(13);
+        barDataSet2.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        barDataSet2.setValueTextColor(Color.rgb(155, 155, 155));
+        BarData barData2 = new BarData(barDataSet2);
+        barData2.setBarWidth(0.9f); // set custom bar width
+        barCantidad.setData(barData2);
+        barCantidad.setFitBars(true);
+        barCantidad.invalidate();
+        barCantidad.setScaleEnabled(true);
+        barCantidad.setDoubleTapToZoomEnabled(false);
+        barCantidad.setBackgroundColor(Color.rgb(255, 255, 255));
+        xAxis2.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return "";
+            }
+        });
+        latEstadisticas.setVisibility(View.VISIBLE);
     }
 
     private void loadInfo() {
@@ -297,10 +514,10 @@ public class PerfilActivity extends AppCompatActivity
                     edtLegajoAlu.setText(((Alumno) mUsuario).getLegajo());
                     edtAnioIngresoAlu.setText(((Alumno) mUsuario).getAnio());
                     loadCarrera(mUsuario);
-                } else if (isAdminMode && mUsuario instanceof Usuario){
+                } else if (isAdminMode && mUsuario instanceof Usuario) {
                     edtLegajoAlu.setText("0/00");
                     edtAnioIngresoAlu.setText("0000");
-                }else{
+                } else {
                     AlumnoViewModel alumnoViewModel = new AlumnoViewModel(getApplicationContext());
                     alumno = alumnoViewModel.getById(idLocal);
                     if (alumno != null) {

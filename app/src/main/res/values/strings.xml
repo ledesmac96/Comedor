@@ -58,6 +58,7 @@
     <string name="confirmadoReserva">La reserva fue confirmada exitosamente</string>
     <string name="noConfirmado">¡Error!</string>
     <string name="confirmadoReservaError">Hubo un error al intentar confirmar la reserva</string>
+    <string name="sinDatos">¡No existen datos!</string>
 
     <string name="txtAddAlumno">Complete OBLIGATORIAMENTE todos los datos del alumno.</string>
     <string name="txtNotaMenu">NOTA: en caso de no ofrecer cena y/o postre, dejar en blanco.</string>

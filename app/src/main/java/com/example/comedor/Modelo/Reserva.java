@@ -23,6 +23,8 @@ public class Reserva implements Parcelable {
     @Ignore
     public static final int HISTORIAL_TOTAL = 4;
     @Ignore
+    public static final int ESTADISTICA = 5;
+    @Ignore
     public static final String TABLE = "reserva";
     @Ignore
     public static final String KEY_ID_ALU = "idReserva";
@@ -97,6 +99,12 @@ public class Reserva implements Parcelable {
         validez = in.readInt();
         nombre = in.readString();
         apellido = in.readString();
+        descripcion = in.readString();
+        tipoEntrega = in.readString();
+        dia = in.readInt();
+        mes = in.readInt();
+        anio = in.readInt();
+
     }
 
     public String getDescripcion() {
@@ -222,7 +230,7 @@ public class Reserva implements Parcelable {
                     fechaReserva = object.getString("fechareserva");
                     fechaModificacion = object.getString("fechamodificacion");
                     validez = Integer.parseInt(object.getString("validez"));
-                    reserva = new Reserva(idReserva,idUsuario, 0, idMenu, estado, fechaReserva, fechaModificacion, validez, "");
+                    reserva = new Reserva(idReserva, idUsuario, 0, idMenu, estado, fechaReserva, fechaModificacion, validez, "");
                     break;
                 case MEDIUM:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
@@ -241,9 +249,11 @@ public class Reserva implements Parcelable {
                     mes = Integer.parseInt(object.getString("mes"));
                     anio = Integer.parseInt(object.getString("anio"));
                     fechaReserva = object.getString("fechareserva");
+                    fechaModificacion = object.getString("fechamodificacion");
                     estadoDescripcion = object.getString("descripcion");
                     tipoEntrega = object.getString("tiporeserva");
                     reserva = new Reserva(idReserva, idMenu, fechaReserva, estadoDescripcion, tipoEntrega, dia, mes, anio);
+                    reserva.setFechaModificacion(fechaModificacion);
                     break;
                 case HISTORIAL_TOTAL:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
@@ -254,6 +264,16 @@ public class Reserva implements Parcelable {
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
                     reserva = new Reserva(idReserva, idMenu, validez, "", nombre, apellido, estadoDescripcion, tipoEntrega);
+                    break;
+                case ESTADISTICA:
+                    idReserva = Integer.parseInt(object.getString("idreserva"));
+                    idUsuario = Integer.parseInt(object.getString("idusuario"));
+                    idMenu = Integer.parseInt(object.getString("idmenu"));
+                    fechaReserva = object.getString("fechareserva");
+                    fechaModificacion = object.getString("fechamodificacion");
+                    estado = Integer.parseInt(object.getString("estado"));
+                    reserva = new Reserva(idReserva, idUsuario, 0,
+                            idMenu, estado, fechaReserva, fechaModificacion, -1, "");
                     break;
             }
         } catch (JSONException e) {
@@ -319,5 +339,10 @@ public class Reserva implements Parcelable {
         dest.writeInt(validez);
         dest.writeString(nombre);
         dest.writeString(apellido);
+        dest.writeString(descripcion);
+        dest.writeString(tipoEntrega);
+        dest.writeInt(dia);
+        dest.writeInt(mes);
+        dest.writeInt(anio);
     }
 }

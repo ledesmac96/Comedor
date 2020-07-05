@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:id="@+id/backgroundlogin"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
         android:gravity="center"
@@ -26,7 +28,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/ic_reserva" />
+                app:srcCompat="@drawable/ic_reserva_vacio" />
 
             <TextView
                 android:gravity="center"
@@ -35,10 +37,12 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/montserrat_black"
                 android:text="NO EXISTEN RESERVAS REALIZADAS" />
 
+
         </LinearLayout>
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
