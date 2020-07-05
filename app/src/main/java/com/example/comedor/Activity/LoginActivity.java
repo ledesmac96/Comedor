@@ -220,7 +220,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
 
-                    String rol = object.getString("idRol");
+                    String rol = object.getString("idrol");
 
                     Rol ro = new Rol(Integer.parseInt(rol), id, "test");
 

@@ -28,8 +28,12 @@ public class ReservaViewModel {
         mRepository.update(reserva);
     }
 
-    public Reserva getAllByMenuID(int id) {
+    public Reserva getByReservaID(int id) {
         return mRepository.getById(id);
+    }
+
+    public List<Reserva> getAll() {
+        return mRepository.getAll();
     }
 
 

@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.comedor.Activity.InfoReservaActivity;
 import com.example.comedor.Adapter.ReservasAdapter;
+import com.example.comedor.Database.ReservaViewModel;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Modelo.Reserva;
 import com.example.comedor.R;
@@ -28,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -46,6 +49,7 @@ public class MisReservasFragment extends Fragment {
     Context mContext;
     DialogoProcesamiento dialog;
     LinearLayout latNoData;
+    ReservaViewModel mReservaViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,22 +67,6 @@ public class MisReservasFragment extends Fragment {
 
 
     private void loadListener() {
-
-
-    }
-
-    private void loadData() {
-        mReservas = new ArrayList<>();
-        mProgressBar.setVisibility(View.VISIBLE);
-        latNoData.setVisibility(View.GONE);
-        mReservasAdapter = new ReservasAdapter(mReservas, getContext(), ReservasAdapter.USER);
-        mLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        mRecyclerView.setNestedScrollingEnabled(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mReservasAdapter);
-
-        loadInfo();
-
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
@@ -88,6 +76,22 @@ public class MisReservasFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+
+    }
+
+    private void loadData() {
+        mReservas = new ArrayList<>();
+        mProgressBar.setVisibility(View.VISIBLE);
+        latNoData.setVisibility(View.GONE);
+        mReservaViewModel = new ReservaViewModel(getContext());
+        mReservasAdapter = new ReservasAdapter(mReservas, getContext(), ReservasAdapter.USER);
+        mLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        mRecyclerView.setNestedScrollingEnabled(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mReservasAdapter);
+
+        loadInfo();
 
     }
 
@@ -107,6 +111,7 @@ public class MisReservasFragment extends Fragment {
                 error.printStackTrace();
                 mProgressBar.setVisibility(View.GONE);
                 latNoData.setVisibility(View.VISIBLE);
+                loadInternal();
                 Utils.showToast(mContext, getString(R.string.servidorOff));
                 dialog.dismiss();
 
@@ -117,6 +122,18 @@ public class MisReservasFragment extends Fragment {
         dialog.setCancelable(false);
         dialog.show(mFragmentManager, "dialog_process");
         VolleySingleton.getInstance(mContext).addToRequestQueue(request);
+    }
+
+    private void loadInternal() {
+        List<Reserva> internal = mReservaViewModel.getAll();
+        if (internal != null) {
+            mReservas.clear();
+            mReservas.addAll(internal);
+        }
+        if (mReservas.size() > 0){
+            latNoData.setVisibility(View.GONE);
+        }
+
     }
 
     private void procesarRespuesta(String response) {
@@ -173,19 +190,30 @@ public class MisReservasFragment extends Fragment {
 
                 }
                 if (mReservas.size() > 0) {
+                    Collections.reverse(mReservas);
                     mReservasAdapter.change(mReservas);
                     mReservasAdapter.notifyDataSetChanged();
+                    saveInfo();
                 } else {
                     latNoData.setVisibility(View.VISIBLE);
                 }
 
-            }else{
+            } else {
                 latNoData.setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void saveInfo() {
+        for (Reserva reserva : mReservas) {
+            Reserva exist = mReservaViewModel.getByReservaID(reserva.getIdReserva());
+            if (exist == null) {
+                mReservaViewModel.insert(reserva);
+            }
+        }
     }
 
     private void loadViews() {

@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.comedor.Activity.HistorialReservasActivity;
 import com.example.comedor.Activity.ReservaDiaActivity;
 import com.example.comedor.Adapter.OpcionesAdapter;
+import com.example.comedor.Database.RolViewModel;
 import com.example.comedor.Modelo.Opciones;
+import com.example.comedor.Modelo.Rol;
 import com.example.comedor.R;
 import com.example.comedor.RecyclerListener.ItemClickSupport;
 
@@ -28,6 +29,7 @@ public class GestionReservasFragment extends Fragment {
     RecyclerView.LayoutManager mLayoutManager;
     OpcionesAdapter mAdapter;
     ArrayList<Opciones> mOpciones;
+    RolViewModel mRolViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,9 +65,12 @@ public class GestionReservasFragment extends Fragment {
     }
 
     private void loadData() {
+        mRolViewModel = new RolViewModel(getContext());
         mOpciones = new ArrayList<>();
         mOpciones.add(new Opciones(true, LinearLayout.VERTICAL, 2, "Reservas del día", R.drawable.ic_home, R.color.colorPrimaryDark));
-        mOpciones.add(new Opciones(true,LinearLayout.VERTICAL, 1, "Historial de reservas", R.drawable.ic_home, R.color.colorPrimaryDark));
+        Rol rol = mRolViewModel.getByPermission(401);
+        if (rol != null)
+            mOpciones.add(new Opciones(true, LinearLayout.VERTICAL, 1, "Historial de reservas", R.drawable.ic_home, R.color.colorPrimaryDark));
 
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);

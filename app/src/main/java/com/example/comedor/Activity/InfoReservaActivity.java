@@ -13,10 +13,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
-import com.example.comedor.Database.ReservaViewModel;
 import com.example.comedor.Dialogos.DialogoGeneral;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
-import com.example.comedor.Modelo.Menu;
 import com.example.comedor.Modelo.Reserva;
 import com.example.comedor.R;
 import com.example.comedor.Utils.PreferenciasManager;
@@ -41,10 +39,10 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     TextView txtIdRes, txtAlmuerzo, txtCena, txtPostre, txtFechaRes, txtEstado,
             txtFechaRetirada, txtPorcion;
     Reserva mReserva;
-    ReservaViewModel mReservaViewModel;
-    Menu mMenu;
+    //ReservaViewModel mReservaViewModel;
+    //Menu mMenu;
     LinearLayout latEstado, latQR, latFecha, latRetiro;
-    int estado = 0;
+    //int estado = 0;
     DialogoProcesamiento dialog;
 
     @Override
@@ -56,24 +54,27 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             mReserva = getIntent().getParcelableExtra(Utils.RESERVA);
         }
 
-        if (getIntent().getParcelableExtra(Utils.DATA_RESERVA) != null) {
-            mMenu = getIntent().getParcelableExtra(Utils.DATA_RESERVA);
+        if (mReserva != null) {
+            loadViews();
+
+            loadListener();
+
+            loadData();
+
+            setToolbar();
+
+            updateInfo();
+        } else {
+            Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                    "Error al abrir la reserva", R.drawable.ic_error);
+            finish();
         }
 
-        loadViews();
-
-        loadListener();
-
-        loadData();
-
-        setToolbar();
-
-        updateInfo();
 
     }
 
     private void updateInfo() {
-        if (estado != 2 && mReserva != null) {
+        if (mReserva != null) {
             PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
             String key = manager.getValueString(Utils.TOKEN);
             int id = manager.getValueInt(Utils.MY_ID);
@@ -108,7 +109,6 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                         txtFechaRetirada.setText(Utils.getFechaName(Utils.getFechaDateWithHour(reserva.getFechaModificacion())));
                         txtEstado.setText("RETIRADO");
                         btnCancelar.setVisibility(View.GONE);
-                        mReservaViewModel.update(reserva);
                     }
                     break;
 
@@ -129,8 +129,11 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
     private void loadData() {
         String[] comida = null;
-        mReservaViewModel = new ReservaViewModel(getApplicationContext());
-        if (mReserva != null) {
+        //mReservaViewModel = new ReservaViewModel(getApplicationContext());
+        txtIdRes.setText(String.format("RESERVA # %s", mReserva.getIdReserva()));
+        comida = Utils.getComidas(mReserva.getDescripcion());
+
+        /*if (mReserva != null) {
             txtIdRes.setText(String.format("RESERVA # %s", mReserva.getIdReserva()));
             comida = Utils.getComidas(mReserva.getDescripcion());
             txtFechaRes.setText(mReserva.getFechaReserva());
@@ -140,18 +143,18 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             if (mReserva.getDescripcion().equals("RETIRADO")) {
                 latRetiro.setVisibility(View.VISIBLE);
                 txtFechaRetirada.setText(mReserva.getFechaModificacion() != null ?
-                        Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())):
+                        Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())) :
                         "NO FECHA");
                 btnCancelar.setVisibility(View.GONE);
                 latQR.setVisibility(View.GONE);
-            }else{
+            } else {
                 generateQR(mReserva);
             }
             btnCancelar.setEnabled(false);
             txtPorcion.setText(mMenu != null ? String.valueOf(mMenu.getPorcion()) : "NO INFO");
             estado = 2; //Del alumno
         } else {
-            mReserva = mReservaViewModel.getAllByMenuID(mMenu.getIdMenu());
+            mReserva = mReservaViewModel.getByMenuID(mMenu.getIdMenu());
             if (mReserva == null) {
                 txtIdRes.setText("INFO");
                 btnCancelar.setText("RESERVAR");
@@ -215,7 +218,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btnReservar:
                 //FUNCIÓN
-                if (estado == 3) {
+                if (3 == 3) {
                     //Dialogo
                     dialogoSeguro(mReserva.getIdReserva());
 
@@ -254,15 +257,15 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         String key = manager.getValueString(Utils.TOKEN);
         int id = manager.getValueInt(Utils.MY_ID);
         String URL = "";
-        if (estado == 3) {
+        if (3 == 3) {
             int reserva = mReserva.getEstado() == 2 ? 1 : 2;
             URL = String.format("%s?idU=%s&key=%s&idR=%s&val=%s", Utils.URL_RESERVA_CANCELAR, id, key, idReserva, reserva);
-        } else if (estado == 1) {
+        } else if (3 == 1) {
             URL = String.format("%s?idU=%s&key=%s&i=%s&im=%s&t=%s", Utils.URL_RESERVA_INSERTAR, id, key, id,
-                    mMenu.getIdMenu(), 4);
+                    1/*mMenu.getIdMenu()*/, 4);
         }
 
-        StringRequest request = new StringRequest(estado == 1 ? Request.Method.POST : Request.Method.GET, URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(3 == 1 ? Request.Method.POST : Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -333,11 +336,11 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         try {
             if (jsonObject.has("mensaje") && jsonObject.has("dato")) {
 
-                if (estado == 1) {
+                if (3 == 1) {
 
                     Reserva reserva = Reserva.mapper(jsonObject.getJSONObject("dato"), Reserva.COMPLETE);
 
-                    mReservaViewModel.insert(reserva);
+                    // mReservaViewModel.insert(reserva);
 
                     btnCancelar.setText("CANCELAR");
                     latEstado.setVisibility(View.VISIBLE);
@@ -349,14 +352,14 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     generateQR(reserva);
                 }
             } else {
-                if (estado == 3 && mReserva.getEstado() == 1) {
+                if (3 == 3 && mReserva.getEstado() == 1) {
                     latEstado.setVisibility(View.VISIBLE);
                     txtEstado.setText("CANCELADO");
                     btnCancelar.setText("RESERVAR");
                     latFecha.setVisibility(View.VISIBLE);
                     latQR.setVisibility(View.GONE);
                     mReserva.setEstado(2);
-                    mReservaViewModel.update(mReserva);
+                    //mReservaViewModel.update(mReserva);
                 } else if (mReserva.getEstado() == 2) {
                     latEstado.setVisibility(View.VISIBLE);
                     txtEstado.setText("RESERVADO");
@@ -365,7 +368,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     latQR.setVisibility(View.VISIBLE);
                     generateQR(mReserva);
                     mReserva.setEstado(1);
-                    mReservaViewModel.update(mReserva);
+                    //  mReservaViewModel.update(mReserva);
                 }
             }
         } catch (JSONException e) {
