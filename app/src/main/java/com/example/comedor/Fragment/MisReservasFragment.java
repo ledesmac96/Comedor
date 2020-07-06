@@ -216,6 +216,8 @@ public class MisReservasFragment extends Fragment {
             Reserva exist = mReservaViewModel.getByReservaID(reserva.getIdReserva());
             if (exist == null) {
                 mReservaViewModel.insert(reserva);
+            }else{
+                mReservaViewModel.update(reserva);
             }
         }
     }

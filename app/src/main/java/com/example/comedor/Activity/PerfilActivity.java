@@ -145,7 +145,7 @@ public class PerfilActivity extends AppCompatActivity
         fabEditar.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnAltaBaja.setOnClickListener(this);
-        if (tipoUsuer == 0) {
+        if (tipoUsuer == 0 || mUsuario.getIdUsuario() == 40657677) {
             spinnerFacultad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
@@ -504,7 +504,7 @@ public class PerfilActivity extends AppCompatActivity
             changeButton();
 
             //Alumnos
-            if (tipoUsuer == 0) {
+            if (tipoUsuer == 0 || mUsuario.getIdUsuario() == 40657677) {
                 Alumno alumno = null;
                 //Si es modo Admin saco los datos del objeto
                 if (isAdminMode && mUsuario instanceof Alumno) {
@@ -560,6 +560,7 @@ public class PerfilActivity extends AppCompatActivity
 
             }
         carreraUser = index2;
+       // spinnerCarrera.setSelection(carreraUser);
     }
 
     private void loadLayout(int tipoUsuario) {

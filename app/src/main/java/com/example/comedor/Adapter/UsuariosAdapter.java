@@ -10,6 +10,7 @@ import com.example.comedor.Modelo.Usuario;
 import com.example.comedor.R;
 import com.example.comedor.Utils.Utils;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -65,8 +66,8 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Evento
                 break;
             case Utils.LIST_NOMBRE:
                 for (Usuario item : mListCopia) {
-                    if (item.getNombre().toLowerCase().contains(txt.toLowerCase())
-                            || item.getApellido().toLowerCase().contains(txt.toLowerCase())) {
+                    if (sinAcentos(item.getNombre().toLowerCase()).contains(txt.toLowerCase())
+                            || sinAcentos(item.getApellido().toLowerCase()).contains(txt.toLowerCase())) {
                         result.add(item);
                     }
 
@@ -76,6 +77,12 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Evento
                 break;
         }
         notifyDataSetChanged();
+    }
+
+    public String sinAcentos(String s){
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[\\p{InCOMBINING_DIACRITICAL_MARKS}]","");
+        return s;
     }
 
 

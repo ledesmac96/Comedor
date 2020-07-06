@@ -238,12 +238,12 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btnReservar:
                 //FUNCIÓN
-                if (3 == 3) {
+                if (mReserva.getDescripcion().equals("RESERVADO")) {
                     //Dialogo
                     dialogoSeguro(mReserva.getIdReserva());
 
                 } else {
-                    reservarCancelar(0);
+                    reservarCancelar(mReserva.getIdReserva());
                 }
 
                 break;
@@ -277,15 +277,9 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         String key = manager.getValueString(Utils.TOKEN);
         int id = manager.getValueInt(Utils.MY_ID);
         String URL = "";
-        if (3 == 3) {
-            int reserva = mReserva.getEstado() == 2 ? 1 : 2;
-            URL = String.format("%s?idU=%s&key=%s&idR=%s&val=%s", Utils.URL_RESERVA_CANCELAR, id, key, idReserva, reserva);
-        } else if (3 == 1) {
-            URL = String.format("%s?idU=%s&key=%s&i=%s&im=%s&t=%s", Utils.URL_RESERVA_INSERTAR, id, key, id,
-                    1/*mMenu.getIdMenu()*/, 4);
-        }
-
-        StringRequest request = new StringRequest(3 == 1 ? Request.Method.POST : Request.Method.GET, URL, new Response.Listener<String>() {
+        int reserva = mReserva.getDescripcion().equals("RESERVADO") ? 2 : 1;
+        URL = String.format("%s?idU=%s&key=%s&idR=%s&val=%s", Utils.URL_RESERVA_CANCELAR, id, key, idReserva, reserva);
+        StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -354,9 +348,32 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
     private void loadInfo(JSONObject jsonObject) {
         try {
-            if (jsonObject.has("mensaje") && jsonObject.has("dato")) {
+            if (jsonObject.has("mensaje")) {
 
-                if (3 == 1) {
+                String mensaje = jsonObject.getString("mensaje");
+
+                if (mensaje.contains("cancelada")) {
+                    latEstado.setVisibility(View.VISIBLE);
+                    btnCancelar.setText("RESERVAR");
+                    latFecha.setVisibility(View.VISIBLE);
+                    latQR.setVisibility(View.GONE);
+                    mReserva.setEstado(2);
+                    mReserva.setDescripcion("CANCELADO");
+                    txtEstado.setText(mReserva.getDescripcion());
+                } else if (mensaje.contains("habilitada")) {
+                    latEstado.setVisibility(View.VISIBLE);
+                    mReserva.setEstado(1);
+                    mReserva.setDescripcion("RESERVADO");
+                    txtEstado.setText(mReserva.getDescripcion());
+                    btnCancelar.setText("CANCELAR");
+                    latFecha.setVisibility(View.VISIBLE);
+                    latQR.setVisibility(View.VISIBLE);
+                    generateQR(mReserva);
+
+                }
+            }
+
+               /* if (3 == 1) {
 
                     Reserva reserva = Reserva.mapper(jsonObject.getJSONObject("dato"), Reserva.COMPLETE);
 
@@ -372,25 +389,8 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     generateQR(reserva);
                 }
             } else {
-                if (3 == 3 && mReserva.getEstado() == 1) {
-                    latEstado.setVisibility(View.VISIBLE);
-                    txtEstado.setText("CANCELADO");
-                    btnCancelar.setText("RESERVAR");
-                    latFecha.setVisibility(View.VISIBLE);
-                    latQR.setVisibility(View.GONE);
-                    mReserva.setEstado(2);
-                    //mReservaViewModel.update(mReserva);
-                } else if (mReserva.getEstado() == 2) {
-                    latEstado.setVisibility(View.VISIBLE);
-                    txtEstado.setText("RESERVADO");
-                    btnCancelar.setText("CANCELAR");
-                    latFecha.setVisibility(View.VISIBLE);
-                    latQR.setVisibility(View.VISIBLE);
-                    generateQR(mReserva);
-                    mReserva.setEstado(1);
-                    //  mReservaViewModel.update(mReserva);
-                }
-            }
+
+            }*/
         } catch (JSONException e) {
             e.printStackTrace();
         }

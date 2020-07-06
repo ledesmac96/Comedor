@@ -60,7 +60,7 @@
     <string name="confirmadoReservaError">Hubo un error al intentar confirmar la reserva</string>
     <string name="sinDatos">¡No existen datos!</string>
     <string name="reservado">¡Reservado!</string>
-    <string name="reservaExito">Tu reserva #%s fue registrada exitosamente. Dirígite a \"Mis Reservas\" para más info</string>
+    <string name="reservaExito">Tu reserva #%s fue registrada exitosamente. Dirigíte a \"Mis Reservas\" para más info</string>
     <string name="reservaError">Hubo un inconveniente con tu reserva, intenta nuevamente</string>
     <string name="salioMal">¡Algo salió mal!</string>
     <string name="dirigeReserva">Dirígete a la opción \"Mis Reservas\" para visualizar tu reserva</string>

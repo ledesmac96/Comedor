@@ -141,13 +141,14 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadAdmin() {
-        Rol rol = mRolViewModel.getByPermission(500);
+        Rol rol = mRolViewModel.getByPermission(402);
         if (rol != null) {
             latAdmin.setVisibility(View.VISIBLE);
             //cardReservar.setVisibility(View.GONE);
             isAdmin = true;
         } else {
             isAdmin = false;
+            latAdmin.setVisibility(View.GONE);
             //cardReservar.setVisibility(View.VISIBLE);
         }
     }
@@ -431,7 +432,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
                     }
                 })
-                .setIcono(R.drawable.ic_advertencia)
+                .setIcono(b ? R.drawable.ic_exito : R.drawable.ic_advertencia)
                 .setTipo(DialogoGeneral.TIPO_ACEPTAR);
         DialogoGeneral dialogoGeneral = builder.build();
         dialogoGeneral.show(getFragmentManager(), "dialog_ad");

@@ -157,7 +157,9 @@ public class Usuario implements Parcelable {
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
                     validez = Integer.parseInt(object.getString("validez"));
+                    String anio = object.getString("anio");
                     usuario = new Usuario(idUsuario, nombre, apellido, validez);
+                    usuario.setDomicilio(anio);
                     break;
                 case ESTADISTICA:
                     idUsuario = Integer.parseInt(object.getString("idusuario"));

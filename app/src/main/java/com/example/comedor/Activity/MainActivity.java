@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                 ((MisReservasFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
                 //
                 break;
-            case R.id.item_config:
+            case R.id.item_perfil:
                 startActivity(new Intent(getApplicationContext(), PerfilActivity.class));
                 break;
             case R.id.item_menu:

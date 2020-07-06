@@ -35,7 +35,7 @@
 
         <menu>
             <item
-                android:id="@+id/item_config"
+                android:id="@+id/item_perfil"
                 android:icon="@drawable/ic_perfil"
                 android:title="Mi perfil"/>
             <item

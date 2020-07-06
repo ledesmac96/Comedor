@@ -27,8 +27,9 @@
                 android:src="@drawable/ic_salida" />
 
             <TextView
+                android:gravity="center"
                 android:id="@+id/txtTitulo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="¡ADVERTENCIA!"
                 android:textColor="@color/colorWhite"
