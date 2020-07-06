@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Comedor Univertario</string>
+    <string name="app_name">Comedor Universitario</string>
 
     <string name="camposIncompletos">¡Por favor complete los campos!</string>
     <string name="noData">Usuario inexistente</string>

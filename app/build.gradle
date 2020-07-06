@@ -11,12 +11,30 @@ android {
         versionName "0.1"
         multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    android.defaultConfig.javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+    signingConfigs {
+        release {
+            storeFile file("E:/Cosas de Denis/BienestarEstudiantil/key_comedor.jks")
+            storePassword "unse@belgrano"
+            keyAlias "Comedor"
+            keyPassword "unse@belgrano"
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            pseudoLocalesEnabled false
+            zipAlignEnabled true
+            shrinkResources true
         }
     }
 
