@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.unse.bienestar.comedor.Fragment.EstadisticasFragment">
+    tools:context="com.example.comedor.Fragment.EstadisticasFragment">
 
     <LinearLayout
         android:orientation="vertical"
@@ -123,6 +123,7 @@
                                 android:textSize="22sp"
                                 android:textStyle="bold"
                                 android:layout_height="wrap_content" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

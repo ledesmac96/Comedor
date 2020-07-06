@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Comedor Univertario</string>
 
-    <string name="home_second">Home Second</string>
     <string name="camposIncompletos">¡Por favor complete los campos!</string>
     <string name="noData">Usuario inexistente</string>
     <string name="campoVacio">¡No puede ser vacío!</string>
@@ -11,7 +10,7 @@
     <string name="invalidoContrasenia">La contraseña tiene que tener mínimo 4 caracteres</string>
     <string name="campoNoGrande">¡Mínimo tres caracteres!</string>
     <string name="campoNoFormato">Formato incorrecto</string>
-    <string name="numeroTelInvalido">Número de telefono inválido</string>
+    <string name="numeroTelInvalido">Número de teléfono inválido</string>
     <string name="emailInvalido">Email inválido</string>
     <string name="contraseniaMinimo">Mínimo cuatro caracteres</string>
     <string name="contraseniaNoIguales">Las contraseñas no son iguales</string>
@@ -43,14 +42,14 @@
     <string name="usuarioCreado">¡Usuario creado!</string>
     <string name="usuarioErrorCrear">¡Error al crear el usuario!</string>
     <string name="usuarioYaExiste">¡Ya existe el usuario que desea crear!</string>
-    <string name="noMenu">¡No hay menus éste mes!</string>
+    <string name="noMenu">¡No hay menús éste mes!</string>
     <string name="eligeFecha">¡Elige una fecha!</string>
     <string name="menuCreado">¡Menú creado!</string>
-    <string name="menuExistente">¡Ya existe un menú para el dia!</string>
+    <string name="menuExistente">¡Ya existe un menú para el día!</string>
     <string name="menuError">¡Error al crear el menú!</string>
-    <string name="noReservas">¡No existen reservas el dia de hoy!</string>
+    <string name="noReservas">¡No existen reservas el día de hoy!</string>
     <string name="noReservasUser">¡No posee reservas!</string>
-    <string name="cancelarReserva">¿Está seguro que desea cancelar la reserva? Una vez cancelada no puede ser reservada nuevamente</string>
+    <string name="cancelarReserva">¿Estás seguro que deseas cancelar la reserva?</string>
     <string name="reservaNoExiste">¡Reserva no existente!</string>
     <string name="yaReservo">¡Ya se reservó en este menú!</string>
     <string name="errorActualizar">¡Error al intentar confirmar!</string>
@@ -60,13 +59,13 @@
     <string name="confirmadoReservaError">Hubo un error al intentar confirmar la reserva</string>
     <string name="sinDatos">¡No existen datos!</string>
     <string name="reservado">¡Reservado!</string>
-    <string name="reservaExito">Tu reserva #%s fue registrada exitosamente. Dirigíte a \"Mis Reservas\" para más info</string>
-    <string name="reservaError">Hubo un inconveniente con tu reserva, intenta nuevamente</string>
+    <string name="reservaExito">Tu reserva #%s fue registrada exitosamente. Entrá en \"Mis Reservas\" para más información</string>
+    <string name="reservaError">Hubo un inconveniente con tu reserva, intentá nuevamente</string>
     <string name="salioMal">¡Algo salió mal!</string>
-    <string name="dirigeReserva">Dirígete a la opción \"Mis Reservas\" para visualizar tu reserva</string>
-    <string name="reservaInfo">¿Estas seguro que desea reservar el menú el dia %02d/%02d/%02d?</string>
-    <string name="finalizarMenu">¿Está seguro que desea terminar el día?</string>
-    <string name="rehabilitarMenu">¿Está seguro que desea volver a habilitar el día?</string>
+    <string name="dirigeReserva">Entrá en la opción \"Mis Reservas\" para visualizar tu reserva</string>
+    <string name="reservaInfo">¿Estás seguro que deseas reservar el menú el día %02d/%02d/%02d?</string>
+    <string name="finalizarMenu">¿Estás seguro que deseas terminar el día?</string>
+    <string name="rehabilitarMenu">¿Estás seguro que deseas volver a habilitar el día?</string>
 
     <string name="txtAddAlumno">Complete OBLIGATORIAMENTE todos los datos del alumno.</string>
     <string name="txtNotaMenu">NOTA: en caso de no ofrecer cena y/o postre, dejar en blanco.</string>
