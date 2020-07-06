@@ -53,5 +53,6 @@ public class GeneratePDFTask extends AsyncTask<String, String, String> {
             e.printStackTrace();
         }
         dialogoProcesamiento.dismiss();
+        Utils.showToast(mContext, "¡Listado creado!");
     }
 }

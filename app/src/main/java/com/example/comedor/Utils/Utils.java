@@ -722,7 +722,7 @@ public class Utils {
             document.add(getText("BIENESTAR ESTUDIANTIL", 12, true));
             document.add(getText("SISTEMA DE GESTIÓN - COMEDOR UNIVERSITARIO", 11, true));
             // document.add(getText("----------------------------------------------------------------------------------------------------------------------", 11, true));
-            document.add(getText("LISTA DE USUARIOS", 10, true));
+            document.add(getText("LISTADO DE USUARIOS", 10, true));
             Table table = new Table(new UnitValue[]{
                     new UnitValue(UnitValue.PERCENT, 20f),
                     new UnitValue(UnitValue.PERCENT, 6f),
@@ -761,7 +761,7 @@ public class Utils {
                 table.addCell(createCell("          ", true, 9));
             }
             document.add(table);
-            document.add(getText("Generado desde App Comedor Universitario", 12, false).setTextAlignment(TextAlignment.RIGHT));
+            document.add(getText("Generado desde App Comedor Universitario", 11, false).setTextAlignment(TextAlignment.RIGHT));
             document.add(getText("Fecha de Generación: " +
                     getFechaName(new Date(System.currentTimeMillis())), 10, false).setTextAlignment(TextAlignment.RIGHT));
             document.close();
