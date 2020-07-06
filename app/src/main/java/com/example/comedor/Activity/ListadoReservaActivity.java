@@ -100,6 +100,7 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
         cardEstadisticas.setVisibility(View.GONE);
         mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setNestedScrollingEnabled(true);
         loadInfo();
 
     }

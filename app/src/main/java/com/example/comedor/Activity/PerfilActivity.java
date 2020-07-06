@@ -738,11 +738,13 @@ public class PerfilActivity extends AppCompatActivity
         if (mode != 0) {
             fabEditar.setImageResource(R.drawable.ic_save);
             edtFechaNac.setOnClickListener(this);
+            edtFechaNac.setEnabled(true);
             spinnerFacultad.setEnabled(true);
             spinnerCarrera.setEnabled(true);
         } else {
             fabEditar.setImageResource(R.drawable.ic_edit_);
             edtFechaNac.setOnClickListener(null);
+            edtFechaNac.setEnabled(false);
             spinnerFacultad.setEnabled(false);
             spinnerCarrera.setEnabled(false);
         }

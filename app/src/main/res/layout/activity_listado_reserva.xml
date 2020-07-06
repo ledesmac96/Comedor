@@ -1,298 +1,330 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        layout="@layout/toolbar_trans"/>
-
     <LinearLayout
         android:orientation="vertical"
-        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:layout_margin="10dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_margin="10dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Menú: "
-                    android:textSize="16sp"
-                    android:fontFamily="@font/montserrat_black"/>
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" Almuerzo: "
-                        android:textSize="16sp"
-                        android:fontFamily="@font/montserrat_black"/>
-
-                    <TextView
-                        android:layout_marginStart="4dp"
-                        android:id="@+id/txtAlmuerzo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="Milanesas con papas fritas"
-                        android:fontFamily="@font/montserrat_regular"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" Cena: "
-                        android:textSize="16sp"
-                        android:fontFamily="@font/montserrat_black"/>
-
-                    <TextView
-                        android:layout_marginStart="4dp"
-                        android:id="@+id/txtCena"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="Bife a la criolla"
-                        android:fontFamily="@font/montserrat_regular"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" Postre: "
-                        android:textSize="16sp"
-                        android:fontFamily="@font/montserrat_black"/>
-
-                    <TextView
-                        android:layout_marginStart="4dp"
-                        android:id="@+id/txtPostre"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="Flan o fruta"
-                        android:fontFamily="@font/montserrat_regular"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Porción: "
-                        android:textSize="16sp"
-                        android:fontFamily="@font/montserrat_black"/>
-
-                    <TextView
-                        android:layout_marginStart="4dp"
-                        android:id="@+id/txtPorcion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="2"
-                        android:fontFamily="@font/montserrat_regular"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        <include
+            layout="@layout/toolbar_trans"/>
 
         <LinearLayout
-            android:id="@+id/latVacio"
+            android:orientation="vertical"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:gravity="center"
+            <androidx.cardview.widget.CardView
                 android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="NO EXISTEN RESERVAS ACTUALMENTE"
-                android:textColor="@color/colorAccent"
-                android:fontFamily="@font/montserrat_black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardEstadistica"
-            android:layout_margin="10dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_margin="5dp"
-                android:orientation="vertical"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barCantidad"
-                    android:layout_width="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_height="300dp">
-                </com.github.mikephil.charting.charts.BarChart>
-
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_gravity="center"
-                        android:gravity="start"
+                    <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Menú: "
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_black"/>
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
-                            android:layout_gravity="center"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@color/colorGreen" />
-
                         <TextView
-                            android:textSize="12sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Total" />
+                            android:text=" Almuerzo: "
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat_black"/>
+
+                        <TextView
+                            android:layout_marginStart="4dp"
+                            android:id="@+id/txtAlmuerzo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="Milanesas con papas fritas"
+                            android:fontFamily="@font/montserrat_regular"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="start"
-                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
-                            android:layout_gravity="center"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@color/colorOrange" />
-
                         <TextView
-                            android:textSize="12sp"
-                            android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Reservados" />
+                            android:text=" Cena: "
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat_black"/>
+
+                        <TextView
+                            android:layout_marginStart="4dp"
+                            android:id="@+id/txtCena"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="Bife a la criolla"
+                            android:fontFamily="@font/montserrat_regular"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="start"
-                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
-                            android:layout_gravity="center"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@color/colorYellow" />
-
                         <TextView
-                            android:textSize="12sp"
-                            android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Retirados" />
+                            android:text=" Postre: "
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat_black"/>
+
+                        <TextView
+                            android:layout_marginStart="4dp"
+                            android:id="@+id/txtPostre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="Flan o fruta"
+                            android:fontFamily="@font/montserrat_regular"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="start"
-                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <View
-                            android:layout_gravity="center"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@color/colorPink" />
-
                         <TextView
-                            android:textSize="12sp"
-                            android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Cancelados" />
+                            android:text="Porción: "
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat_black"/>
+
+                        <TextView
+                            android:layout_marginStart="4dp"
+                            android:id="@+id/txtPorcion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="2"
+                            android:fontFamily="@font/montserrat_regular"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/latVacio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NO EXISTEN RESERVAS ACTUALMENTE"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/montserrat_black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardEstadistica"
+                android:layout_margin="10dp"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recycler" />
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barCantidad"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="300dp">
+                    </com.github.mikephil.charting.charts.BarChart>
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_gravity="center"
+                                android:gravity="start"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_gravity="center"
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:background="@color/colorGreen" />
+
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:text="Total" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginStart="10dp"
+                                android:layout_gravity="center"
+                                android:gravity="start"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_gravity="center"
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:background="@color/colorOrange" />
+
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:text="Reservados" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_marginStart="10dp"
+                                android:layout_gravity="center"
+                                android:gravity="start"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_gravity="center"
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:background="@color/colorYellow" />
+
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:text="Retirados" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginStart="10dp"
+                                android:layout_gravity="center"
+                                android:gravity="start"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_gravity="center"
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:background="@color/colorPink" />
+
+                                <TextView
+                                    android:textSize="12sp"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:text="Cancelados" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+
+
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
-</LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

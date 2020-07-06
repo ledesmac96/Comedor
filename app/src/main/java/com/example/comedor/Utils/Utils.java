@@ -445,6 +445,44 @@ public class Utils {
         return value;
     }
 
+    public static String getFechaOrder(Date date) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        String mesS, diaS, minutosS, segS, horasS;
+        int mes = cal.get(Calendar.MONTH) + 1;
+        if (mes < 10) {
+            mesS = "0" + mes;
+        } else
+            mesS = String.valueOf(mes);
+
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
+        if (dia < 10) {
+            diaS = "0" + dia;
+        } else
+            diaS = String.valueOf(dia);
+
+        int minutos = cal.get(Calendar.MINUTE);
+        if (minutos < 10) {
+            minutosS = "0" + minutos;
+        } else
+            minutosS = String.valueOf(minutos);
+
+        int seg = cal.get(Calendar.SECOND);
+        if (seg < 10) {
+            segS = "0" + seg;
+        } else
+            segS = String.valueOf(seg);
+
+        int horas = cal.get(Calendar.HOUR_OF_DAY);
+        if (horas < 10)
+            horasS = "0" + horas;
+        else
+            horasS = String.valueOf(horas);
+
+        return String.format("%s/%s/%s - %s:%s:%s", diaS, mesS, cal.get(Calendar.YEAR), horasS, minutosS, segS);
+    }
+
     public static String getBirthday(Date date) {
 
         Calendar cal = Calendar.getInstance();
@@ -695,9 +733,21 @@ public class Utils {
         if (descripcion != null && descripcion.contains("$")) {
             int index = descripcion.indexOf("$");
             int finIndex = descripcion.lastIndexOf("$");
-            food[0] = descripcion.substring(0, index).trim();
-            food[1] = descripcion.substring(index + 1, finIndex).trim();
-            food[2] = descripcion.substring(finIndex + 1, descripcion.length() - 1).trim();
+
+            try {
+                food[0] = descripcion.substring(0, index).trim();
+            } catch (IndexOutOfBoundsException e) {
+            }
+            try {
+                food[1] = descripcion.substring(index + 1, finIndex).trim();
+            } catch (IndexOutOfBoundsException e) {
+            }
+            try {
+                food[2] = descripcion.substring(finIndex + 1, descripcion.length() - 1).trim();
+            } catch (IndexOutOfBoundsException e) {
+
+            }
+
         }
         return food;
     }
@@ -763,7 +813,7 @@ public class Utils {
             document.add(table);
             document.add(getText("Generado desde App Comedor Universitario", 11, false).setTextAlignment(TextAlignment.RIGHT));
             document.add(getText("Fecha de Generación: " +
-                    getFechaName(new Date(System.currentTimeMillis())), 10, false).setTextAlignment(TextAlignment.RIGHT));
+                    getFechaOrder(new Date(System.currentTimeMillis())), 10, false).setTextAlignment(TextAlignment.RIGHT));
             document.close();
 
 

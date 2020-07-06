@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -63,104 +63,126 @@
                 <LinearLayout
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:layout_gravity="center"
-                        android:gravity="start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                        <View
+                        <LinearLayout
                             android:layout_gravity="center"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@color/colorGreen" />
-
-                        <TextView
-                            android:textSize="12sp"
+                            android:gravity="start"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Total" />
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_gravity="center"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:background="@color/colorGreen" />
+
+                            <TextView
+                                android:textSize="12sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:text="Total" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginStart="10dp"
+                            android:layout_gravity="center"
+                            android:gravity="start"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_gravity="center"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:background="@color/colorOrange" />
+
+                            <TextView
+                                android:textSize="12sp"
+                                android:layout_marginStart="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:text="Reservados" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                        <View
+                        <LinearLayout
+                            android:layout_marginStart="10dp"
                             android:layout_gravity="center"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@color/colorOrange" />
-
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginStart="5dp"
+                            android:gravity="start"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Reservados" />
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_gravity="center"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:background="@color/colorYellow" />
+
+                            <TextView
+                                android:textSize="12sp"
+                                android:layout_marginStart="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:text="Retirados" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginStart="10dp"
+                            android:layout_gravity="center"
+                            android:gravity="start"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_gravity="center"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:background="@color/colorPink" />
+
+                            <TextView
+                                android:textSize="12sp"
+                                android:layout_marginStart="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:text="Cancelados" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
 
-                        <View
-                            android:layout_gravity="center"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@color/colorYellow" />
 
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginStart="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Retirados" />
 
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center"
-                        android:gravity="start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
 
-                        <View
-                            android:layout_gravity="center"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="@color/colorPink" />
-
-                        <TextView
-                            android:textSize="12sp"
-                            android:layout_marginStart="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Cancelados" />
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -176,4 +198,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

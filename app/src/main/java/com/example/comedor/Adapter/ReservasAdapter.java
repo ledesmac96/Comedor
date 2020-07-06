@@ -49,7 +49,7 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
         Reserva reserva = mReservas.get(position);
 
         holder.idReserva.setText(String.format("RESERVA #%s", reserva.getIdReserva()));
-        holder.fecha.setText(reserva.getFechaReserva());
+        holder.fecha.setText(Utils.getFechaOrder(Utils.getFechaDateWithHour(reserva.getFechaReserva())));
         holder.estado.setText(reserva.getDescripcion());
         if (reserva.getDescripcion().equals("RESERVADO")) {
             holder.mBackg.getBackground().setColorFilter(Color.parseColor("#E64A19"), PorterDuff.Mode.SRC_OVER);
@@ -58,7 +58,7 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
             holder.mBackg.getBackground().setColorFilter(Color.parseColor("#32AC37"), PorterDuff.Mode.SRC_OVER);
 
         } else if (reserva.getDescripcion().equals("CANCELADO")) {
-            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#D32F2F"), PorterDuff.Mode.SRC_OVER);
+            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#FFC2185B"), PorterDuff.Mode.SRC_OVER);
 
         }
         if (tipo == ADMIN) {

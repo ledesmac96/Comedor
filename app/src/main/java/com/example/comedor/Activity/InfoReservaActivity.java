@@ -108,7 +108,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     if (reserva.getEstado() == 3) {
                         latQR.setVisibility(View.GONE);
                         latRetiro.setVisibility(View.VISIBLE);
-                        txtFechaRetirada.setText(Utils.getFechaName(Utils.getFechaDateWithHour(reserva.getFechaModificacion())));
+                        txtFechaRetirada.setText(Utils.getFechaOrder(Utils.getFechaDateWithHour(reserva.getFechaModificacion())));
                         txtEstado.setText("RETIRADO");
                         btnCancelar.setVisibility(View.GONE);
                     }
@@ -137,7 +137,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         txtAlmuerzo.setText(comida[0]);
         txtCena.setText(comida[1]);
         txtPostre.setText(comida[2]);
-        txtFechaRes.setText(mReserva.getFechaReserva());
+        txtFechaRes.setText(Utils.getFechaOrder(Utils.getFechaDateWithHour(mReserva.getFechaReserva())));
         txtEstado.setText(mReserva.getDescripcion());
         //txtEstado.setText(mReserva.getEstado() == 1 ? "RESERVADO" : mReserva.getEstado() == 2 ? "CANCELADO" : "RETIRADO");
         btnCancelar.setText(mReserva.getDescripcion().equals("RESERVADO") ? "CANCELAR" : "RESERVAR");
@@ -145,7 +145,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         if (mReserva.getDescripcion().equals("RETIRADO")) {
             latRetiro.setVisibility(View.VISIBLE);
             txtFechaRetirada.setText(mReserva.getFechaModificacion() != null ?
-                    Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())) :
+                    Utils.getFechaOrder(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())) :
                     "NO FECHA");
             btnCancelar.setVisibility(View.GONE);
             latQR.setVisibility(View.GONE);
