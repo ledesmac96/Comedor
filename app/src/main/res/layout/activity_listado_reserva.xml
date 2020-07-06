@@ -27,6 +27,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Menú: "
+                    android:textSize="16sp"
+                    android:fontFamily="@font/montserrat_black"/>
+
                 <LinearLayout
                     android:gravity="center"
                     android:layout_width="match_parent"
@@ -36,17 +43,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Plato: "
+                        android:text=" Almuerzo: "
                         android:textSize="16sp"
                         android:fontFamily="@font/montserrat_black"/>
 
                     <TextView
-                        android:layout_marginStart="5dp"
-                        android:id="@+id/txtPlato"
+                        android:layout_marginStart="4dp"
+                        android:id="@+id/txtAlmuerzo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Info Comida"
+                        android:text="Milanesas con papas fritas"
                         android:fontFamily="@font/montserrat_regular"/>
 
                 </LinearLayout>
@@ -60,7 +67,55 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Porciones: "
+                        android:text=" Cena: "
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_black"/>
+
+                    <TextView
+                        android:layout_marginStart="4dp"
+                        android:id="@+id/txtCena"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Bife a la criolla"
+                        android:fontFamily="@font/montserrat_regular"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Postre: "
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_black"/>
+
+                    <TextView
+                        android:layout_marginStart="4dp"
+                        android:id="@+id/txtPostre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Flan o fruta"
+                        android:fontFamily="@font/montserrat_regular"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Porción: "
                         android:textSize="16sp"
                         android:fontFamily="@font/montserrat_black"/>
 
@@ -70,7 +125,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Info porciones"
+                        android:text="2"
                         android:fontFamily="@font/montserrat_regular"/>
 
                 </LinearLayout>
@@ -140,6 +195,7 @@
                             android:background="@color/colorGreen" />
 
                         <TextView
+                            android:textSize="12sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
@@ -163,6 +219,7 @@
                             android:background="@color/colorOrange" />
 
                         <TextView
+                            android:textSize="12sp"
                             android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -186,6 +243,7 @@
                             android:background="@color/colorYellow" />
 
                         <TextView
+                            android:textSize="12sp"
                             android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -209,6 +267,7 @@
                             android:background="@color/colorPink" />
 
                         <TextView
+                            android:textSize="12sp"
                             android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.comedor">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    package="com.unse.bienestar.comedor">
 
     <application
         android:allowBackup="true"
@@ -13,17 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Dialogos.DialogCancelar"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".Activity.InfoReservaActivity" />
-        <activity android:name=".Fragment.MisReservasFragment" />
         <activity android:name=".Activity.NuevoAlumnoActivity" />
-        <activity android:name=".Fragment.GestionReservasFragment" />
-        <activity android:name=".Fragment.InicioFragment" />
-        <activity android:name=".Fragment.EstadisticasFragment" />
-        <activity android:name=".Fragment.GestionUsuarioFragment" />
-        <activity android:name=".Fragment.GestionMenuFragment" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.SlideWelcomeActivity">
@@ -41,5 +29,11 @@
         <activity android:name=".Activity.ListadoReservaActivity" />
         <activity android:name=".Activity.AboutActivity" />
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
