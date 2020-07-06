@@ -675,10 +675,9 @@
                                                             android:id="@+id/spinner1"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:textSize="14sp"
-                                                            android:textStyle="bold"
-                                                            android:textColor="@color/colorTextDefault"
-                                                            android:layout_margin="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:gravity="center"
+                                                            android:spinnerMode="dropdown"
                                                             android:fontFamily="@font/montserrat_regular"/>
 
                                                     </LinearLayout>
@@ -719,10 +718,9 @@
                                                             android:id="@+id/spinner2"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:textSize="14sp"
-                                                            android:textStyle="bold"
-                                                            android:textColor="@color/colorTextDefault"
-                                                            android:layout_margin="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:gravity="center"
+                                                            android:spinnerMode="dropdown"
                                                             android:fontFamily="@font/montserrat_regular"/>
 
                                                     </LinearLayout>

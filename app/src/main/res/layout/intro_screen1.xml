@@ -1,45 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/one"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bienestarVerde"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:layout_marginTop="40dp"
-            android:textColor="@color/whiteTextColor"
-            android:fontFamily="@font/montserrat_black"/>
-
-    </LinearLayout>
+    android:background="@color/bienestarVerde">
 
     <TextView
         android:id="@+id/txtTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="¡BIENVENIDO/A!"
+        android:paddingTop="120dp"
         android:gravity="center"
         android:textSize="28sp"
         android:layout_marginTop="10dp"
-        android:layout_gravity="center"
         android:textColor="@color/whiteTextColor"
         android:fontFamily="@font/montserrat_black"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:translationY="25dp"
         android:layout_margin="20dp"
         android:background="@drawable/corners_rounded_green">
 
@@ -101,4 +84,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

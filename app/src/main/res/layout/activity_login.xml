@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@mipmap/img_unse2">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtWelcome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="¡Buenas noches!"
-            android:textColor="@color/whiteTextColor"
-            android:textSize="35sp"
-            android:gravity="center"
-            android:fontFamily="@font/montserrat_black"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Bienvenido/a a la aplicación del \nComedor Universitario."
-            android:textSize="18sp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/whiteTextColor"
-            android:gravity="center"
-            android:fontFamily="@font/montserrat_regular"/>
+        android:layout_height="match_parent"
+        android:paddingTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtWelcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="¡Buenas noches!"
+                android:textColor="@color/whiteTextColor"
+                android:textSize="35sp"
+                android:gravity="center"
+                android:fontFamily="@font/montserrat_black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bienvenido/a a la aplicación del \nComedor Universitario."
+                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/whiteTextColor"
+                android:gravity="center"
+                android:fontFamily="@font/montserrat_regular"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_margin="20dp"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_logo_bienestar_01" />
+                app:srcCompat="@drawable/ic_logo_bienestar_01" />
 
             <EditText
                 android:id="@+id/edtUser"
@@ -111,39 +119,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:background="@color/black_alpha_40"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_weight="0.3"
                 android:layout_gravity="center"
+                android:layout_weight="0.3"
                 android:padding="10dp"
-                android:src="@drawable/aniversario47"/>
+                android:src="@drawable/aniversario47" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_weight="0.3"
                 android:layout_gravity="center"
+                android:layout_weight="0.3"
                 android:padding="12dp"
-                android:src="@drawable/doscientos"/>
+                android:src="@drawable/doscientos" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="120dp"
-                android:layout_weight="0.4"
                 android:layout_gravity="center"
-                android:tint="@color/whiteTextColor"
+                android:layout_weight="0.4"
                 android:paddingTop="5dp"
-                android:src="@drawable/logo_unse"/>
+                android:src="@drawable/logo_unse"
+                android:tint="@color/whiteTextColor" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>

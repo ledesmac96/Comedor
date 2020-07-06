@@ -155,36 +155,36 @@ public class PerfilActivity extends AppCompatActivity
                         case 0:
                             //FAyA
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, Utils.faya);
-                            carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    R.layout.style_spinner, Utils.faya);
+                            carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                         case 1:
                             //FCEyT
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, Utils.fceyt);
-                            carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    R.layout.style_spinner, Utils.fceyt);
+                            carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                         case 2:
                             //FCF
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, Utils.fcf);
-                            carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    R.layout.style_spinner, Utils.fcf);
+                            carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                         case 3:
                             //FCM
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, Utils.fcm);
-                            carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    R.layout.style_spinner, Utils.fcm);
+                            carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                         case 4:
                             //FHyCS
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, Utils.fhcys);
-                            carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    R.layout.style_spinner, Utils.fhcys);
+                            carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                     }
@@ -275,12 +275,12 @@ public class PerfilActivity extends AppCompatActivity
             @Override
             public void run() {
                 facultadAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, Utils.facultad);
-                facultadAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        R.layout.style_spinner, Utils.facultad);
+                facultadAdapter.setDropDownViewResource(R.layout.style_spinner);
                 spinnerFacultad.setAdapter(facultadAdapter);
                 carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, Utils.faya);
-                carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        R.layout.style_spinner, Utils.faya);
+                carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                 spinnerCarrera.setAdapter(carreraAdapter);
             }
         }).start();
@@ -295,10 +295,7 @@ public class PerfilActivity extends AppCompatActivity
         StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 procesarRespuestaReserva(response);
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -309,7 +306,6 @@ public class PerfilActivity extends AppCompatActivity
                 Utils.showCustomToast(PerfilActivity.this, getApplicationContext(),
                         getString(R.string.servidorOff), R.drawable.ic_error);
                 dialog.dismiss();
-
             }
         });
         //Abro dialogo para congelar pantalla
