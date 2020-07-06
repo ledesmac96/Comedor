@@ -1,5 +1,6 @@
 package com.example.comedor.Activity;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -49,6 +50,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_reserva);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         if (getIntent().getParcelableExtra(Utils.RESERVA) != null) {
             mReserva = getIntent().getParcelableExtra(Utils.RESERVA);
