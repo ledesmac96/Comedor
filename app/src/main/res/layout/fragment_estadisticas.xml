@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.comedor.Fragment.EstadisticasFragment">
+    tools:context="com.bienestar.comedor.com.unse.bienestar.comedor.Fragment.EstadisticasFragment">
 
     <LinearLayout
         android:orientation="vertical"
