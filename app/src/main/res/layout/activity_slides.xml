@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="vertical"
-        android:background="@drawable/back_slides">
+        android:background="@drawable/ic_slides_comedor">
 
         <TextView
             android:id="@+id/txtTitulo"
