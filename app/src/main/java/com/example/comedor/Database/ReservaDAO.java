@@ -19,7 +19,7 @@ public interface ReservaDAO {
     @Update
     void update(Reserva alumno);
 
-    @Query("SELECT * FROM " + Reserva.TABLE + " WHERE " + Reserva.KEY_MENU + " = :id ")
+    @Query("SELECT * FROM " + Reserva.TABLE + " WHERE " + Reserva.KEY_ID_ALU + " = :id ")
     Reserva get(int id);
 
     @Delete

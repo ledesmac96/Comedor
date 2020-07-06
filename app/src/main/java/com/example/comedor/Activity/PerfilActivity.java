@@ -64,12 +64,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.View.VISIBLE;
-import static com.example.comedor.Utils.Utils.facultad;
-import static com.example.comedor.Utils.Utils.faya;
-import static com.example.comedor.Utils.Utils.fceyt;
-import static com.example.comedor.Utils.Utils.fcf;
-import static com.example.comedor.Utils.Utils.fcm;
-import static com.example.comedor.Utils.Utils.fhcys;
 
 public class PerfilActivity extends AppCompatActivity
         implements View.OnClickListener, TextWatcher {
@@ -161,35 +155,35 @@ public class PerfilActivity extends AppCompatActivity
                         case 0:
                             //FAyA
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, faya);
+                                    android.R.layout.simple_spinner_item, Utils.faya);
                             carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                         case 1:
                             //FCEyT
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, fceyt);
+                                    android.R.layout.simple_spinner_item, Utils.fceyt);
                             carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                         case 2:
                             //FCF
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, fcf);
+                                    android.R.layout.simple_spinner_item, Utils.fcf);
                             carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                         case 3:
                             //FCM
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, fcm);
+                                    android.R.layout.simple_spinner_item, Utils.fcm);
                             carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
                         case 4:
                             //FHyCS
                             carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item, fhcys);
+                                    android.R.layout.simple_spinner_item, Utils.fhcys);
                             carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerCarrera.setAdapter(carreraAdapter);
                             break;
@@ -281,11 +275,11 @@ public class PerfilActivity extends AppCompatActivity
             @Override
             public void run() {
                 facultadAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, facultad);
+                        android.R.layout.simple_spinner_item, Utils.facultad);
                 facultadAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerFacultad.setAdapter(facultadAdapter);
                 carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, faya);
+                        android.R.layout.simple_spinner_item, Utils.faya);
                 carreraAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerCarrera.setAdapter(carreraAdapter);
             }
@@ -705,15 +699,15 @@ public class PerfilActivity extends AppCompatActivity
     private String getCarrera(int selectedItemPosition) {
         switch (selectedItemPosition) {
             case 0:
-                return faya[spinnerCarrera.getSelectedItemPosition()];
+                return Utils.faya[spinnerCarrera.getSelectedItemPosition()];
             case 1:
-                return fceyt[spinnerCarrera.getSelectedItemPosition()];
+                return Utils.fceyt[spinnerCarrera.getSelectedItemPosition()];
             case 2:
-                return fcf[spinnerCarrera.getSelectedItemPosition()];
+                return Utils.fcf[spinnerCarrera.getSelectedItemPosition()];
             case 3:
-                return fcm[spinnerCarrera.getSelectedItemPosition()];
+                return Utils.fcm[spinnerCarrera.getSelectedItemPosition()];
             case 4:
-                return fhcys[spinnerCarrera.getSelectedItemPosition()];
+                return Utils.fhcys[spinnerCarrera.getSelectedItemPosition()];
         }
         return "";
     }
@@ -774,7 +768,7 @@ public class PerfilActivity extends AppCompatActivity
         String apellido = edtApellido.getText().toString().trim();
         String dni = edtDNI.getText().toString().trim();
         String mail = edtMail.getText().toString().trim();
-        String faculta = facultad[spinnerFacultad.getSelectedItemPosition()].trim();
+        String faculta = Utils.facultad[spinnerFacultad.getSelectedItemPosition()].trim();
         String carrera = getCarrera(spinnerFacultad.getSelectedItemPosition()).trim();
         String anioIngreso2 = edtAnioIngresoAlu.getText().toString().trim();
         String domicilio = edtDomicilio.getText().toString().trim();

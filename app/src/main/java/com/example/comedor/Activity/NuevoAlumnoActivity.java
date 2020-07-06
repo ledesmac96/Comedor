@@ -26,13 +26,6 @@ import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.example.comedor.Utils.Utils.facultad;
-import static com.example.comedor.Utils.Utils.faya;
-import static com.example.comedor.Utils.Utils.fceyt;
-import static com.example.comedor.Utils.Utils.fcf;
-import static com.example.comedor.Utils.Utils.fcm;
-import static com.example.comedor.Utils.Utils.fhcys;
-
 public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText edtNombre, edtApellido, edtDNI, edtLegajo, edtAnioIngreso;
@@ -69,35 +62,35 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
                     case 0:
                         //FAyA
                         carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                R.layout.style_spinner, faya);
+                                R.layout.style_spinner, Utils.faya);
                         carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                         mSpinnerCarrera.setAdapter(carreraAdapter);
                         break;
                     case 1:
                         //FCEyT
                         carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                R.layout.style_spinner, fceyt);
+                                R.layout.style_spinner, Utils.fceyt);
                         carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                         mSpinnerCarrera.setAdapter(carreraAdapter);
                         break;
                     case 2:
                         //FCF
                         carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                R.layout.style_spinner, fcf);
+                                R.layout.style_spinner, Utils.fcf);
                         carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                         mSpinnerCarrera.setAdapter(carreraAdapter);
                         break;
                     case 3:
                         //FCM
                         carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                R.layout.style_spinner, fcm);
+                                R.layout.style_spinner, Utils.fcm);
                         carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                         mSpinnerCarrera.setAdapter(carreraAdapter);
                         break;
                     case 4:
                         //FHyCS
                         carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                                R.layout.style_spinner, fhcys);
+                                R.layout.style_spinner, Utils.fhcys);
                         carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                         mSpinnerCarrera.setAdapter(carreraAdapter);
                         break;
@@ -129,11 +122,11 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void run() {
                 facultadAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                        R.layout.style_spinner, facultad);
+                        R.layout.style_spinner, Utils.facultad);
                 facultadAdapter.setDropDownViewResource(R.layout.style_spinner);
                 mSpinnerFacultad.setAdapter(facultadAdapter);
                 carreraAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                        R.layout.style_spinner, faya);
+                        R.layout.style_spinner, Utils.faya);
                 carreraAdapter.setDropDownViewResource(R.layout.style_spinner);
                 mSpinnerCarrera.setAdapter(carreraAdapter);
             }
@@ -159,15 +152,15 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
     private String getCarrera(int selectedItemPosition) {
         switch (selectedItemPosition) {
             case 0:
-                return faya[mSpinnerCarrera.getSelectedItemPosition()];
+                return Utils.faya[mSpinnerCarrera.getSelectedItemPosition()];
             case 1:
-                return fceyt[mSpinnerCarrera.getSelectedItemPosition()];
+                return Utils.fceyt[mSpinnerCarrera.getSelectedItemPosition()];
             case 2:
-                return fcf[mSpinnerCarrera.getSelectedItemPosition()];
+                return Utils.fcf[mSpinnerCarrera.getSelectedItemPosition()];
             case 3:
-                return fcm[mSpinnerCarrera.getSelectedItemPosition()];
+                return Utils.fcm[mSpinnerCarrera.getSelectedItemPosition()];
             case 4:
-                return fhcys[mSpinnerCarrera.getSelectedItemPosition()];
+                return Utils.fhcys[mSpinnerCarrera.getSelectedItemPosition()];
         }
         return "";
     }
@@ -179,7 +172,7 @@ public class NuevoAlumnoActivity extends AppCompatActivity implements View.OnCli
         String nombre = edtNombre.getText().toString().trim();
         String apellido = edtApellido.getText().toString().trim();
         String dni = edtDNI.getText().toString().trim();
-        String faculta = facultad[mSpinnerFacultad.getSelectedItemPosition()].trim();
+        String faculta = Utils.facultad[mSpinnerFacultad.getSelectedItemPosition()].trim();
         String carrera = getCarrera(mSpinnerFacultad.getSelectedItemPosition()).trim();
         String anioIngreso2 = edtAnioIngreso.getText().toString().trim();
         String legajo = edtLegajo.getText().toString().trim();

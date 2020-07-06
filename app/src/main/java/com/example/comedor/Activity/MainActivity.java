@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.comedor.Database.RolViewModel;
 import com.example.comedor.Database.UsuarioViewModel;
 import com.example.comedor.Dialogos.DialogoGeneral;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
@@ -22,6 +24,7 @@ import com.example.comedor.Fragment.GestionReservasFragment;
 import com.example.comedor.Fragment.GestionUsuarioFragment;
 import com.example.comedor.Fragment.InicioFragment;
 import com.example.comedor.Fragment.MisReservasFragment;
+import com.example.comedor.Modelo.Rol;
 import com.example.comedor.Modelo.Usuario;
 import com.example.comedor.R;
 import com.example.comedor.Utils.PreferenciasManager;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     PreferenciasManager mPreferenciasManager;
     DialogoProcesamiento dialog;
     boolean reservar = false;
+    RolViewModel mRolViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        mRolViewModel = new RolViewModel(getApplicationContext());
         mPreferenciasManager = new PreferenciasManager(getApplicationContext());
         mUsuarioViewModel = new UsuarioViewModel(getApplicationContext());
         int dni = mPreferenciasManager.getValueInt(Utils.MY_ID);
@@ -257,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
         if (usuario != null) {
             txtNombre.setText(String.format("%s %s", usuario.getNombre(), usuario.getApellido()));
         }
+        updateMenu();
 
     }
 
@@ -355,6 +361,39 @@ public class MainActivity extends AppCompatActivity {
 
         itemSelecionado = itemDrawer.getItemId();
 
+    }
+
+    private void updateMenu() {
+        Menu menu = navigationView.getMenu();
+        int[] idItem = new int[]{R.id.item_reservas, R.id.item_users, R.id.item_menu, R.id.item_estad};
+        int[] idRol = new int[]{400,300,200,100};
+        int i = 0;
+        for (Integer integer : idItem){
+            MenuItem item = menu.findItem(integer);
+            Rol rol = mRolViewModel.getByPermission(idRol[i]);
+            if (rol == null) {
+                item.setVisible(false);
+            }
+            i++;
+
+        }
+        MenuItem item = menu.findItem(R.id.item_mis_reservas);
+        Rol rol = mRolViewModel.getByPermission(403);
+        if (rol != null) {
+            item.setVisible(false);
+        }
+        /*int position = 0, i = 0;
+        for (ItemDrawer itemDrawer : mItemDrawers) {
+            if (itemDrawer.getId() == R.id.item_sistema) {
+                position = i;
+                break;
+            }
+            i++;
+        }
+        if (rol == null) {
+            mItemDrawers.remove(position);
+            mAdapter.notifyDataSetChanged();
+        }*/
     }
 
     private void logout() {

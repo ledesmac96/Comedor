@@ -70,10 +70,11 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/txtTerminar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="TERMINAR\nDÍA"
+                            android:text="FINALIZAR\nDÍA"
                             android:gravity="center"
                             android:textStyle="bold"
                             android:textSize="18sp"

@@ -62,7 +62,6 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
 
         }
         if (tipo == ADMIN) {
-            holder.fecha.setVisibility(View.GONE);
             holder.nombre.setVisibility(View.VISIBLE);
             holder.nombre.setText(String.format("%s %s", reserva.getNombre(), reserva.getApellido()));
         } else {

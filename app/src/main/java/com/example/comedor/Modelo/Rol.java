@@ -1,15 +1,12 @@
 package com.example.comedor.Modelo;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.io.Serializable;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.Insert;
-import androidx.room.PrimaryKey;
 
 @Entity(tableName = "roles", primaryKeys = {"idRol", "idUsuario"})
 public class Rol implements Serializable {

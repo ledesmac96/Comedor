@@ -26,7 +26,7 @@ public class MenuViewModel {
         mRepository.update(reserva);
     }
 
-    public Menu getAllByMenuID(int id) {
+    public Menu getByMenuID(int id) {
         return mRepository.getById(id);
     }
 

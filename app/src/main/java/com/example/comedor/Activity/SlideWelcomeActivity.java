@@ -25,8 +25,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import static com.example.comedor.Utils.Utils.PERMISSION_ALL;
-
 public class SlideWelcomeActivity extends AppCompatActivity {
 
     private ViewPager viewPager;

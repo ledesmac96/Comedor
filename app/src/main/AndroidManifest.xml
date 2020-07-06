@@ -2,44 +2,38 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.comedor">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Dialogos.DialogCancelar"></activity>
-        <activity android:name=".Activity.InfoReservaActivity" />
-        <activity android:name=".Fragment.MisReservasFragment" />
-        <activity android:name=".Activity.NuevoAlumnoActivity" />
-        <activity android:name=".Fragment.GestionReservasFragment" />
-        <activity android:name=".Fragment.InicioFragment" />
-        <activity android:name=".Fragment.EstadisticasFragment" />
-        <activity android:name=".Fragment.GestionUsuarioFragment" />
-        <activity android:name=".Fragment.GestionMenuFragment" />
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.SlideWelcomeActivity">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name="com.example.comedor.Activity.InfoReservaActivity" />
+        <activity android:name="com.example.comedor.Activity.NuevoAlumnoActivity" />
+        <activity android:name="com.example.comedor.Activity.MainActivity" />
+        <activity android:name="com.example.comedor.Activity.LoginActivity" />
+        <activity android:name="com.example.comedor.Activity.SlideWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.PerfilActivity" />
-        <activity android:name=".Activity.LockedActivity" />
-        <activity android:name=".Activity.NuevoMenuActivity" />
-        <activity android:name=".Activity.ReservaDiaActivity" />
-        <activity android:name=".Activity.HistorialReservasActivity" />
-        <activity android:name=".Activity.ListadoReservaActivity" />
-        <activity android:name=".Activity.AboutActivity" />
+        <activity android:name="com.example.comedor.Activity.PerfilActivity" />
+        <activity android:name="com.example.comedor.Activity.LockedActivity" />
+        <activity android:name="com.example.comedor.Activity.NuevoMenuActivity" />
+        <activity android:name="com.example.comedor.Activity.ReservaDiaActivity" />
+        <activity android:name="com.example.comedor.Activity.HistorialReservasActivity" />
+        <activity android:name="com.example.comedor.Activity.ListadoReservaActivity" />
+        <activity android:name="com.example.comedor.Activity.AboutActivity" />
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

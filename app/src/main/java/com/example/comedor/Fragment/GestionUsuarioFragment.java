@@ -19,11 +19,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.comedor.Activity.NuevoAlumnoActivity;
 import com.example.comedor.Activity.PerfilActivity;
 import com.example.comedor.Adapter.UsuariosAdapter;
+import com.example.comedor.Database.RolViewModel;
 import com.example.comedor.Dialogos.DialogoProcesamiento;
 import com.example.comedor.Modelo.Alumno;
+import com.example.comedor.Modelo.Rol;
 import com.example.comedor.Modelo.Usuario;
 import com.example.comedor.R;
 import com.example.comedor.RecyclerListener.ItemClickSupport;
+import com.example.comedor.Utils.GeneratePDFTask;
 import com.example.comedor.Utils.PreferenciasManager;
 import com.example.comedor.Utils.Utils;
 import com.example.comedor.Utils.VolleySingleton;
@@ -45,7 +48,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class GestionUsuarioFragment extends Fragment implements View.OnClickListener {
 
     View view;
-    FloatingActionButton fabAdd;
+    FloatingActionButton fabAdd, fabPDF;
     ArrayList<Usuario> mUsuarios;
     RecyclerView.LayoutManager mLayoutManager;
     DialogoProcesamiento dialog;
@@ -56,6 +59,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     ProgressBar mProgressBar;
     Context mContext;
     EditText edtBuscar;
+    RolViewModel mRolViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,6 +77,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
 
 
     private void loadListener() {
+        fabPDF.setOnClickListener(this);
         fabAdd.setOnClickListener(this);
         edtBuscar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,6 +99,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     }
 
     private void loadViews() {
+        fabPDF = view.findViewById(R.id.fabPDF);
         latVacio = view.findViewById(R.id.latVacio);
         edtBuscar = view.findViewById(R.id.edtBuscar);
         recyclerUsuarios = view.findViewById(R.id.recycler);
@@ -207,7 +213,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
                 }
                 mUsuariosAdapter.change(mUsuarios);
                 mUsuariosAdapter.notifyDataSetChanged();
-            }else{
+            } else {
                 latVacio.setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
@@ -217,6 +223,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     }
 
     private void loadData() {
+        mRolViewModel = new RolViewModel(getContext());
         latVacio.setVisibility(View.GONE);
         mUsuarios = new ArrayList<>();
         mProgressBar.setVisibility(View.VISIBLE);
@@ -232,7 +239,13 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
-                processClick(search(position, (int) id));
+                Rol rol = mRolViewModel.getByPermission(301);
+                if (rol != null) {
+                    processClick(search(position, (int) id));
+                } else {
+                    Utils.showToast(getContext(), "No posee los permisos para esta operación");
+                }
+
             }
         });
 
@@ -341,6 +354,16 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
             case R.id.fabAdd:
                 Intent i = new Intent(getContext(), NuevoAlumnoActivity.class);
                 startActivity(i);
+                break;
+            case R.id.fabPDF:
+                if (mUsuarios != null && mUsuarios.size() > 0) {
+                    DialogoProcesamiento dialogoProcesamiento = new DialogoProcesamiento();
+                    dialogoProcesamiento.show(getManagerFragment(), "jeje");
+                    new GeneratePDFTask(mUsuarios, dialogoProcesamiento, getContext()).execute();
+                } else {
+                    Utils.showToast(getContext(), getString(R.string.noUsuarios));
+                }
+
                 break;
 
         }

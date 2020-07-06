@@ -59,6 +59,14 @@
     <string name="noConfirmado">¡Error!</string>
     <string name="confirmadoReservaError">Hubo un error al intentar confirmar la reserva</string>
     <string name="sinDatos">¡No existen datos!</string>
+    <string name="reservado">¡Reservado!</string>
+    <string name="reservaExito">Tu reserva #%s fue registrada exitosamente. Dirígite a \"Mis Reservas\" para más info</string>
+    <string name="reservaError">Hubo un inconveniente con tu reserva, intenta nuevamente</string>
+    <string name="salioMal">¡Algo salió mal!</string>
+    <string name="dirigeReserva">Dirígete a la opción \"Mis Reservas\" para visualizar tu reserva</string>
+    <string name="reservaInfo">¿Estas seguro que desea reservar el menú el dia %02d/%02d/%02d?</string>
+    <string name="finalizarMenu">¿Está seguro que desea terminar el día?</string>
+    <string name="rehabilitarMenu">¿Está seguro que desea volver a habilitar el día?</string>
 
     <string name="txtAddAlumno">Complete OBLIGATORIAMENTE todos los datos del alumno.</string>
     <string name="txtNotaMenu">NOTA: en caso de no ofrecer cena y/o postre, dejar en blanco.</string>
@@ -67,5 +75,8 @@
     <string name="slide3">Cuando vayas a retirar el menú del día, procurá tener a mano el código QR que se asignó luego de la reserva.</string>
     <string name="slide4">Si ya estás inscripto es las Becas Comedor, ya estás registrado en la aplicación. Se te enviarán los datos necesarios para acceder o solicitalos a la Secretaría de Bienestar Estudiantil.</string>
     <string name="slide5">Usar siempre el tapabocas sobre mentón y nariz. El distanciamiento a 2m de cada persona. Desinfectá tú celular con frecuencia y no olvides lavar bien tus manos con jabón.</string>
+    <string name="modoOffLine">Sin conexión, puede que el listado no esté actualizado</string>
+    <string name="noUsuarios">No hay usuarios disponibles</string>
+    <string name="errorPDF">¡Error al crear listado de usuarios!</string>
 
 </resources>

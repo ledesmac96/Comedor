@@ -44,7 +44,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ListadoReservaActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txtPlato, txtPorciones;
+    TextView txtAlmuerzo, txtCena, txtPostre, txtPorciones;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     ReservasAdapter mAdapter;
@@ -203,7 +203,10 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
                 }
                 mRecyclerView.setAdapter(mAdapter);
                 if (mMenu != null) {
-                    txtPlato.setText(mMenu.getDescripcion());
+                    String[] comida = Utils.getComidas(mMenu.getDescripcion());
+                    txtAlmuerzo.setText(comida[0]);
+                    txtCena.setText(comida[1]);
+                    txtPostre.setText(comida[2]);
                     txtPorciones.setText(String.valueOf(mMenu.getPorcion()));
                 }
             }
@@ -292,7 +295,9 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
         latVacio = findViewById(R.id.latVacio);
         cardEstadisticas = findViewById(R.id.cardEstadistica);
         btnBack = findViewById(R.id.imgFlecha);
-        txtPlato = findViewById(R.id.txtPlato);
+        txtAlmuerzo = findViewById(R.id.txtAlmuerzo);
+        txtCena = findViewById(R.id.txtCena);
+        txtPostre = findViewById(R.id.txtPostre);
         txtPorciones = findViewById(R.id.txtPorcion);
         mRecyclerView = findViewById(R.id.recycler);
         mProgressBar = findViewById(R.id.progress_bar);

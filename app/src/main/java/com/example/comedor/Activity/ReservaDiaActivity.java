@@ -2,9 +2,12 @@ package com.example.comedor.Activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,6 +24,14 @@ import com.example.comedor.RecyclerListener.ItemClickSupport;
 import com.example.comedor.Utils.PreferenciasManager;
 import com.example.comedor.Utils.Utils;
 import com.example.comedor.Utils.VolleySingleton;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,10 +51,13 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
     Menu mMenus;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
+    LinearLayout latVacio;
+    CardView cardEstadisticas;
     ReservasAdapter mReservasAdapter;
     ArrayList<Reserva> mReservas;
     ImageView imgIcono;
     ProgressBar mProgressBar;
+    BarChart barCantidad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +83,6 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
 
     private void loadListener() {
         imgIcono.setOnClickListener(this);
-    }
-
-    private void loadData() {
-        mReservas = new ArrayList<>();
-
-        mProgressBar.setVisibility(View.VISIBLE);
-        mReservasAdapter = new ReservasAdapter(mReservas, getApplicationContext(), ReservasAdapter.ADMIN);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
-        mRecyclerView.setNestedScrollingEnabled(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mReservasAdapter);
-
-        loadInfo();
-
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
@@ -91,6 +92,22 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
                 startActivity(i);
             }
         });
+
+    }
+
+    private void loadData() {
+        mReservas = new ArrayList<>();
+        latVacio.setVisibility(View.GONE);
+        cardEstadisticas.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mReservasAdapter = new ReservasAdapter(mReservas, getApplicationContext(), ReservasAdapter.ADMIN);
+        mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+        mRecyclerView.setNestedScrollingEnabled(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mReservasAdapter);
+
+        loadInfo();
+
 
     }
 
@@ -184,7 +201,12 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
                     mReservas.add(reserva);
 
                 }
-                mReservasAdapter.change(mReservas);
+                if (mReservas.size() > 0) {
+                    mReservasAdapter.change(mReservas);
+                    loadEstadisticas();
+                } else{
+                    latVacio.setVisibility(View.VISIBLE);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -193,15 +215,90 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void loadView() {
+        barCantidad = findViewById(R.id.barCantidad);
         txtDescripcion = findViewById(R.id.txtDescripcion);
         imgIcono = findViewById(R.id.imgFlecha);
         mProgressBar = findViewById(R.id.progress_bar);
         mRecyclerView = findViewById(R.id.recycler);
+        cardEstadisticas = findViewById(R.id.cardEstadistica);
+        latVacio = findViewById(R.id.latVacio);
+    }
+
+    private void loadEstadisticas() {
+        //Reservas Ultimos 7 dias
+        final ArrayList<BarEntry> entries;
+        final ArrayList<String> entryLabels;
+        XAxis xAxis2;
+        YAxis leftAxis, rightAxis;
+
+        barCantidad.getDescription().setEnabled(false);
+        barCantidad.getLegend().setEnabled(false);
+        xAxis2 = barCantidad.getXAxis();
+        xAxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis2.setTextSize(12f);
+        //Habilita los labels
+        xAxis2.setDrawAxisLine(true);
+        xAxis2.setDrawGridLines(false);
+
+        leftAxis = barCantidad.getAxisLeft();
+        rightAxis = barCantidad.getAxisRight();
+
+        leftAxis.setTextSize(12f);
+        leftAxis.setDrawAxisLine(true);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawLabels(false);
+
+        rightAxis.setDrawAxisLine(false);
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setDrawLabels(false);
+
+
+        entries = new ArrayList<>();
+        entryLabels = new ArrayList<String>();
+        int cantidadRes = 0, cantidadReti = 0, cantidadCancelado = 0;
+        for (Reserva reserva : mReservas) {
+            if (reserva.getDescripcion().equals("RESERVADO")) {
+                cantidadRes++;
+            } else if (reserva.getDescripcion().equals("CANCELADO")) {
+                cantidadCancelado++;
+            } else if (reserva.getDescripcion().equals("RETIRADO")) {
+
+                cantidadReti++;
+            }
+        }
+        entries.add(new BarEntry(1, mReservas.size()));
+        entryLabels.add("Total");
+        entries.add(new BarEntry(2, cantidadRes));
+        entryLabels.add("Reservas");
+        entries.add(new BarEntry(3, cantidadReti));
+        entryLabels.add("Retiros");
+        entries.add(new BarEntry(4, cantidadCancelado));
+        entryLabels.add("Cancelos");
+        BarDataSet barDataSet2 = new BarDataSet(entries, "");
+        barDataSet2.setColors(new int[]{R.color.colorGreen, R.color.colorOrange, R.color.colorYellow, R.color.colorPink}, getApplicationContext());
+        barDataSet2.setValueTextSize(13);
+        barDataSet2.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        barDataSet2.setValueTextColor(Color.rgb(155, 155, 155));
+        BarData barData2 = new BarData(barDataSet2);
+        barData2.setBarWidth(0.9f); // set custom bar width
+        barCantidad.setData(barData2);
+        barCantidad.setFitBars(true);
+        barCantidad.invalidate();
+        barCantidad.setScaleEnabled(true);
+        barCantidad.setDoubleTapToZoomEnabled(false);
+        barCantidad.setBackgroundColor(Color.rgb(255, 255, 255));
+        xAxis2.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return "";
+            }
+        });
+        cardEstadisticas.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imgFlecha:
                 onBackPressed();
                 break;

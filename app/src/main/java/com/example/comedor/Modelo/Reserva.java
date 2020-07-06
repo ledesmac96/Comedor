@@ -34,8 +34,8 @@ public class Reserva implements Parcelable {
     @PrimaryKey
     @NonNull
     private int idReserva;
-    private int idUsuario, idEmpleado, idMenu, estado, validez;
-    private String fechaReserva, fechaModificacion, nombre, apellido;
+    private int idUsuario, idEmpleado, idMenu, estado, validez, porcion;
+    private String fechaReserva, fechaModificacion, nombre, apellido, menu;
     private String descripcion, tipoEntrega;
     private int dia, mes, anio;
 
@@ -52,8 +52,8 @@ public class Reserva implements Parcelable {
         this.anio = anio;
     }
 
-    public Reserva(int idReserva, int idUsuario, int idEmpleado, int idMenu, int estado,
-                   String fechaReserva, String fechaModificacion, int validez, String descripcion) {
+    public Reserva(int idReserva, int idUsuario, int idEmpleado, int idMenu, int estado, int porcion,
+                   String fechaReserva, String fechaModificacion, int validez, String descripcion, String menu) {
         this.idReserva = idReserva;
         this.idUsuario = idUsuario;
         this.idEmpleado = idEmpleado;
@@ -63,6 +63,8 @@ public class Reserva implements Parcelable {
         this.validez = validez;
         this.fechaReserva = fechaReserva;
         this.fechaModificacion = fechaModificacion;
+        this.porcion = porcion;
+        this.menu = menu;
     }
 
     @Ignore
@@ -104,7 +106,17 @@ public class Reserva implements Parcelable {
         dia = in.readInt();
         mes = in.readInt();
         anio = in.readInt();
+        menu = in.readString();
+        porcion = in.readInt();
 
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu;
     }
 
     public String getDescripcion() {
@@ -215,10 +227,18 @@ public class Reserva implements Parcelable {
         this.fechaModificacion = fechaModificacion;
     }
 
+    public int getPorcion() {
+        return porcion;
+    }
+
+    public void setPorcion(int porcion) {
+        this.porcion = porcion;
+    }
+
     @Ignore
     public static Reserva mapper(JSONObject object, int tipo) {
-        int idReserva, idUsuario, idEmpleado, idMenu, estado, validez, dia, mes, anio;
-        String fechaReserva, fechaModificacion, nombre, apellido, estadoDescripcion, tipoEntrega;
+        int idReserva, idUsuario, idEmpleado, idMenu, estado, validez, dia, mes, anio, porcion;
+        String fechaReserva, fechaModificacion, nombre, apellido, estadoDescripcion, tipoEntrega, menu;
         Reserva reserva = new Reserva();
         try {
             switch (tipo) {
@@ -230,7 +250,8 @@ public class Reserva implements Parcelable {
                     fechaReserva = object.getString("fechareserva");
                     fechaModificacion = object.getString("fechamodificacion");
                     validez = Integer.parseInt(object.getString("validez"));
-                    reserva = new Reserva(idReserva, idUsuario, 0, idMenu, estado, fechaReserva, fechaModificacion, validez, "");
+                    reserva = new Reserva(idReserva, idUsuario, 0, idMenu, estado, 0, fechaReserva,
+                            fechaModificacion, validez, "", "");
                     break;
                 case MEDIUM:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
@@ -238,32 +259,40 @@ public class Reserva implements Parcelable {
                     idMenu = Integer.parseInt(object.getString("idmenu"));
                     estadoDescripcion = object.getString("descripcion");
                     validez = Integer.parseInt(object.getString("validez"));
+                    fechaReserva = object.getString("fechareserva");
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
                     reserva = new Reserva(idReserva, idUsuario, idMenu, estadoDescripcion, validez, nombre, apellido);
+                    reserva.setFechaReserva(fechaReserva);
                     break;
                 case HISTORIAL:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
                     idMenu = Integer.parseInt(object.getString("idmenu"));
+                    porcion = Integer.parseInt(object.getString("porcion"));
                     dia = Integer.parseInt(object.getString("dia"));
                     mes = Integer.parseInt(object.getString("mes"));
                     anio = Integer.parseInt(object.getString("anio"));
                     fechaReserva = object.getString("fechareserva");
                     fechaModificacion = object.getString("fechamodificacion");
                     estadoDescripcion = object.getString("descripcion");
+                    menu = object.getString("descripcionmenu");
                     tipoEntrega = object.getString("tiporeserva");
                     reserva = new Reserva(idReserva, idMenu, fechaReserva, estadoDescripcion, tipoEntrega, dia, mes, anio);
                     reserva.setFechaModificacion(fechaModificacion);
+                    reserva.setPorcion(porcion);
+                    reserva.setMenu(menu);
                     break;
                 case HISTORIAL_TOTAL:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
                     idMenu = Integer.parseInt(object.getString("idmenu"));
                     estadoDescripcion = object.getString("descripcion");
                     tipoEntrega = object.getString("tiporeserva");
+                    fechaReserva = object.getString("fechareserva");
                     validez = Integer.parseInt(object.getString("validez"));
                     nombre = object.getString("nombre");
                     apellido = object.getString("apellido");
                     reserva = new Reserva(idReserva, idMenu, validez, "", nombre, apellido, estadoDescripcion, tipoEntrega);
+                    reserva.setFechaReserva(fechaReserva);
                     break;
                 case ESTADISTICA:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
@@ -273,7 +302,7 @@ public class Reserva implements Parcelable {
                     fechaModificacion = object.getString("fechamodificacion");
                     estado = Integer.parseInt(object.getString("estado"));
                     reserva = new Reserva(idReserva, idUsuario, 0,
-                            idMenu, estado, fechaReserva, fechaModificacion, -1, "");
+                            idMenu, estado, 0, fechaReserva, fechaModificacion, -1, "", "");
                     break;
             }
         } catch (JSONException e) {
@@ -344,5 +373,7 @@ public class Reserva implements Parcelable {
         dest.writeInt(dia);
         dest.writeInt(mes);
         dest.writeInt(anio);
+        dest.writeString(menu);
+        dest.writeInt(porcion);
     }
 }
