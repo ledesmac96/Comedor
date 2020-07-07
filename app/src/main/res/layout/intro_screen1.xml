@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="100dp"
+    android:paddingTop="100dp"
     android:background="@color/bienestarVerde">
 
     <TextView
@@ -10,29 +13,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="¡BIENVENIDO/A!"
-        android:paddingTop="120dp"
         android:gravity="center"
-        android:textSize="28sp"
-        android:layout_marginTop="10dp"
+        android:textSize="24sp"
         android:textColor="@color/whiteTextColor"
         android:fontFamily="@font/montserrat_black"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerInParent="true"
-        android:translationY="25dp"
         android:layout_margin="20dp"
+        android:translationY="25dp"
         android:background="@drawable/corners_rounded_green">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_weight="0.2"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_logo_bienestar_01"
+            app:srcCompat="@drawable/ic_logo_bienestar_01"
             android:id="@+id/imageView" />
 
         <TextView
@@ -40,7 +38,6 @@
             android:layout_height="wrap_content"
             android:text="@string/slide1"
             android:textColor="@android:color/black"
-            android:layout_weight="0.4"
             android:textSize="18dp"
             android:gravity="center"
             android:textStyle="bold"
@@ -53,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
@@ -82,6 +80,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="100dp"
+    android:paddingTop="100dp"
     android:background="@color/bienestarAmarillo">
 
     <TextView
@@ -11,20 +14,15 @@
         android:layout_height="wrap_content"
         android:text="VAMOS A CUIDARNOS"
         android:gravity="center"
-        android:textSize="28sp"
-        android:layout_marginTop="130dp"
-        android:layout_gravity="center"
+        android:textSize="24sp"
         android:textColor="@color/blackTextColor"
         android:fontFamily="@font/montserrat_black"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:translationY="35dp"
         android:layout_margin="20dp"
+        android:translationY="25dp"
         android:background="@drawable/corners_rounded_green">
 
         <TextView
@@ -35,16 +33,15 @@
             android:textSize="20dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:layout_weight="0.2"
             android:layout_below="@+id/imageView"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
             android:layout_margin="20dp"
             android:fontFamily="@font/montserrat_black"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
+            android:layout_marginTop="100dp"
             android:weightSum="1"
             android:orientation="horizontal">
 
@@ -53,28 +50,28 @@
                 android:layout_height="70dp"
                 android:layout_weight="0.25"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_face_mask"/>
+                app:srcCompat="@drawable/ic_face_mask"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="0.25"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_social_distancing"/>
+                app:srcCompat="@drawable/ic_social_distancing"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="0.25"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_disinfect"/>
+                app:srcCompat="@drawable/ic_disinfect"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="0.25"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_washing_hands"/>
+                app:srcCompat="@drawable/ic_washing_hands"/>
 
         </LinearLayout>
 
@@ -88,18 +85,21 @@
             android:gravity="center"
             android:textStyle="bold"
             android:layout_below="@+id/imageView"
+            android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="20dp"
             android:fontFamily="@font/montserrat_regular"/>
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="80dp"
-            android:layout_weight="0.2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_logo_bienestar_01"/>
+            android:paddingBottom="5dp"
+            app:srcCompat="@drawable/ic_logo_bienestar_01"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
