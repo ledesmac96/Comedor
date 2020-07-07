@@ -53,6 +53,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -164,6 +166,7 @@ public class Utils {
     public static final String URL_MENU_BY_RANGE = "http://" + IP + "/bienestar/comedor/menu/getMenuByRange.php";
     public static final String URL_MENU_HOY = "http://" + IP + "/bienestar/comedor/menu/getMenuToday.php";
     public static final String URL_MENU_TERMINAR = "http://" + IP + "/bienestar/comedor/menu/terminarMenu.php";
+    public static final String URL_MENU_RESTRINGIR = "http://" + IP + "/bienestar/comedor/menu/restringirMenu.php";
     public static final String URL_MENU_NUEVO = "http://" + IP + "/bienestar/comedor/menu/insertarMenu.php";
 
     public static final String URL_RESERVA_HOY = "http://" + IP + "/bienestar/comedor/reserva/getReservaByDay.php";
@@ -731,7 +734,19 @@ public class Utils {
     public static String[] getComidas(String descripcion) {
         String[] food = new String[]{"NO INFO", "NO INFO", "NO INFO"};
         if (descripcion != null && descripcion.contains("$")) {
+
             int index = descripcion.indexOf("$");
+            food[0] = descripcion.substring(0, index).trim();
+
+            Pattern pattern = Pattern.compile("\\$[a-zA-Z  ]+");
+            Matcher matcher = pattern.matcher(descripcion);
+            int  i = 1;
+            while (matcher.find()){
+                food[i] = matcher.group().substring(1);
+                i++;
+            }
+
+            /*int index = descripcion.indexOf("$");
             int finIndex = descripcion.lastIndexOf("$");
 
             try {
@@ -746,7 +761,7 @@ public class Utils {
                 food[2] = descripcion.substring(finIndex + 1, descripcion.length() - 1).trim();
             } catch (IndexOutOfBoundsException e) {
 
-            }
+            }*/
 
         }
         return food;
@@ -849,11 +864,10 @@ public class Utils {
                         .setMultipliedLeading(1));
     }
 
-    public static boolean isShowByHour() {
+    public static boolean isShowByHour(int max) {
         String hora = Utils.getHora(new Date(System.currentTimeMillis()));
         hora = hora.substring(0, hora.indexOf(":"));
-        int max = 24;
-        int horaNum = 15;
+        int horaNum = 13;
         try {
             horaNum = Integer.parseInt(hora);
         } catch (NumberFormatException e) {

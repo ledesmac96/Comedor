@@ -14,6 +14,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.unse.bienestar.comedor.Dialogos.DialogoGeneral;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Reserva;
@@ -22,11 +27,6 @@ import com.unse.bienestar.comedor.Utils.PreferenciasManager;
 import com.unse.bienestar.comedor.Utils.Utils;
 import com.unse.bienestar.comedor.Utils.VolleySingleton;
 import com.unse.bienestar.comedor.Utils.YesNoDialogListener;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -401,10 +401,14 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     private void generateQR(Reserva reserva) {
         MultiFormatWriter formatWriter = new MultiFormatWriter();
         try {
-            BitMatrix matrix = formatWriter.encode(String.format("BIENESTAR ESTUDIANTIL #%s",
-                    reserva.getIdReserva()), BarcodeFormat.QR_CODE, 300, 300);
+            StringBuilder builder = new StringBuilder();
+            builder.append("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL");
+            builder.append("\n");
+            builder.append("¡MUCHAS GRACIAS POR RESERVAR!");
+            builder.append("\n");
+            builder.append(String.format("#%s-%s#", mReserva.getIdUsuario(), mReserva.getIdReserva()));
+            BitMatrix matrix = formatWriter.encode(builder.toString(), BarcodeFormat.QR_CODE, 300, 300);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-
             Bitmap bitmap = barcodeEncoder.createBitmap(matrix);
             if (bitmap != null) {
                 Glide.with(imgQR.getContext()).load(bitmap).into(imgQR);

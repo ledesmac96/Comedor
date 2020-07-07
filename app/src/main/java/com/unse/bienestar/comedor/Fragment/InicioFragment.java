@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.unse.bienestar.comedor.Database.MenuViewModel;
 import com.unse.bienestar.comedor.Database.ReservaViewModel;
 import com.unse.bienestar.comedor.Database.RolViewModel;
@@ -26,7 +27,6 @@ import com.unse.bienestar.comedor.Utils.PreferenciasManager;
 import com.unse.bienestar.comedor.Utils.Utils;
 import com.unse.bienestar.comedor.Utils.VolleySingleton;
 import com.unse.bienestar.comedor.Utils.YesNoDialogListener;
-import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +39,8 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     View view;
     ProgressBar mProgressBar;
     LinearLayout latAdmin;
-    CardView cardInicio, cardReservar, cardNo, cardScanear, cardTerminar;
+    TextView txtMenu, txtTerminarDia, txtRestringirReservas;
+    CardView cardInicio, cardReservar, cardNo, cardScanear, cardTerminar, cardRestringir;
     DialogoProcesamiento dialog;
     Menu mMenu;
     PreferenciasManager mPreferenciasManager;
@@ -72,9 +73,14 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         cardReservar.setOnClickListener(this);
         cardScanear.setOnClickListener(this);
         cardTerminar.setOnClickListener(this);
+        cardRestringir.setOnClickListener(this);
     }
 
     private void loadViews() {
+        cardRestringir = view.findViewById(R.id.cardCortar);
+        txtRestringirReservas = view.findViewById(R.id.txtCortar);
+        txtTerminarDia = view.findViewById(R.id.txtTerminar);
+        txtMenu = view.findViewById(R.id.txtTextoMenu);
         latAdmin = view.findViewById(R.id.latAdmin);
         cardScanear = view.findViewById(R.id.cardScan);
         cardTerminar = view.findViewById(R.id.cardTerminar);
@@ -215,28 +221,23 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
             if (exist == null)
                 mMenuViewModel.insert(menu);
             mMenu = menu;
-            if (mMenu.getDisponible() == 1 && Utils.isShowByHour()) {
-
-                TextView txtFecha = view.findViewById(R.id.txtFecha);
-                TextView txtPlato = view.findViewById(R.id.txtPlato);
-                TextView txtPostre = view.findViewById(R.id.txtPostre);
-
-                mPreferenciasManager.setValue(Utils.ID_MENU, mMenu.getIdMenu());
-
-                txtFecha.setText(Utils.getDate(menu.getDia(), menu.getMes(), menu.getAnio()));
-                String[] comida = Utils.getComidas(menu.getDescripcion());
-                String food = String.format("%s %s", comida[0], comida[1]);
-                txtPlato.setText(food.length() > 20 ? food.substring(20) : food);
-                txtPostre.setText(comida[2]);
-
-                cardReservar.setVisibility(View.VISIBLE);
-                cardInicio.setVisibility(View.VISIBLE);
-
+            if ((isAdmin || mMenu.getDisponible() == 1) && Utils.isShowByHour(isAdmin ? 17 : 14)) {
+                loadInfoCardView(menu);
+            } else if (isAdmin && Utils.isShowByHour(17)) {
+                loadInfoCardView(menu);
             } else {
                 cardNo.setVisibility(View.VISIBLE);
+                if (menu.getValidez() == 0) {
+                    txtMenu.setText(getString(R.string.noMenuDisponible));
+                } else {
+                    txtMenu.setText(getString(R.string.noMenuAceptaReserva));
+                }
                 cardReservar.setVisibility(View.GONE);
+                if (isAdmin) {
+                    latAdmin.setVisibility(View.GONE);
+                }
             }
-            if (isAdmin) updateButton(mMenu.getDisponible() == 1);
+            if (isAdmin) updateButton(mMenu.getValidez() == 1, mMenu.getDisponible() == 1);
 
 
         } else {
@@ -244,6 +245,23 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
             cardReservar.setVisibility(View.GONE);
         }
 
+    }
+
+    private void loadInfoCardView(Menu menu) {
+        TextView txtFecha = view.findViewById(R.id.txtFecha);
+        TextView txtPlato = view.findViewById(R.id.txtPlato);
+        TextView txtPostre = view.findViewById(R.id.txtPostre);
+
+        mPreferenciasManager.setValue(Utils.ID_MENU, mMenu.getIdMenu());
+
+        txtFecha.setText(Utils.getDate(menu.getDia(), menu.getMes(), menu.getAnio()));
+        String[] comida = Utils.getComidas(menu.getDescripcion());
+        String food = String.format("%s %s", comida[0], comida[1]);
+        txtPlato.setText(food.length() > 30 ? food.substring(0, 29) + "..." : food);
+        txtPostre.setText(comida[2]);
+
+        cardReservar.setVisibility(View.VISIBLE);
+        cardInicio.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -258,11 +276,108 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
             case R.id.cardTerminar:
                 terminarDialogo();
                 break;
+            case R.id.cardCortar:
+                restringirDialogo();
+                break;
+        }
+    }
+
+    private void restringirDialogo() {
+        boolean b = mMenu.getDisponible() == 1;
+        DialogoGeneral.Builder builder = new DialogoGeneral.Builder(getContext())
+                .setTitulo(getString(R.string.advertencia))
+                .setDescripcion(getString(b ? R.string.restringirMenu : R.string.rehabilitarReservaMenu))
+                .setListener(new YesNoDialogListener() {
+                    @Override
+                    public void yes() {
+                        restringir();
+                    }
+
+                    @Override
+                    public void no() {
+
+                    }
+                })
+                .setIcono(R.drawable.ic_advertencia)
+                .setTipo(DialogoGeneral.TIPO_ACEPTAR);
+        DialogoGeneral dialogoGeneral = builder.build();
+        dialogoGeneral.show(getFragmentManager(), "dialog_ad");
+    }
+
+    private void restringir() {
+        PreferenciasManager manager = new PreferenciasManager(getContext());
+        String key = manager.getValueString(Utils.TOKEN);
+        int id = manager.getValueInt(Utils.MY_ID);
+        String URL = String.format("%s?idU=%s&key=%s&idM=%s&val=%s", Utils.URL_MENU_RESTRINGIR,
+                id, key, mMenu.getIdMenu(), mMenu.getDisponible() == 1 ? 0 : 1);
+        StringRequest request = new StringRequest(Request.Method.PUT, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                procesarRespuestaRestringir(response);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Utils.showToast(getContext(), getString(R.string.servidorOff));
+                dialog.dismiss();
+
+
+            }
+        });
+        //Abro dialogo para congelar pantalla
+        dialog = new DialogoProcesamiento();
+        dialog.setCancelable(false);
+        dialog.show(getFragmentManager(), "dialog_process");
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(request);
+    }
+
+    private void procesarRespuestaRestringir(String response) {
+        try {
+            dialog.dismiss();
+            JSONObject jsonObject = new JSONObject(response);
+            int estado = jsonObject.getInt("estado");
+            switch (estado) {
+                case -1:
+                    Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
+                    break;
+                case 1:
+                    //Exito
+                    String mensaje = jsonObject.getString("mensaje");
+                    if (mensaje.contains("permite")) {
+
+                        mMenu.setDisponible(1);
+                        updateButton(mMenu.getValidez() == 1, mMenu.getDisponible() == 1);
+                    } else if (mensaje.contains("restringido")) {
+                        mMenu.setDisponible(0);
+                        //updateButton(false);
+                        //mMenu.setDisponible(0);
+                    }
+                    updateButton(mMenu.getValidez() == 1, mMenu.getDisponible() == 1);
+                    mMenuViewModel.update(mMenu);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    Utils.showToast(getContext(), getString(R.string.tokenInvalido));
+                    break;
+                case 100:
+                    //No autorizado
+                    Utils.showToast(getContext(), getString(R.string.tokenInexistente));
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Utils.showToast(getContext(), getString(R.string.errorInternoAdmin));
         }
     }
 
     private void terminarDialogo() {
-        boolean b = mMenu.getDisponible() == 1;
+        boolean b = mMenu.getValidez() == 1;
         DialogoGeneral.Builder builder = new DialogoGeneral.Builder(getContext())
                 .setTitulo(getString(R.string.advertencia))
                 .setDescripcion(getString(b ? R.string.finalizarMenu : R.string.rehabilitarMenu))
@@ -442,7 +557,8 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         PreferenciasManager manager = new PreferenciasManager(getContext());
         String key = manager.getValueString(Utils.TOKEN);
         int id = manager.getValueInt(Utils.MY_ID);
-        String URL = String.format("%s?idU=%s&key=%s&idM=%s&val=%s", Utils.URL_MENU_TERMINAR, id, key, mMenu.getIdMenu(), mMenu.getDisponible() == 1 ? 0 : 1);
+        String URL = String.format("%s?idU=%s&key=%s&idM=%s&val=%s", Utils.URL_MENU_TERMINAR,
+                id, key, mMenu.getIdMenu(), mMenu.getValidez() == 1 ? 0 : 1);
         StringRequest request = new StringRequest(Request.Method.PUT, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -481,12 +597,13 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
                     //Exito
                     String mensaje = jsonObject.getString("mensaje");
                     if (mensaje.contains("habilitado")) {
-                        updateButton(true);
-                        mMenu.setDisponible(1);
+                        //updateButton(true);
+                        mMenu.setValidez(1);
                     } else if (mensaje.contains("terminado")) {
-                        updateButton(false);
-                        mMenu.setDisponible(0);
+                        //updateButton(false);
+                        mMenu.setValidez(0);
                     }
+                    updateButton(mMenu.getValidez() == 1, mMenu.getDisponible() == 1);
                     mMenuViewModel.update(mMenu);
                     break;
                 case 2:
@@ -506,10 +623,11 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void updateButton(boolean b) {
-        ((TextView) view.findViewById(R.id.txtTerminar)).setText(b ? "FINALIZAR DIA" : "HABILITAR DIA");
-        cardInicio.setEnabled(b);
-        if (b) {
+    private void updateButton(boolean terminar, boolean restringir) {
+        txtTerminarDia.setText(terminar ? "FINALIZAR DIA" : "HABILITAR DIA");
+        txtRestringirReservas.setText(restringir ? "RESTRINGIR RESERVAS" : "PERMITIR RESERVAS");
+        cardInicio.setEnabled(terminar);
+        if (restringir) {
             cardInicio.setAlpha(1);
         } else {
             cardInicio.setAlpha(0.5f);

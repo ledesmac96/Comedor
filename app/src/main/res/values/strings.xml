@@ -65,7 +65,9 @@
     <string name="dirigeReserva">Entrá en la opción \"Mis Reservas\" para visualizar tu reserva</string>
     <string name="reservaInfo">¿Estás seguro que deseas reservar el menú el día %02d/%02d/%02d?</string>
     <string name="finalizarMenu">¿Estás seguro que deseas terminar el día?</string>
+    <string name="restringirMenu">¿Estás seguro que deseas restringir las reservas?</string>
     <string name="rehabilitarMenu">¿Estás seguro que deseas volver a habilitar el día?</string>
+    <string name="rehabilitarReservaMenu">¿Estás seguro que deseas volver a habilitar las reservas?</string>
 
     <string name="txtAddAlumno">Complete OBLIGATORIAMENTE todos los datos del alumno.</string>
     <string name="txtNotaMenu">NOTA: en caso de no ofrecer cena y/o postre, dejar en blanco.</string>
@@ -77,5 +79,8 @@
     <string name="modoOffLine">Sin conexión, puede que el listado no esté actualizado</string>
     <string name="noUsuarios">No hay usuarios disponibles</string>
     <string name="errorPDF">¡Error al crear listado de usuarios!</string>
+    <string name="noMenuDisponible">"NO HAY MENÚ DISPONIBLE EL DÍA DE HOY"</string>
+    <string name="noMenuAceptaReserva">YA NO SE ACEPTAN RESERVAS PARA EL MENÚ DE HOY</string>
+    <string name="qrNoData">¡El QR contiene datos inválidos!</string>
 
 </resources>

@@ -272,7 +272,7 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
         entries.add(new BarEntry(4, cantidadCancelado));
         entryLabels.add("Cancelos");
         BarDataSet barDataSet2 = new BarDataSet(entries, "");
-        barDataSet2.setColors(new int[]{R.color.colorGreen, R.color.colorOrange, R.color.colorYellow, R.color.colorPink}, getApplicationContext());
+        barDataSet2.setColors(new int[]{R.color.colorYellow, R.color.colorOrange, R.color.colorGreen, R.color.colorPink}, getApplicationContext());
         barDataSet2.setValueTextSize(13);
         barDataSet2.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         barDataSet2.setValueTextColor(Color.rgb(155, 155, 155));

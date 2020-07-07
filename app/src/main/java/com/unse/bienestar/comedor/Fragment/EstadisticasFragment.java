@@ -597,7 +597,7 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
     }
 
     public void loadAnimation() {
-        mPieChart.animateY(800, Easing.EasingOption.EaseInCirc);
+        mPieChart.animateY(1000, Easing.EasingOption.EaseInCirc);
         //mBarChart.animateY(1500, Easing.EasingOption.EaseInOutExpo);
 
     }

@@ -14,6 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.unse.bienestar.comedor.Database.RolViewModel;
 import com.unse.bienestar.comedor.Database.UsuarioViewModel;
 import com.unse.bienestar.comedor.Dialogos.DialogoGeneral;
@@ -31,12 +34,12 @@ import com.unse.bienestar.comedor.Utils.PreferenciasManager;
 import com.unse.bienestar.comedor.Utils.Utils;
 import com.unse.bienestar.comedor.Utils.VolleySingleton;
 import com.unse.bienestar.comedor.Utils.YesNoDialogListener;
-import com.google.android.material.navigation.NavigationView;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolbar;
     View headerView;
     Fragment mFragment;
-    int itemSelecionado = -1, idUser = 0;
+    int itemSelecionado = -1, idRes = 0, dniUser = 0;
     ImageView imgBienestar;
     TextView txtNombre, txtTitulo;
     UsuarioViewModel mUsuarioViewModel;
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             loadData();
 
             checkInfo();
+
         }
     }
 
@@ -97,12 +101,33 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 String contenido = intentIntegrator.getContents();
-                if (contenido.contains("#")) {
-                    int index = contenido.indexOf("#");
-                    String id = contenido.substring(index + 1);
-                    idUser = Integer.parseInt(id);
-                    reservar = true;
+                Pattern pattern = Pattern.compile("#[0-9]+-");
+                Matcher matcher = pattern.matcher(contenido);
+                String dni = "";
+                if (matcher.find()) {
+                    dni = matcher.group().replace("#", "").replace("-", "");
                 }
+                pattern = Pattern.compile("-[0-9]+#");
+                matcher = pattern.matcher(contenido);
+                String idReserva = "";
+                if (matcher.find()) {
+                    idReserva = matcher.group().replace("#", "").replace("-", "");
+                }
+                try {
+                    if (!dni.equals("") && !idReserva.equals("")) {
+                        //int index = contenido.indexOf("#");
+                        //String id = contenido.substring(index + 1);
+                        idRes = Integer.parseInt(idReserva);
+                        dniUser = Integer.parseInt(dni);
+                        reservar = true;
+                    } else {
+                        Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                                getString(R.string.qrNoData), R.drawable.ic_error);
+                    }
+                } catch (NumberFormatException e) {
+
+                }
+
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -113,8 +138,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (reservar) {
-            changeEstado(String.valueOf(idUser));
-            reservar = false;
+            if (dniUser != 0 && idRes != 0) {
+                changeEstado(String.valueOf(idRes));
+                reservar = false;
+            }
         }
 
     }
@@ -366,9 +393,9 @@ public class MainActivity extends AppCompatActivity {
     private void updateMenu() {
         Menu menu = navigationView.getMenu();
         int[] idItem = new int[]{R.id.item_reservas, R.id.item_users, R.id.item_menu, R.id.item_estad};
-        int[] idRol = new int[]{400,300,200,100};
+        int[] idRol = new int[]{400, 300, 200, 100};
         int i = 0;
-        for (Integer integer : idItem){
+        for (Integer integer : idItem) {
             MenuItem item = menu.findItem(integer);
             Rol rol = mRolViewModel.getByPermission(idRol[i]);
             if (rol == null) {

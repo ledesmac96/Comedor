@@ -203,7 +203,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="10dp"
                                     android:layout_height="10dp"
-                                    android:background="@color/colorGreen" />
+                                    android:background="@color/colorYellow" />
 
                                 <TextView
                                     android:textSize="12sp"
@@ -259,7 +259,7 @@
                                     android:layout_gravity="center"
                                     android:layout_width="10dp"
                                     android:layout_height="10dp"
-                                    android:background="@color/colorYellow" />
+                                    android:background="@color/colorGreen" />
 
                                 <TextView
                                     android:textSize="12sp"

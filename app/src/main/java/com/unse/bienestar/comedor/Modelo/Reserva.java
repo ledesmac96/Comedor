@@ -267,6 +267,7 @@ public class Reserva implements Parcelable {
                     break;
                 case HISTORIAL:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
+                    idUsuario = Integer.parseInt(object.getString("idusuario"));
                     idMenu = Integer.parseInt(object.getString("idmenu"));
                     porcion = Integer.parseInt(object.getString("porcion"));
                     dia = Integer.parseInt(object.getString("dia"));
@@ -281,6 +282,7 @@ public class Reserva implements Parcelable {
                     reserva.setFechaModificacion(fechaModificacion);
                     reserva.setPorcion(porcion);
                     reserva.setMenu(menu);
+                    reserva.setIdUsuario(idUsuario);
                     break;
                 case HISTORIAL_TOTAL:
                     idReserva = Integer.parseInt(object.getString("idreserva"));
