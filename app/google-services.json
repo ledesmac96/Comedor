@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "775644630316",
+    "firebase_url": "https://comedor-universitario---unse.firebaseio.com",
+    "project_id": "comedor-universitario---unse",
+    "storage_bucket": "comedor-universitario---unse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775644630316:android:88ae2afe273a649ae7b089",
+        "android_client_info": {
+          "package_name": "com.unse.bienestar.comedor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775644630316-82buh8oamcnd10dfrr26tv7pu5p8vp9p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unse.bienestar.comedor",
+            "certificate_hash": "4ffccae6b2953ee3be0e06afa28dab3d5b1cdc38"
+          }
+        },
+        {
+          "client_id": "775644630316-0edsjteo22tc2km17qhlgukosji3bvm7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unse.bienestar.comedor",
+            "certificate_hash": "4e542e148ceffe98cbfe4c1f86f159ac30aa868f"
+          }
+        },
+        {
+          "client_id": "775644630316-3pbakhq700aggoh4kt7m49adrqm9r8n8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH_TDLaiQdOTPT2styT9Fy0l2gfDH82Iw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775644630316-3pbakhq700aggoh4kt7m49adrqm9r8n8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

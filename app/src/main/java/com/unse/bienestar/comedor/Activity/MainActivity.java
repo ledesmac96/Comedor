@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
             checkInfo();
 
+           //decodeQR("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL\n¡MUCHAS GRACIAS POR RESERVAR!\n#TMW57W77-10#");
+
         }
     }
 
@@ -101,34 +103,46 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 String contenido = intentIntegrator.getContents();
-                Pattern pattern = Pattern.compile("#[0-9]+-");
-                Matcher matcher = pattern.matcher(contenido);
-                String dni = "";
-                if (matcher.find()) {
-                    dni = matcher.group().replace("#", "").replace("-", "");
-                }
-                pattern = Pattern.compile("-[0-9]+#");
-                matcher = pattern.matcher(contenido);
-                String idReserva = "";
-                if (matcher.find()) {
-                    idReserva = matcher.group().replace("#", "").replace("-", "");
-                }
-                try {
-                    if (!dni.equals("") && !idReserva.equals("")) {
-                        idRes = Integer.parseInt(idReserva);
-                        dniUser = Integer.parseInt(dni);
-                        reservar = true;
-                    } else {
-                        Utils.showCustomToast(MainActivity.this, getApplicationContext(),
-                                getString(R.string.qrNoData), R.drawable.ic_error);
-                    }
-                } catch (NumberFormatException e) {
-
-                }
-
+                decodeQR(contenido);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void decodeQR(String contenido) {
+        Pattern pattern = Pattern.compile("#[0-9A-Z]+-");
+        Matcher matcher = pattern.matcher(contenido);
+        String dni = "";
+        if (matcher.find()) {
+            dni = matcher.group().replace("#", "").replace("-", "");
+        }
+        pattern = Pattern.compile("-[0-9]+#");
+        matcher = pattern.matcher(contenido);
+        String idReserva = "";
+        if (matcher.find()) {
+            idReserva = matcher.group().replace("#", "").replace("-", "");
+        }
+        String[] dniDecode = new String[dni.length()];
+        for (int i = 0; i < dniDecode.length; i++) {
+            dniDecode[i] = String.valueOf(Utils.decode(dni.charAt(i)));
+        }
+        StringBuilder dniModif = new StringBuilder();
+        for (int i = 0; i < dniDecode.length; i++) {
+            dniModif.append(dniDecode[i]);
+        }
+        dni = dniModif.toString();
+        try {
+            if (!dni.equals("") && !idReserva.equals("")) {
+                idRes = Integer.parseInt(idReserva);
+                dniUser = Integer.parseInt(dni);
+                reservar = true;
+            } else {
+                Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                        getString(R.string.qrNoData), R.drawable.ic_error);
+            }
+        } catch (NumberFormatException e) {
+
         }
     }
 

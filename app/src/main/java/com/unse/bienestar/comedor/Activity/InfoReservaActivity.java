@@ -366,17 +366,14 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             builder.append("\n");
             builder.append("¡MUCHAS GRACIAS POR RESERVAR!");
             builder.append("\n");
-            Integer[] dni = new Integer[String.valueOf(reserva.getIdUsuario()).length()];
+            String[] dni = new String[String.valueOf(reserva.getIdUsuario()).length()];
             for (int i = 0; i < dni.length; i++) {
-                char numero = String.valueOf(reserva.getIdUsuario()).charAt(i);
-                dni[i] = Integer.parseInt(String.valueOf(numero));
-                dni[i] = dni[i] + (i % 2 == 0 ? 3 : -3);
+                char valor = Utils.encode(String.valueOf(reserva.getIdUsuario()).charAt(i));
+                dni[i] = String.valueOf(valor);
             }
             StringBuilder dniModif = new StringBuilder();
             for (int i = 0; i < dni.length; i++) {
                 dniModif.append(dni[i]);
-
-
             }
             builder.append(String.format("#%s-%s#", dniModif, reserva.getIdReserva()));
             BitMatrix matrix = formatWriter.encode(builder.toString(), BarcodeFormat.QR_CODE, 300, 300);

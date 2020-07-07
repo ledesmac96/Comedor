@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -78,18 +79,18 @@ dependencies {
     //Circle Image View
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     //Código de Barras Scanner
-    implementation 'com.journeyapps:zxing-android-embedded:2.3.0@aar'
+    //implementation 'com.journeyapps:zxing-android-embedded:2.3.0@aar'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'com.google.zxing:core:3.3.3'
     //Librería para Estadisticas
     implementation files('libs/MPAndroidChart-v3.0.2.jar')
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.navigation:navigation-fragment:2.0.0'
-    implementation 'androidx.navigation:navigation-ui:2.0.0'
-    //implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    //implementation 'com.google.firebase:firebase-analytics:17.4.3'
-    //implementation 'com.google.firebase:firebase-firestore:21.4.3' //17.1.5
+    // Add the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+
+    // Add the SDK for Firebase Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

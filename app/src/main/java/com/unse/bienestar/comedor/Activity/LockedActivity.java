@@ -70,8 +70,12 @@ public class LockedActivity extends AppCompatActivity {
                     usuario.setValidez(validez);
                     usuarioViewModel.update(usuario);
                     if (validez == 1) {
-                        mPreferenciasManager.setValue(Utils.IS_LOCK, false);
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Utils.resetData(getApplicationContext());
+                        mPreferenciasManager.setValue(Utils.IS_LOGIN, true);
+                        mPreferenciasManager.setValue(Utils.IS_LOCK, true);
+                        mPreferenciasManager.setValue(Utils.MY_ID, 0);
+                        mPreferenciasManager.setValue(Utils.TOKEN, "");
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finishAffinity();
                     }
                     break;

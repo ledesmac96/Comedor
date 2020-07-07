@@ -159,6 +159,7 @@ public class Utils {
     public static final String URL_USUARIO_ACTUALIZAR = "http://" + IP + "/bienestar/comedor/beneficiario/actualizarUsuario.php";
     public static final String URL_USUARIO_LOGIN = "http://" + IP + "/bienestar/comedor/beneficiario/login.php";
     public static final String URL_USUARIO_CHECK = "http://" + IP + "/bienestar/comedor/beneficiario/getValid.php";
+    public static final String URL_USUARIO_TEST = "http://" + IP + "/bienestar/comedor/menu/test.php";
     public static final String URL_USUARIOS_LISTA = "http://" + IP + "/bienestar/comedor/beneficiario/getUsuarios.php";
     public static final String URL_USUARIO_BY_ID = "http://" + IP + "/bienestar/comedor/beneficiario/getUsuario.php";
     public static final String URL_USUARIO_ELIMINAR = "http://" + IP + "/bienestar/comedor/beneficiario/eliminarUsuario.php";
@@ -878,6 +879,44 @@ public class Utils {
 
         }
         return (horaNum < max && horaNum > 0);
+    }
+
+    public static char encode(char charAt) {
+        if (charAt % 2 == 0) {
+
+            switch (charAt) {
+                case '0':
+                    return 'M';
+                case '2':
+                    return 'U';
+                case '4':
+                    return 'T';
+                case '6':
+                    return 'W';
+                case '8':
+                    return 'X';
+                default:
+                    return charAt;
+            }
+
+        } else return charAt;
+    }
+
+    public static char decode(char charAt) {
+        switch (charAt) {
+            case 'M':
+                return '0';
+            case 'U':
+                return '2';
+            case 'T':
+                return '4';
+            case 'W':
+                return '6';
+            case 'X':
+                return '8';
+            default:
+                return charAt;
+        }
     }
 }
 
