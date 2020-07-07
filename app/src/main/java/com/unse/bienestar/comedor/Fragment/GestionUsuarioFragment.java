@@ -239,12 +239,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
-                Rol rol = mRolViewModel.getByPermission(301);
-                if (rol != null) {
-                    processClick(search(position, (int) id));
-                } else {
-                    Utils.showToast(getContext(), "No posee los permisos para esta operación");
-                }
+                processClick(search(position, (int) id));
 
             }
         });

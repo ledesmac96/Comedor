@@ -472,8 +472,17 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
                     Utils.showToast(getContext(), getString(R.string.tokenInvalido));
                     dialogReserva(false, null);
                     break;
+                case 4:
+                    dialogReserva(false, null);
+                    break;
                 case 5:
-                    yaExisteDialogo();
+                    yaExisteDialogo(5);
+                    break;
+                case 6:
+                    yaExisteDialogo(6);
+                    break;
+                case 7:
+                    yaExisteDialogo(7);
                     break;
                 case 100:
                     //No autorizado
@@ -488,10 +497,10 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void yaExisteDialogo() {
+    private void yaExisteDialogo(int valor) {
         DialogoGeneral.Builder builder = new DialogoGeneral.Builder(getContext())
-                .setTitulo(getString(R.string.yaReservo))
-                .setDescripcion(getString(R.string.dirigeReserva))
+                .setTitulo(getString(valor == 5 ? R.string.yaReservo : valor == 6 ? R.string.error : R.string.error))
+                .setDescripcion(getString(valor == 5 ? R.string.dirigeReserva : valor == 6 ? R.string.menuPermite : R.string.menuCerrado))
                 .setListener(new YesNoDialogListener() {
                     @Override
                     public void yes() {
@@ -503,7 +512,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
                     }
                 })
-                .setIcono(R.drawable.ic_advertencia)
+                .setIcono(valor == 5 ? R.drawable.ic_advertencia : R.drawable.ic_error)
                 .setTipo(DialogoGeneral.TIPO_ACEPTAR);
         DialogoGeneral dialogoGeneral = builder.build();
         dialogoGeneral.show(getFragmentManager(), "dialog_ad");

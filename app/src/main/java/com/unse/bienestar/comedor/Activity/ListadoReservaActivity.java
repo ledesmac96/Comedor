@@ -14,6 +14,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.unse.bienestar.comedor.Adapter.ReservasAdapter;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Menu;
@@ -23,14 +31,6 @@ import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
 import com.unse.bienestar.comedor.Utils.PreferenciasManager;
 import com.unse.bienestar.comedor.Utils.Utils;
 import com.unse.bienestar.comedor.Utils.VolleySingleton;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -251,8 +251,7 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
 
         entries = new ArrayList<>();
         entryLabels = new ArrayList<String>();
-        int i = 1;
-        int cantidadRes = 0, cantidadReti = 0, cantidadCancelado = 0;
+        int cantidadRes = 0, cantidadReti = 0, cantidadCancelado = 0, cantidadNoRetirados = 0;
         for (Reserva reserva : mReservas) {
             if (reserva.getDescripcion().equals("RESERVADO")) {
                 cantidadRes++;
@@ -261,18 +260,24 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
             } else if (reserva.getDescripcion().equals("RETIRADO")) {
 
                 cantidadReti++;
+            } else if (reserva.getDescripcion().equals("NO RETIRADO")) {
+
+                cantidadNoRetirados++;
             }
         }
         entries.add(new BarEntry(1, mReservas.size()));
         entryLabels.add("Total");
-        entries.add(new BarEntry(2, cantidadRes));
-        entryLabels.add("Reservas");
-        entries.add(new BarEntry(3, cantidadReti));
+        entries.add(new BarEntry(2, cantidadReti));
         entryLabels.add("Retiros");
+        entries.add(new BarEntry(3, cantidadRes));
+        entryLabels.add("Reservas");
         entries.add(new BarEntry(4, cantidadCancelado));
         entryLabels.add("Cancelos");
+        entries.add(new BarEntry(5, cantidadNoRetirados));
+        entryLabels.add("No Retirados");
         BarDataSet barDataSet2 = new BarDataSet(entries, "");
-        barDataSet2.setColors(new int[]{R.color.colorYellow, R.color.colorOrange, R.color.colorGreen, R.color.colorPink}, getApplicationContext());
+        barDataSet2.setColors(new int[]{R.color.colorLightBlue, R.color.colorGreen,
+                R.color.colorOrange, R.color.colorRed, R.color.colorPink}, getApplicationContext());
         barDataSet2.setValueTextSize(13);
         barDataSet2.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         barDataSet2.setValueTextColor(Color.rgb(155, 155, 155));

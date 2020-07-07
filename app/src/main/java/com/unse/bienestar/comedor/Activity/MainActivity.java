@@ -115,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 try {
                     if (!dni.equals("") && !idReserva.equals("")) {
-                        //int index = contenido.indexOf("#");
-                        //String id = contenido.substring(index + 1);
                         idRes = Integer.parseInt(idReserva);
                         dniUser = Integer.parseInt(dni);
                         reservar = true;
@@ -139,18 +137,18 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (reservar) {
             if (dniUser != 0 && idRes != 0) {
-                changeEstado(String.valueOf(idRes));
+                changeEstado(String.valueOf(idRes), String.valueOf(dniUser));
                 reservar = false;
             }
         }
 
     }
 
-    private void changeEstado(String idReserva) {
+    private void changeEstado(String idReserva, String dni) {
         PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
         String key = manager.getValueString(Utils.TOKEN);
         int id = manager.getValueInt(Utils.MY_ID);
-        String URL = String.format("%s?idU=%s&key=%s&ir=%s&ie=%s&e=%s", Utils.URL_RESERVA_ACTUALIZAR, id, key, idReserva, id, 3);
+        String URL = String.format("%s?idU=%s&key=%s&ir=%s&ie=%s&e=%s&d=%s", Utils.URL_RESERVA_ACTUALIZAR, id, key, idReserva, id, 3, dni);
         StringRequest request = new StringRequest(Request.Method.PUT, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -192,13 +190,46 @@ public class MainActivity extends AppCompatActivity {
                             getString(R.string.errorActualizar), R.drawable.ic_error);
                     dialogo(false);
                     break;
+                case 3:
+                    Utils.showCustomToast(MainActivity.this, getApplicationContext(),
+                            getString(R.string.tokenInvalido), R.drawable.ic_error);
+                    break;
                 case 4:
                     Utils.showCustomToast(MainActivity.this, getApplicationContext(),
                             getString(R.string.camposIncompletos), R.drawable.ic_error);
                     break;
-                case 3:
-                    Utils.showCustomToast(MainActivity.this, getApplicationContext(),
-                            getString(R.string.tokenInvalido), R.drawable.ic_error);
+                case 5:
+                    dialogoCustom(5);
+                    break;
+                case 6:
+                    dialogoCustom(6);
+                    break;
+                case 7:
+                    dialogoCustom(7);
+                    break;
+                case 8:
+                    dialogoCustom(8);
+                    break;
+                case 9:
+                    dialogoCustom(9);
+                    break;
+                case 10:
+                    dialogoCustom(10);
+                    break;
+                case 11:
+                    dialogoCustom(11);
+                    break;
+                case 12:
+                    dialogoCustom(12);
+                    break;
+                case 13:
+                    dialogoCustom(13);
+                    break;
+                case 14:
+                    dialogoCustom(14);
+                    break;
+                case 15:
+                    dialogoCustom(15);
                     break;
                 case 100:
                     //No autorizado
@@ -213,6 +244,48 @@ public class MainActivity extends AppCompatActivity {
                     getString(R.string.errorInternoAdmin), R.drawable.ic_error);
 
         }
+    }
+
+    private void dialogoCustom(int valor) {
+        DialogoGeneral.Builder builder = new DialogoGeneral.Builder(getApplicationContext())
+                .setTitulo(getString(
+                        valor == 5 ? R.string.yaRetiro :
+                                valor == 6 ? R.string.reservaNoExiste :
+                                        (valor == 7 || valor == 8 || valor == 9 || valor == 10 || valor == 11) ? R.string.noMenuActual :
+                                                valor == 12 ? R.string.cambioUsuario :
+                                                        (valor == 13 || valor == 14) ? R.string.reservaYaComprobada :
+                                                                valor == 15 ? R.string.error :
+                                                                        R.string.error))
+                .setDescripcion(getString(
+                        valor == 5 ? R.string.reservaRetirada :
+                                valor == 6 ? R.string.reservaNoExisteDesc :
+                                        valor == 7 ? R.string.reservaAnteriorNoRetirada :
+                                                valor == 8 ? R.string.reservaAnteriorCancelada :
+                                                        valor == 9 ? R.string.reservaAnteriorRetirada :
+                                                                valor == 10 ? R.string.reservaAnteriorYaNoRetirada :
+                                                                        valor == 11 ? R.string.reservaNoExisteDesc :
+                                                                                valor == 12 ? R.string.reservaNoDNI :
+                                                                                        valor == 13 ? R.string.reservaHoyCancelada :
+                                                                                                valor == 14 ? R.string.reservaHoyNoRetirada :
+                                                                                                        valor == 15 ? R.string.menuCerrado :
+                                                                                                                R.string.menuCerrado))
+                .setListener(new YesNoDialogListener() {
+                    @Override
+                    public void yes() {
+
+                    }
+
+                    @Override
+                    public void no() {
+
+                    }
+                })
+                .setIcono((valor == 5 || valor == 6 || valor == 12 || valor == 13 || valor == 14 || valor == 15) ? R.drawable.ic_error :
+                        (valor == 7 || valor == 8 || valor == 9 || valor == 10 | valor == 11) ? R.drawable.ic_advertencia :
+                                R.drawable.ic_error)
+                .setTipo(DialogoGeneral.TIPO_ACEPTAR);
+        DialogoGeneral dialogoGeneral = builder.build();
+        dialogoGeneral.show(getSupportFragmentManager(), "dialog_ad");
     }
 
     private void dialogo(boolean estado) {

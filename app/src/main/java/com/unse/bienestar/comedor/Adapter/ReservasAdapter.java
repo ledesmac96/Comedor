@@ -58,7 +58,10 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
             holder.mBackg.getBackground().setColorFilter(Color.parseColor("#32AC37"), PorterDuff.Mode.SRC_OVER);
 
         } else if (reserva.getDescripcion().equals("CANCELADO")) {
-            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#FFC2185B"), PorterDuff.Mode.SRC_OVER);
+            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#DF1A1A"), PorterDuff.Mode.SRC_OVER);
+
+        }else if (reserva.getDescripcion().equals("NO RETIRADO")) {
+            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#A30E49"), PorterDuff.Mode.SRC_OVER);
 
         }
         if (tipo == ADMIN) {

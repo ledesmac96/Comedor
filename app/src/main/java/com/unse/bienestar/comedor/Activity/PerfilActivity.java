@@ -23,22 +23,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.unse.bienestar.comedor.Adapter.ReservasAdapter;
-import com.unse.bienestar.comedor.Database.AlumnoViewModel;
-import com.unse.bienestar.comedor.Database.RolViewModel;
-import com.unse.bienestar.comedor.Database.UsuarioViewModel;
-import com.unse.bienestar.comedor.Dialogos.DatePickerFragment;
-import com.unse.bienestar.comedor.Dialogos.DialogoGeneral;
-import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
-import com.unse.bienestar.comedor.Modelo.Alumno;
-import com.unse.bienestar.comedor.Modelo.Reserva;
-import com.unse.bienestar.comedor.Modelo.Usuario;
-import com.unse.bienestar.comedor.R;
-import com.unse.bienestar.comedor.Utils.PreferenciasManager;
-import com.unse.bienestar.comedor.Utils.Utils;
-import com.unse.bienestar.comedor.Utils.Validador;
-import com.unse.bienestar.comedor.Utils.VolleySingleton;
-import com.unse.bienestar.comedor.Utils.YesNoDialogListener;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -48,6 +32,23 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.unse.bienestar.comedor.Adapter.ReservasAdapter;
+import com.unse.bienestar.comedor.Database.AlumnoViewModel;
+import com.unse.bienestar.comedor.Database.RolViewModel;
+import com.unse.bienestar.comedor.Database.UsuarioViewModel;
+import com.unse.bienestar.comedor.Dialogos.DatePickerFragment;
+import com.unse.bienestar.comedor.Dialogos.DialogoGeneral;
+import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
+import com.unse.bienestar.comedor.Modelo.Alumno;
+import com.unse.bienestar.comedor.Modelo.Reserva;
+import com.unse.bienestar.comedor.Modelo.Rol;
+import com.unse.bienestar.comedor.Modelo.Usuario;
+import com.unse.bienestar.comedor.R;
+import com.unse.bienestar.comedor.Utils.PreferenciasManager;
+import com.unse.bienestar.comedor.Utils.Utils;
+import com.unse.bienestar.comedor.Utils.Validador;
+import com.unse.bienestar.comedor.Utils.VolleySingleton;
+import com.unse.bienestar.comedor.Utils.YesNoDialogListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +71,7 @@ public class PerfilActivity extends AppCompatActivity
 
     ImageView btnBack;
     CircleImageView imgUser;
-    LinearLayout latGeneral, latAlumno, latAdmin, latUser, latVacio, latEstadisticas, latReserva;
+    LinearLayout latGeneral, latAlumno, latAdmin, latUser, latVacio, latEstadisticas, latReserva, latInfoUser;
     FloatingActionButton fabEditar;
     EditText edtNombre, edtApellido, edtDNI, edtMail, edtAnioIngresoAlu, edtLegajoAlu, edtDomicilio,
             edtProvincia, edtTelefono, edtPais, edtLocalidad, edtBarrio, edtRegistro, edtModificacion,
@@ -85,6 +86,7 @@ public class PerfilActivity extends AppCompatActivity
     ReservasAdapter mReservasAdapter;
     ArrayList<Reserva> mReservas;
     BarChart barCantidad;
+    RolViewModel mRolViewModel;
 
     DialogoProcesamiento dialog;
     UsuarioViewModel mUsuarioViewModel;
@@ -105,7 +107,6 @@ public class PerfilActivity extends AppCompatActivity
         loadViews();
 
         isAdmin();
-
 
         setToolbar();
 
@@ -133,6 +134,12 @@ public class PerfilActivity extends AppCompatActivity
             latVacio.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.GONE);
             latReserva.setVisibility(View.GONE);
+        }
+        Rol rol = mRolViewModel.getByPermission(301);
+        if (rol != null) {
+            latInfoUser.setVisibility(VISIBLE);
+        } else {
+            latInfoUser.setVisibility(View.GONE);
         }
     }
 
@@ -219,6 +226,7 @@ public class PerfilActivity extends AppCompatActivity
     }
 
     private void loadViews() {
+        latInfoUser = findViewById(R.id.latInfoUser);
         barCantidad = findViewById(R.id.barCantidad);
         latReserva = findViewById(R.id.latReserva);
         latEstadisticas = findViewById(R.id.latEstadisticas);
@@ -252,6 +260,7 @@ public class PerfilActivity extends AppCompatActivity
     }
 
     private void loadData() {
+        mRolViewModel = new RolViewModel(getApplicationContext());
         mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -421,7 +430,7 @@ public class PerfilActivity extends AppCompatActivity
 
         entries = new ArrayList<>();
         entryLabels = new ArrayList<String>();
-        int cantidadRes = 0, cantidadReti = 0, cantidadCancelado = 0;
+        int cantidadRes = 0, cantidadReti = 0, cantidadCancelado = 0, cantidadNoRetirados = 0;
         for (Reserva reserva : mReservas) {
             if (reserva.getDescripcion().equals("RESERVADO")) {
                 cantidadRes++;
@@ -430,18 +439,24 @@ public class PerfilActivity extends AppCompatActivity
             } else if (reserva.getDescripcion().equals("RETIRADO")) {
 
                 cantidadReti++;
+            } else if (reserva.getDescripcion().equals("NO RETIRADO")) {
+
+                cantidadNoRetirados++;
             }
         }
         entries.add(new BarEntry(1, mReservas.size()));
         entryLabels.add("Total");
-        entries.add(new BarEntry(2, cantidadRes));
-        entryLabels.add("Reservas");
-        entries.add(new BarEntry(3, cantidadReti));
+        entries.add(new BarEntry(2, cantidadReti));
         entryLabels.add("Retiros");
+        entries.add(new BarEntry(3, cantidadRes));
+        entryLabels.add("Reservas");
         entries.add(new BarEntry(4, cantidadCancelado));
         entryLabels.add("Cancelos");
+        entries.add(new BarEntry(5, cantidadNoRetirados));
+        entryLabels.add("No Retirados");
         BarDataSet barDataSet2 = new BarDataSet(entries, "");
-        barDataSet2.setColors(new int[]{R.color.colorGreen, R.color.colorOrange, R.color.colorYellow, R.color.colorPink}, getApplicationContext());
+        barDataSet2.setColors(new int[]{R.color.colorLightBlue, R.color.colorGreen,
+                R.color.colorOrange, R.color.colorRed, R.color.colorPink}, getApplicationContext());
         barDataSet2.setValueTextSize(13);
         barDataSet2.setValueTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         barDataSet2.setValueTextColor(Color.rgb(155, 155, 155));
@@ -556,7 +571,7 @@ public class PerfilActivity extends AppCompatActivity
 
             }
         carreraUser = index2;
-       // spinnerCarrera.setSelection(carreraUser);
+        // spinnerCarrera.setSelection(carreraUser);
     }
 
     private void loadLayout(int tipoUsuario) {

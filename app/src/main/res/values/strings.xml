@@ -82,5 +82,23 @@
     <string name="noMenuDisponible">"NO HAY MENÚ DISPONIBLE EL DÍA DE HOY"</string>
     <string name="noMenuAceptaReserva">YA NO SE ACEPTAN RESERVAS PARA EL MENÚ DE HOY</string>
     <string name="qrNoData">¡El QR contiene datos inválidos!</string>
+    <string name="error">¡Error!</string>
+    <string name="menuPermite">El menú del día ya no permite reservas</string>
+    <string name="menuCerrado">El menú del día ya fue cerrado</string>
+    <string name="yaRetiro">¡Reserva retirada!</string>
+    <string name="reservaRetirada">La reserva ya fue retirada</string>
+    <string name="reservaNoExisteDesc">La reserva no existe en el sistema</string>
+    <string name="noMenuActual">¡Menú anterior!</string>
+    <string name="reservaAnteriorCancelada">La reserva fue cancelada debido a que pertenece a un menú anterior</string>
+    <string name="reservaAnteriorNoRetirada">La reserva fue anulada debido a que pertenece a un menú anterior</string>
+    <string name="reservaAnteriorRetirada">La reserva ya fue retirada y pertenece a un menú anterior</string>
+    <string name="reservaAnteriorYaNoRetirada">La reserva ya fue anulada debido a que pertenece a un menú anterior</string>
+    <string name="cambioUsuario">¡Intercambio de usuario!</string>
+    <string name="reservaNoDNI">La reserva fue modificada y cambiada de usuario. No válido</string>
+    <string name="reservaYaComprobada">¡Ya escaneada!</string>
+    <string name="reservaHoyCancelada">La reserva es actual, pero fue cancelada por el estudiante</string>
+    <string name="reservaHoyNoRetirada">La reserva es actual, pero es inválida</string>
+    <string name="reservaNoCancelada">¡Error al cancelar!</string>
+    <string name="reservaAnterior">Reserva anterior ¡fue cancelada!</string>
 
 </resources>

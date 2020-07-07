@@ -23,13 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.unse.bienestar.comedor.Database.AlumnoViewModel;
-import com.unse.bienestar.comedor.Database.MenuViewModel;
-import com.unse.bienestar.comedor.Database.ReservaViewModel;
-import com.unse.bienestar.comedor.Database.RolViewModel;
-import com.unse.bienestar.comedor.Database.UsuarioViewModel;
-import com.unse.bienestar.comedor.Modelo.Usuario;
-import com.unse.bienestar.comedor.R;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -39,6 +32,13 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
+import com.unse.bienestar.comedor.Database.AlumnoViewModel;
+import com.unse.bienestar.comedor.Database.MenuViewModel;
+import com.unse.bienestar.comedor.Database.ReservaViewModel;
+import com.unse.bienestar.comedor.Database.RolViewModel;
+import com.unse.bienestar.comedor.Database.UsuarioViewModel;
+import com.unse.bienestar.comedor.Modelo.Usuario;
+import com.unse.bienestar.comedor.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -356,7 +356,7 @@ public class Utils {
     public static Date getFechaDateWithHour(String fecha) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date fechaI = null;
-        if (fecha != null)
+        if (fecha != null) {
             try {
                 fechaI = simpleDateFormat.parse(fecha);
 
@@ -369,8 +369,9 @@ public class Utils {
                     e2.printStackTrace();
                 }
             }
+            return fechaI;
+        } else return null;
 
-        return fechaI;
 
     }
 
@@ -451,39 +452,42 @@ public class Utils {
     public static String getFechaOrder(Date date) {
 
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        String mesS, diaS, minutosS, segS, horasS;
-        int mes = cal.get(Calendar.MONTH) + 1;
-        if (mes < 10) {
-            mesS = "0" + mes;
-        } else
-            mesS = String.valueOf(mes);
+        if (date != null) {
+            cal.setTime(date);
+            String mesS, diaS, minutosS, segS, horasS;
+            int mes = cal.get(Calendar.MONTH) + 1;
+            if (mes < 10) {
+                mesS = "0" + mes;
+            } else
+                mesS = String.valueOf(mes);
 
-        int dia = cal.get(Calendar.DAY_OF_MONTH);
-        if (dia < 10) {
-            diaS = "0" + dia;
-        } else
-            diaS = String.valueOf(dia);
+            int dia = cal.get(Calendar.DAY_OF_MONTH);
+            if (dia < 10) {
+                diaS = "0" + dia;
+            } else
+                diaS = String.valueOf(dia);
 
-        int minutos = cal.get(Calendar.MINUTE);
-        if (minutos < 10) {
-            minutosS = "0" + minutos;
-        } else
-            minutosS = String.valueOf(minutos);
+            int minutos = cal.get(Calendar.MINUTE);
+            if (minutos < 10) {
+                minutosS = "0" + minutos;
+            } else
+                minutosS = String.valueOf(minutos);
 
-        int seg = cal.get(Calendar.SECOND);
-        if (seg < 10) {
-            segS = "0" + seg;
-        } else
-            segS = String.valueOf(seg);
+            int seg = cal.get(Calendar.SECOND);
+            if (seg < 10) {
+                segS = "0" + seg;
+            } else
+                segS = String.valueOf(seg);
 
-        int horas = cal.get(Calendar.HOUR_OF_DAY);
-        if (horas < 10)
-            horasS = "0" + horas;
-        else
-            horasS = String.valueOf(horas);
+            int horas = cal.get(Calendar.HOUR_OF_DAY);
+            if (horas < 10)
+                horasS = "0" + horas;
+            else
+                horasS = String.valueOf(horas);
 
-        return String.format("%s/%s/%s - %s:%s:%s", diaS, mesS, cal.get(Calendar.YEAR), horasS, minutosS, segS);
+            return String.format("%s/%s/%s - %s:%s:%s", diaS, mesS, cal.get(Calendar.YEAR), horasS, minutosS, segS);
+        } else return "NO FECHA";
+
     }
 
     public static String getBirthday(Date date) {
@@ -740,8 +744,8 @@ public class Utils {
 
             Pattern pattern = Pattern.compile("\\$[a-zA-Z  ]+");
             Matcher matcher = pattern.matcher(descripcion);
-            int  i = 1;
-            while (matcher.find()){
+            int i = 1;
+            while (matcher.find()) {
                 food[i] = matcher.group().substring(1);
                 i++;
             }

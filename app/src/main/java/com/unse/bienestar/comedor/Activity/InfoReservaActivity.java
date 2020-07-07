@@ -38,7 +38,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     ImageView imgIcono, imgQR;
     Button btnCancelar;
     TextView txtIdRes, txtAlmuerzo, txtCena, txtPostre, txtFechaRes, txtEstado,
-            txtFechaRetirada, txtPorcion;
+            txtFechaRetirada, txtPorcion, txtFechaResDescripcion;
     Reserva mReserva;
     //ReservaViewModel mReservaViewModel;
     //Menu mMenu;
@@ -139,7 +139,6 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         txtPostre.setText(comida[2]);
         txtFechaRes.setText(Utils.getFechaOrder(Utils.getFechaDateWithHour(mReserva.getFechaReserva())));
         txtEstado.setText(mReserva.getDescripcion());
-        //txtEstado.setText(mReserva.getEstado() == 1 ? "RESERVADO" : mReserva.getEstado() == 2 ? "CANCELADO" : "RETIRADO");
         btnCancelar.setText(mReserva.getDescripcion().equals("RESERVADO") ? "CANCELAR" : "RESERVAR");
         txtPorcion.setText(String.valueOf(mReserva.getPorcion()));
         if (mReserva.getDescripcion().equals("RETIRADO")) {
@@ -151,60 +150,17 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             latQR.setVisibility(View.GONE);
         } else if (mReserva.getDescripcion().equals("RESERVADO")) {
             generateQR(mReserva);
+        } else if (mReserva.getDescripcion().equals("NO RETIRADO")) {
+            latRetiro.setVisibility(View.VISIBLE);
+            txtFechaResDescripcion.setText("Fecha de Cancelación");
+            txtFechaRetirada.setText(mReserva.getFechaModificacion() != null ?
+                    Utils.getFechaOrder(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())) :
+                    "NO FECHA");
+            btnCancelar.setVisibility(View.GONE);
+            latQR.setVisibility(View.GONE);
         } else {
             latQR.setVisibility(View.GONE);
         }
-
-        /*if (mReserva != null) {
-            txtIdRes.setText(String.format("RESERVA # %s", mReserva.getIdReserva()));
-            comida = Utils.getComidas(mReserva.getDescripcion());
-
-            txtEstado.setText(mReserva.getDescripcion());
-            //
-            btnCancelar.setText(mReserva.getDescripcion().equals("RESERVADO") ? "CANCELAR" : "RESERVAR");
-            if (mReserva.getDescripcion().equals("RETIRADO")) {
-                latRetiro.setVisibility(View.VISIBLE);
-                txtFechaRetirada.setText(mReserva.getFechaModificacion() != null ?
-                        Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())) :
-                        "NO FECHA");
-                btnCancelar.setVisibility(View.GONE);
-                latQR.setVisibility(View.GONE);
-            } else {
-                generateQR(mReserva);
-            }
-            btnCancelar.setEnabled(false);
-            txtPorcion.setText(mMenu != null ? String.valueOf(mMenu.getPorcion()) : "NO INFO");
-            estado = 2; //Del alumno
-        } else {
-            mReserva = mReservaViewModel.getByMenuID(mMenu.getIdMenu());
-            if (mReserva == null) {
-                txtIdRes.setText("INFO");
-                btnCancelar.setText("RESERVAR");
-                comida = Utils.getComidas(mMenu.getDescripcion());
-                txtPorcion.setText(String.valueOf(mMenu.getPorcion()));
-                latQR.setVisibility(View.GONE);
-                latFecha.setVisibility(View.GONE);
-                latEstado.setVisibility(View.GONE);
-                estado = 1; //Nueva
-            } else {
-                txtEstado.setText(mReserva.getEstado() == 1 ? "RESERVADO" : mReserva.getEstado() == 2 ? "CANCELADO" : "RETIRADO");
-                txtIdRes.setText(String.format("RESERVA # %s", mReserva.getIdReserva()));
-                if (mReserva.getEstado() == 3) {
-                    latRetiro.setVisibility(View.VISIBLE);
-                    txtFechaRetirada.setText(Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())));
-                }
-                btnCancelar.setText(mReserva.getEstado() == 1 ? "CANCELAR" : "RESERVAR");
-                comida = Utils.getComidas(mMenu.getDescripcion());
-                txtPorcion.setText(String.valueOf(mMenu.getPorcion()));
-                txtFechaRes.setText(Utils.getFechaName(Utils.getFechaDateWithHour(mReserva.getFechaReserva())));
-                estado = 3;//Ya reservada
-                if (mReserva.getEstado() != 2) generateQR(mReserva);
-                else latQR.setVisibility(View.GONE);
-            }
-        }*/
-        //txtPlato.setText(String.format("Almuerzo: %s\nCena: %s\nPostre: %s", comida[0], comida[1], comida[2]));
-
-
     }
 
     private void loadListener() {
@@ -213,6 +169,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadViews() {
+        txtFechaResDescripcion = findViewById(R.id.txtFechaRet);
         txtPorcion = findViewById(R.id.txtPorcion);
         latRetiro = findViewById(R.id.latFechaRetirada);
         txtFechaRetirada = findViewById(R.id.txtFechaRetiro);
@@ -322,16 +279,33 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case 2:
                     Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
-                            getString(R.string.reservaNoExiste), R.drawable.ic_error);
+                            getString(R.string.reservaNoCancelada), R.drawable.ic_error);
                     break;
                 case 3:
                     Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
                             getString(R.string.tokenInvalido), R.drawable.ic_error);
                     break;
+                case 4:
+                    Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.camposInvalidos), R.drawable.ic_error);
+                    break;
                 case 5:
                     Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
-                            getString(R.string.yaReservo), R.drawable.ic_error);
+                            getString(R.string.yaRetiro), R.drawable.ic_error);
+                    latQR.setVisibility(View.GONE);
+                    btnCancelar.setEnabled(false);
                     break;
+                case 6:
+                    Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.reservaNoExiste), R.drawable.ic_error);
+                    finish();
+                    break;
+                case 7:
+                case 8:
+                    Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
+                            getString(R.string.reservaAnterior), R.drawable.ic_advertencia);
+                    latQR.setVisibility(View.GONE);
+                    btnCancelar.setVisibility(View.GONE);
                 case 100:
                     //No autorizado
                     Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),
@@ -354,43 +328,29 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
 
                 if (mensaje.contains("cancelada")) {
                     latEstado.setVisibility(View.VISIBLE);
-                    btnCancelar.setText("RESERVAR");
                     latFecha.setVisibility(View.VISIBLE);
                     latQR.setVisibility(View.GONE);
+                    btnCancelar.setText("RESERVAR");
                     mReserva.setEstado(2);
                     mReserva.setDescripcion("CANCELADO");
                     txtEstado.setText(mReserva.getDescripcion());
                 } else if (mensaje.contains("habilitada")) {
                     latEstado.setVisibility(View.VISIBLE);
+                    latFecha.setVisibility(View.VISIBLE);
+                    latQR.setVisibility(View.VISIBLE);
                     mReserva.setEstado(1);
                     mReserva.setDescripcion("RESERVADO");
                     txtEstado.setText(mReserva.getDescripcion());
                     btnCancelar.setText("CANCELAR");
-                    latFecha.setVisibility(View.VISIBLE);
-                    latQR.setVisibility(View.VISIBLE);
                     generateQR(mReserva);
-
+                } else if (mensaje.contains("retirada")) {
+                    latQR.setVisibility(View.GONE);
+                    latRetiro.setVisibility(View.VISIBLE);
+                    txtFechaRetirada.setText(Utils.getFechaOrder(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())));
+                    txtEstado.setText("RETIRADO");
+                    btnCancelar.setVisibility(View.GONE);
                 }
             }
-
-               /* if (3 == 1) {
-
-                    Reserva reserva = Reserva.mapper(jsonObject.getJSONObject("dato"), Reserva.COMPLETE);
-
-                    // mReservaViewModel.insert(reserva);
-
-                    btnCancelar.setText("CANCELAR");
-                    latEstado.setVisibility(View.VISIBLE);
-                    txtEstado.setText(reserva.getEstado() == 1 ? "RESERVADO" : reserva.getEstado() == 2 ? "CANCELADO" : "RETIRADO");
-                    latFecha.setVisibility(View.VISIBLE);
-                    txtFechaRes.setText(Utils.getFechaName(Utils.getFechaDate(reserva.getFechaReserva())));
-                    txtIdRes.setText(String.format("RESERVA #%s", reserva.getIdReserva()));
-                    latQR.setVisibility(View.VISIBLE);
-                    generateQR(reserva);
-                }
-            } else {
-
-            }*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -406,7 +366,19 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             builder.append("\n");
             builder.append("¡MUCHAS GRACIAS POR RESERVAR!");
             builder.append("\n");
-            builder.append(String.format("#%s-%s#", mReserva.getIdUsuario(), mReserva.getIdReserva()));
+            Integer[] dni = new Integer[String.valueOf(reserva.getIdUsuario()).length()];
+            for (int i = 0; i < dni.length; i++) {
+                char numero = String.valueOf(reserva.getIdUsuario()).charAt(i);
+                dni[i] = Integer.parseInt(String.valueOf(numero));
+                dni[i] = dni[i] + (i % 2 == 0 ? 3 : -3);
+            }
+            StringBuilder dniModif = new StringBuilder();
+            for (int i = 0; i < dni.length; i++) {
+                dniModif.append(dni[i]);
+
+
+            }
+            builder.append(String.format("#%s-%s#", dniModif, reserva.getIdReserva()));
             BitMatrix matrix = formatWriter.encode(builder.toString(), BarcodeFormat.QR_CODE, 300, 300);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(matrix);

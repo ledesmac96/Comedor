@@ -19,8 +19,8 @@
     <!--Colores varios-->
     <color name="colorGreen">#32AC37</color>
     <color name="colorOrange">#E64A19</color>
-    <color name="colorRed">#D32F2F</color>
-    <color name="colorPink">#C2185B</color>
+    <color name="colorRed">#DF1A1A</color>
+    <color name="colorPink">#A30E49</color>
     <color name="colorYellow">#FFA000</color>
     <color name="colorGreeLight">#AFB42B</color>
     <color name="colorLightBlue">#0097A7</color>
