@@ -24,8 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -103,6 +103,7 @@ public class Utils {
     public static final int LIST_NOMBRE = 3;
 
     public static final String IS_TOKEN = "is_token_firebase";
+    public static final String MESNAME = "mes_name";
 
     private static final String IP = "bienestar.unse.edu.ar";
     //USUARIO
@@ -736,25 +737,12 @@ public class Utils {
             File filePath = new File(getNameFile(directory_path, 1, ""));
             if (!file.exists())
                 file.createNewFile();
-            }
-
             fileOutputStream = new FileOutputStream(filePath);
             PdfWriter pdfWriter = new PdfWriter(fileOutputStream);
             document = new Document(new PdfDocument(pdfWriter));
             PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
-            addHeadder(document, font);
+            addHeadder(document, font, context);
             document.add(getText("LISTADO DE USUARIOS", 10, true).setFont(font));
-            Image image = loadImage(context, R.drawable.encabezado, 179, 79);
-            document.add(image.setTextAlignment(TextAlignment.CENTER));
-            //image = loadImage(context, R.drawable.logo_unse, 179, 76);
-            //document.add(image.setTextAlignment(TextAlignment.RIGHT));
-
-            //PdfFont font = PdfFontFactory.createFont();
-            //PdfFont font = PdfFontFactory.createFont("assets/product_sans_regular.ttf", PdfEncodings.IDENTITY_H, true);
-            document.add(getText("BIENESTAR ESTUDIANTIL", 12, true));
-            document.add(getText("SISTEMA DE GESTIÓN - COMEDOR UNIVERSITARIO", 11, true));
-            // document.add(getText("----------------------------------------------------------------------------------------------------------------------", 11, true));
-            document.add(getText("LISTADO DE USUARIOS", 10, true));
             Table table = new Table(new UnitValue[]{
                     new UnitValue(UnitValue.PERCENT, 20f),
                     new UnitValue(UnitValue.PERCENT, 6f),
@@ -817,7 +805,7 @@ public class Utils {
             PdfWriter pdfWriter = new PdfWriter(fileOutputStream);
             document = new Document(new PdfDocument(pdfWriter));
             PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
-            addHeadder(document, font);
+            addHeadder(document, font, context);
             document.add(getText(String.format("REPORTE MENSUAL: %s", mes.toUpperCase()), 10, true).setFont(font));
             UnitValue[] columnas = new UnitValue[2 + dias + 1];
             columnas[0] = new UnitValue(UnitValue.PERCENT, 18f);
@@ -871,7 +859,9 @@ public class Utils {
 
     }
 
-    public static void addHeadder(Document document, PdfFont font) {
+    public static void addHeadder(Document document, PdfFont font, Context context) {
+        Image image = loadImage(context, R.drawable.encabezado, 179, 79);
+        document.add(image.setTextAlignment(TextAlignment.CENTER));
         document.add(getText("BIENESTAR ESTUDIANTIL", 12, true).setFont(font));
         document.add(getText("SISTEMA DE GESTIÓN - COMEDOR UNIVERSITARIO", 11, true).setFont(font));
 
@@ -895,7 +885,7 @@ public class Utils {
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
-       // bitmap = resize(bitmap, width, height);
+        // bitmap = resize(bitmap, width, height);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);
         Image image = null;

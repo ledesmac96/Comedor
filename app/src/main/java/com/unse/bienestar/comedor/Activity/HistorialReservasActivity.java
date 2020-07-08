@@ -13,7 +13,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.zxing.integration.android.IntentResult;
 import com.unse.bienestar.comedor.Adapter.HistorialReservasAdapter;
 import com.unse.bienestar.comedor.Dialogos.DialogoOpciones;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
@@ -59,6 +58,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
 
     ImageView imgIcono;
     ProgressBar mProgressBar;
+    String mes = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -298,13 +298,14 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     }
 
     private void openMonthDialog() {
-        ArrayList<Opciones> opciones = new ArrayList<>();
+        final ArrayList<Opciones> opciones = new ArrayList<>();
         for (String s : meses) {
             opciones.add(new Opciones(s.toUpperCase()));
         }
         DialogoOpciones dialogoOpciones = new DialogoOpciones(new OnClickOptionListener() {
             @Override
             public void onClick(int pos) {
+                mes = opciones.get(pos).getTitulo();
                 procesarClickMes(pos);
 
             }
@@ -415,14 +416,14 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
 
                     JSONObject o = jsonArray.getJSONObject(i);
 
-                    Reserva reserva = Reserva.mapper(o, Reserva.COMPLETE);
+                    Reserva reserva = Reserva.mapper(o, Reserva.REPORTE_MENSUAL);
 
                     reservas.add(reserva);
                 }
 
-                if (menus.size() > 0 && reservas.size() > 0){
+                if (menus.size() > 0 && reservas.size() > 0) {
                     openActivity(menus, alumnos, reservas);
-                }else{
+                } else {
                     Utils.showToast(getApplicationContext(), getString(R.string.noMenuMesDato));
                 }
 
@@ -435,10 +436,11 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     }
 
     private void openActivity(ArrayList<Menu> menus, ArrayList<Alumno> alumnos, ArrayList<Reserva> reservas) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(getApplicationContext(), PDFMonthActivity.class);
         intent.putExtra(Utils.ID_MENU, menus);
         intent.putExtra(Utils.ALUMNO_NAME, alumnos);
         intent.putExtra(Utils.RESERVA, reservas);
+        intent.putExtra(Utils.MESNAME, mes);
         startActivity(intent);
     }
 }

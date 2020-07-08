@@ -370,9 +370,17 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
                 if (mUsuarios != null && mUsuarios.size() > 0) {
                     if (Utils.isPermissionGranted(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         if (Utils.isPermissionGranted(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                            DialogoProcesamiento dialogoProcesamiento = new DialogoProcesamiento();
-                            dialogoProcesamiento.show(getManagerFragment(), "jeje");
-                            new GeneratePDFTask(mUsuarios, dialogoProcesamiento, getContext()).execute();
+                            ArrayList<Opciones> opciones = new ArrayList<>();
+                            opciones.add(new Opciones("TODOS LOS USUARIOS"));
+                            opciones.add(new Opciones("INCLUIR INACTIVOS"));
+                            DialogoOpciones dialogoOpciones = new DialogoOpciones(new OnClickOptionListener() {
+                                @Override
+                                public void onClick(int pos) {
+                                    procesarClick(pos);
+
+                                }
+                            }, opciones, getContext());
+                            dialogoOpciones.show(getManagerFragment(), "opciones");
                         } else {
                             showPermission();
                         }
@@ -380,18 +388,6 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
                     } else {
                         showPermission();
                     }
-
-                    ArrayList<Opciones> opciones = new ArrayList<>();
-                    opciones.add(new Opciones("TODOS LOS USUARIOS"));
-                    opciones.add(new Opciones("INCLUIR INACTIVOS"));
-                    DialogoOpciones dialogoOpciones = new DialogoOpciones(new OnClickOptionListener() {
-                        @Override
-                        public void onClick(int pos) {
-                            procesarClick(pos);
-
-                        }
-                    }, opciones, getContext());
-                    dialogoOpciones.show(getManagerFragment(), "opciones");
                 } else {
                     Utils.showToast(getContext(), getString(R.string.noUsuarios));
                 }
@@ -404,7 +400,7 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
     private void showPermission() {
         ActivityCompat.requestPermissions(mActivity,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE},100);
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
     }
 
     private void procesarClick(int pos) {

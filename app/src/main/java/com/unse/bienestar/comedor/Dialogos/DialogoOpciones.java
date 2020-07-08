@@ -66,7 +66,7 @@ public class DialogoOpciones extends DialogFragment {
     private void loadData() {
         if (mOpciones.size() > 5) {
             ViewGroup.LayoutParams layoutParams = latDatos.getLayoutParams();
-            layoutParams.height = 300;
+            layoutParams.height = 600;
             latDatos.setLayoutParams(layoutParams);
         }
         mLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
