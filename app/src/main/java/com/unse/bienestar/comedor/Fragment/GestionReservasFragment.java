@@ -74,7 +74,7 @@ public class GestionReservasFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new OpcionesAdapter(mOpciones, getContext());
+        mAdapter = new OpcionesAdapter(mOpciones, getContext(),1);
         mRecyclerView.setAdapter(mAdapter);
     }
 

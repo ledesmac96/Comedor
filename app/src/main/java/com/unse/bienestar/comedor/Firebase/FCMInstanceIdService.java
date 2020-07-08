@@ -22,7 +22,8 @@ public class FCMInstanceIdService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         String fcmToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "FCM Token: " + fcmToken);
-        sendTokenToServer(fcmToken);
+
+        //sendTokenToServer(fcmToken);
     }
 
     private void sendTokenToServer(String fcmToken) {

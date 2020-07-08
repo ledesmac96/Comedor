@@ -15,7 +15,7 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
-    android.defaultConfig.javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+    //android.defaultConfig.javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     signingConfigs {
         release {
             storeFile file("E:/Cosas de Denis/BienestarEstudiantil/key_comedor.jks")

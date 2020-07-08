@@ -100,6 +100,7 @@
     <string name="reservaHoyNoRetirada">La reserva es actual, pero es inválida</string>
     <string name="reservaNoCancelada">¡Error al cancelar!</string>
     <string name="reservaAnterior">Reserva anterior ¡fue cancelada!</string>
+    <string name="noMenuMesDato">¡Sin reservas en el mes!</string>
 
     <string name="mision0">Desarrollar acciones orientadas a la mejora de la calidad de vida en relación a la actividad universitaria, contribuyendo al acceso, permanencia y egreso, el esparcimiento, la orientación y la información de los estudiantes.</string>
     <string name="mision1">La estructura funcional de la Secretaría se conforma con las siguientes Áreas de gestión que abarca el Bienestar Universitario: Becas, Salud, Deportes, Bienestar, Accesibilidad, Servicios de Salud, Complejo Polideportivo y Residencia Universitaria.</string>
