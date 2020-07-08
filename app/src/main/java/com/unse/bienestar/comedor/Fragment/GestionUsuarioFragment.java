@@ -23,12 +23,15 @@ import com.unse.bienestar.comedor.Activity.NuevoAlumnoActivity;
 import com.unse.bienestar.comedor.Activity.PerfilActivity;
 import com.unse.bienestar.comedor.Adapter.UsuariosAdapter;
 import com.unse.bienestar.comedor.Database.RolViewModel;
+import com.unse.bienestar.comedor.Dialogos.DialogoOpciones;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Alumno;
+import com.unse.bienestar.comedor.Modelo.Opciones;
 import com.unse.bienestar.comedor.Modelo.Usuario;
 import com.unse.bienestar.comedor.R;
 import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
 import com.unse.bienestar.comedor.Utils.GeneratePDFTask;
+import com.unse.bienestar.comedor.Utils.OnClickOptionListener;
 import com.unse.bienestar.comedor.Utils.PreferenciasManager;
 import com.unse.bienestar.comedor.Utils.Utils;
 import com.unse.bienestar.comedor.Utils.VolleySingleton;
@@ -378,6 +381,17 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
                         showPermission();
                     }
 
+                    ArrayList<Opciones> opciones = new ArrayList<>();
+                    opciones.add(new Opciones("TODOS LOS USUARIOS"));
+                    opciones.add(new Opciones("INCLUIR INACTIVOS"));
+                    DialogoOpciones dialogoOpciones = new DialogoOpciones(new OnClickOptionListener() {
+                        @Override
+                        public void onClick(int pos) {
+                            procesarClick(pos);
+
+                        }
+                    }, opciones, getContext());
+                    dialogoOpciones.show(getManagerFragment(), "opciones");
                 } else {
                     Utils.showToast(getContext(), getString(R.string.noUsuarios));
                 }
@@ -391,5 +405,21 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
         ActivityCompat.requestPermissions(mActivity,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},100);
+    }
+
+    private void procesarClick(int pos) {
+        DialogoProcesamiento dialogoProcesamiento = new DialogoProcesamiento();
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        if (pos == 0) {
+            for (Usuario usuario : mUsuarios) {
+                if (usuario.getValidez() == 1)
+                    usuarios.add(usuario);
+            }
+            new GeneratePDFTask(1, usuarios, dialogoProcesamiento, getContext()).execute();
+        } else {
+            new GeneratePDFTask(1, mUsuarios, dialogoProcesamiento, getContext()).execute();
+        }
+        dialogoProcesamiento.show(getManagerFragment(), "jeje");
+
     }
 }

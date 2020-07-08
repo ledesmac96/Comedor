@@ -21,6 +21,8 @@ public class Menu implements Parcelable {
     @Ignore
     public static final int ESTADISTICA = 3;
     @Ignore
+    public static final int REPORTE = 4;
+    @Ignore
     public static final String TABLE = "menu";
     @Ignore
     public static final String KEY_ID = "idMenu";
@@ -116,6 +118,16 @@ public class Menu implements Parcelable {
                     porcion = Integer.parseInt(datos.getString("porcion"));
                     menu = new Menu(idMenu, dia, mes, anio);
                     menu.setPorcion(porcion);
+                    break;
+                case REPORTE:
+                    idMenu = Integer.parseInt(datos.getString("idmenu"));
+                    dia = Integer.parseInt(datos.getString("dia"));
+                    mes = Integer.parseInt(datos.getString("mes"));
+                    anio = Integer.parseInt(datos.getString("anio"));
+                    porcion = Integer.parseInt(datos.getString("porcion"));
+                    menu = new Menu(idMenu, dia, mes, anio);
+                    menu.setPorcion(porcion);
+                    menu.setDisponible(1);
                     break;
 
             }

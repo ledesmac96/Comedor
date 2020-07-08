@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.unse.bienestar.comedor.Database.RolViewModel;
@@ -89,8 +90,35 @@ public class MainActivity extends AppCompatActivity {
 
             checkInfo();
 
+            sendTokenToServer();
+
             //decodeQR("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL\n¡MUCHAS GRACIAS POR RESERVAR!\n#TMW57W77-10#");
 
+        }
+    }
+
+    private void sendTokenToServer() {
+        if (mPreferenciasManager.getValue(Utils.IS_TOKEN)) {
+            String fcmToken = FirebaseInstanceId.getInstance().getToken();
+            if (!fcmToken.equals("")) {
+                PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
+                final int idLocal = manager.getValueInt(Utils.MY_ID);
+                String URL = String.format("%s?tok=%s&id=%s", Utils.URL_USUARIO_TEST, fcmToken, idLocal);
+                StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                            mPreferenciasManager.setValue(Utils.IS_TOKEN, false);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+
+                    }
+                });
+                //Abro dialogo para congelar pantalla
+                VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+            }
         }
     }
 

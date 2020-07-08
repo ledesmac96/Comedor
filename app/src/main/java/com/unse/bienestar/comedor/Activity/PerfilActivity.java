@@ -135,6 +135,7 @@ public class PerfilActivity extends AppCompatActivity
             mRecyclerView.setVisibility(View.GONE);
             latReserva.setVisibility(View.GONE);
         }
+        mRolViewModel = new RolViewModel(getApplicationContext());
         Rol rol = mRolViewModel.getByPermission(301);
         if (rol != null) {
             latInfoUser.setVisibility(VISIBLE);

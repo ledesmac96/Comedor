@@ -12,14 +12,21 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.zxing.integration.android.IntentResult;
 import com.unse.bienestar.comedor.Adapter.HistorialReservasAdapter;
+import com.unse.bienestar.comedor.Dialogos.DialogoOpciones;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
+import com.unse.bienestar.comedor.Modelo.Alumno;
 import com.unse.bienestar.comedor.Modelo.ItemBase;
 import com.unse.bienestar.comedor.Modelo.ItemDato;
 import com.unse.bienestar.comedor.Modelo.ItemFecha;
 import com.unse.bienestar.comedor.Modelo.Menu;
+import com.unse.bienestar.comedor.Modelo.Opciones;
+import com.unse.bienestar.comedor.Modelo.Reserva;
 import com.unse.bienestar.comedor.R;
 import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
+import com.unse.bienestar.comedor.Utils.OnClickOptionListener;
 import com.unse.bienestar.comedor.Utils.PreferenciasManager;
 import com.unse.bienestar.comedor.Utils.Utils;
 import com.unse.bienestar.comedor.Utils.VolleySingleton;
@@ -42,10 +49,13 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     ArrayList<Menu> mMenus;
     ArrayList<ItemBase> mItems;
     ArrayList<ItemBase> mListOficial;
+    FloatingActionButton fabPDF;
 
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     HistorialReservasAdapter adapter;
+    String[] meses = new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+            "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 
     ImageView imgIcono;
     ProgressBar mProgressBar;
@@ -196,13 +206,14 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     }
 
     private void loadListener() {
+        fabPDF.setOnClickListener(this);
         imgIcono.setOnClickListener(this);
 
         ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
-                if (mListOficial.get(position) instanceof ItemDato){
+                if (mListOficial.get(position) instanceof ItemDato) {
                     Intent i = new Intent(getApplicationContext(), ListadoReservaActivity.class);
                     i.putExtra(Utils.DATA_RESERVA, ((ItemDato) mListOficial.get(position)).getMenu());
                     startActivity(i);
@@ -212,6 +223,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     }
 
     private void loadViews() {
+        fabPDF = findViewById(R.id.fabPDF);
         imgIcono = findViewById(R.id.imgFlecha);
         mProgressBar = findViewById(R.id.progress_bar);
         mRecyclerView = findViewById(R.id.recycler);
@@ -258,6 +270,175 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
             case R.id.imgFlecha:
                 onBackPressed();
                 break;
+            case R.id.fabPDF:
+                openDialog();
+                break;
         }
+    }
+
+    private void openDialog() {
+        ArrayList<Opciones> opciones = new ArrayList<>();
+        opciones.add(new Opciones("REPORTE MENSUAL"));
+        DialogoOpciones dialogoOpciones = new DialogoOpciones(new OnClickOptionListener() {
+            @Override
+            public void onClick(int pos) {
+                procesarClick(pos);
+
+            }
+        }, opciones, getApplicationContext());
+        dialogoOpciones.show(getSupportFragmentManager(), "opciones");
+    }
+
+    private void procesarClick(int pos) {
+        switch (pos) {
+            case 0:
+                openMonthDialog();
+                break;
+        }
+    }
+
+    private void openMonthDialog() {
+        ArrayList<Opciones> opciones = new ArrayList<>();
+        for (String s : meses) {
+            opciones.add(new Opciones(s.toUpperCase()));
+        }
+        DialogoOpciones dialogoOpciones = new DialogoOpciones(new OnClickOptionListener() {
+            @Override
+            public void onClick(int pos) {
+                procesarClickMes(pos);
+
+            }
+        }, opciones, getApplicationContext());
+        dialogoOpciones.show(getSupportFragmentManager(), "opciones");
+    }
+
+    private void procesarClickMes(int pos) {
+        PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
+        String key = manager.getValueString(Utils.TOKEN);
+        int id = manager.getValueInt(Utils.MY_ID);
+        String URL = String.format("%s?id=%s&key=%s&me=%s", Utils.URL_DATOS_RESERVA_MENSUAL, id, key, (pos + 1));
+        StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                procesarRespuestaMes(response);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Utils.showToast(getApplicationContext(), getString(R.string.servidorOff));
+                dialog.dismiss();
+
+            }
+        });
+        //Abro dialogo para congelar pantalla
+        dialog = new DialogoProcesamiento();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), "dialog_process");
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+
+    private void procesarRespuestaMes(String response) {
+        try {
+            dialog.dismiss();
+            JSONObject jsonObject = new JSONObject(response);
+            int estado = jsonObject.getInt("estado");
+            switch (estado) {
+                case -1:
+                    Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+                    break;
+                case 1:
+                    //Exito
+                    loadInfoMes(jsonObject);
+                    break;
+                case 2:
+                    Utils.showToast(getApplicationContext(), getString(R.string.noMenuMesDato));
+                    break;
+                case 3:
+                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInvalido));
+                    break;
+                case 100:
+                    //No autorizado
+                    Utils.showToast(getApplicationContext(), getString(R.string.tokenInexistente));
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Utils.showToast(getApplicationContext(), getString(R.string.errorInternoAdmin));
+        }
+    }
+
+    private void loadInfoMes(JSONObject jsonObject) {
+        try {
+            if (jsonObject.has("mensaje") && jsonObject.has("reserva") &&
+                    jsonObject.has("alumnos")) {
+
+                JSONArray jsonArray = jsonObject.getJSONArray("mensaje");
+
+                ArrayList<Menu> menus = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject o = jsonArray.getJSONObject(i);
+
+                    Menu menu = Menu.mapper(o, Menu.REPORTE);
+
+                    menus.add(menu);
+                }
+
+                jsonArray = jsonObject.getJSONArray("alumnos");
+
+                ArrayList<Alumno> alumnos = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject o = jsonArray.getJSONObject(i);
+
+                    String id = o.getString("idalumno");
+                    String facultad = o.getString("facultad");
+                    Alumno alumno = new Alumno();
+                    alumno.setIdAlumno(Integer.parseInt(id));
+                    alumno.setFacultad(facultad);
+
+                    alumnos.add(alumno);
+                }
+
+                jsonArray = jsonObject.getJSONArray("reserva");
+
+                ArrayList<Reserva> reservas = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject o = jsonArray.getJSONObject(i);
+
+                    Reserva reserva = Reserva.mapper(o, Reserva.COMPLETE);
+
+                    reservas.add(reserva);
+                }
+
+                if (menus.size() > 0 && reservas.size() > 0){
+                    openActivity(menus, alumnos, reservas);
+                }else{
+                    Utils.showToast(getApplicationContext(), getString(R.string.noMenuMesDato));
+                }
+
+            } else {
+                Utils.showToast(getApplicationContext(), getString(R.string.noMenuMesDato));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openActivity(ArrayList<Menu> menus, ArrayList<Alumno> alumnos, ArrayList<Reserva> reservas) {
+        Intent intent = new Intent();
+        intent.putExtra(Utils.ID_MENU, menus);
+        intent.putExtra(Utils.ALUMNO_NAME, alumnos);
+        intent.putExtra(Utils.RESERVA, reservas);
+        startActivity(intent);
     }
 }

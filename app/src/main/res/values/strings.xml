@@ -100,6 +100,7 @@
     <string name="reservaHoyNoRetirada">La reserva es actual, pero es inválida</string>
     <string name="reservaNoCancelada">¡Error al cancelar!</string>
     <string name="reservaAnterior">Reserva anterior ¡fue cancelada!</string>
+    <string name="noMenuMesDato">¡Sin reservas en el mes!</string>
 
     <string-array name="text_q1">
         <item>"MicroSDE" es la aplicación más completa sobre los recorridos de colectivos urbanos y algunos interurbanos de la ciudad Capital de Santiago del Estero. Encontrarás recorridos como por ejemplo, La Banda a Capital, Capital a Vuelta La Barranca, etc.</item>

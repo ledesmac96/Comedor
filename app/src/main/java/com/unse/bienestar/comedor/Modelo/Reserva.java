@@ -25,6 +25,8 @@ public class Reserva implements Parcelable {
     @Ignore
     public static final int ESTADISTICA = 5;
     @Ignore
+    public static final int REPORTE_MENSUAL = 6;
+    @Ignore
     public static final String TABLE = "reserva";
     @Ignore
     public static final String KEY_ID_ALU = "idReserva";
@@ -305,6 +307,15 @@ public class Reserva implements Parcelable {
                     estado = Integer.parseInt(object.getString("estado"));
                     reserva = new Reserva(idReserva, idUsuario, 0,
                             idMenu, estado, 0, fechaReserva, fechaModificacion, -1, "", "");
+                    break;
+                case REPORTE_MENSUAL:
+                    idReserva = Integer.parseInt(object.getString("idreserva"));
+                    idUsuario = Integer.parseInt(object.getString("idusuario"));
+                    idMenu = Integer.parseInt(object.getString("idmenu"));
+                    estadoDescripcion = object.getString("estado");
+                    reserva = new Reserva(idReserva, idUsuario, 0,
+                            idMenu, 0, 0, "",
+                            "", -1, estadoDescripcion, "");
                     break;
             }
         } catch (JSONException e) {

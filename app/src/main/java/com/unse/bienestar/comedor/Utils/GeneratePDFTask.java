@@ -13,11 +13,13 @@ public class GeneratePDFTask extends AsyncTask<String, String, String> {
     ArrayList<Usuario> mUsuarios;
     DialogoProcesamiento dialogoProcesamiento;
     private Context mContext;
+    int tipo = 0;
 
-    public GeneratePDFTask(ArrayList<Usuario> usuarios, DialogoProcesamiento dialogoProcesamiento, Context context) {
+    public GeneratePDFTask(int tipo, ArrayList<Usuario> usuarios, DialogoProcesamiento dialogoProcesamiento, Context context) {
         mUsuarios = usuarios;
         this.dialogoProcesamiento = dialogoProcesamiento;
         mContext = context;
+        this.tipo = tipo;
     }
 
     public ArrayList<Usuario> getUsuarios() {
@@ -39,7 +41,10 @@ public class GeneratePDFTask extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        Utils.createPDF(mUsuarios, mContext);
+        if (tipo == 1)
+            Utils.createPDF(mUsuarios, mContext);
+        else if (tipo == 2)
+            Utils.createReportMensualPDF(mUsuarios, mContext, "Julio", 31);
         return null;
 
     }

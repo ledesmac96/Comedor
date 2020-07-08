@@ -25,7 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -56,6 +58,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,85 +79,30 @@ public class Utils {
     //Constantes para activities
     public static final String USER_INFO = "user_info";
     //public static final String RESERVA = "user_info";
-    public static final String DEPORTE_NAME = "dato_deporte";
-    public static final String DEPORTE_ID = "id_deporte";
-    public static final String TIPO_CREDENCIAL = "tipo_cred";
-    public static final String TIPO_CREDENCIAL_DATO = "tipo_cred_dato";
-    public static final String CREDENCIAL = "credencial";
-    public static final String URI_IMAGE = "uri_image";
-    public static final String DEPORTE_NAME_PROF = "dato_deporte_prof";
     public static final String IS_ADMIN_MODE = "is_admin_mode";
-    public static final String NAME_GENERAL = "name_general";
-    public static final String ANIO = "anio_temp";
-    public static final String ROLES = "roles_all";
-    public static final String ROLES_USER = "roles_user";
-    public static final String ASISTENCIA = "asistencia";
-    public static final String FECHA = "fecha";
-    public static final String LINEA_NAME = "linea_name";
-    //Constantes para activities
-    public static final int PICK_IMAGE = 9090;
-    public static final int EDIT_IMAGE = 9091;
-    //Constantes para tipos de usuario
-    public static final int TIPO_USUARIO = 1;
-    public static final int TIPO_ESTUDIANTE = 2;
-    public static final int TIPO_ROLES = 10;
+
     //Constantes para busqueda
     public static final String PATRON_LEGAJO = "[0-9]{1,5}(-|/)[0-9]{2,4}";
     public static final String PATRON_DNI = "([0-9]){5,8}";
     public static final String PATRON_NOMBRES = "[a-zA-Z_ ]+";
     public static final String PATRON_NUMEROS = "[0-9]+";
-    //Constante para tipo de usuario
-    public static final int TIPO_ALUMNO = 1;
-    public static final int TIPO_PROFESOR = 2;
-    public static final int TIPO_NODOCENTE = 3;
-    public static final int TIPO_EGRESADO = 4;
-    public static final int TIPO_PARTICULAR = 5;
     //Constante para Volley
     public static final int MY_DEFAULT_TIMEOUT = 15000;
-    //Constante de nombres de archivos
-    public static final String PROFILE_PIC = "%s.jpg";
-    //Constantes de permisos
-    public static final int[] LIST_PERMISOS = new int[]{999, 998};
 
-    public static final int PERMISSION_ALL = 1010;
-
-    public static final int NOTICIA_NORMAL = 3030;
-    public static final int NOTICIA_BUTTON_WEB = 3131;
-    public static final int NOTICIA_BUTTON_TIENDA = 3132;
-    public static final int NOTICIA_BUTTON_APP = 3133;
-
-    public static final int TIPO_COMEDOR = 1;
-    public static final int TIPO_DEPORTE = 2;
-    public static final int TIPO_TRANSPORTE = 3;
-    public static final int TIPO_BECA = 4;
-    public static final int TIPO_RESIDENCIA = 5;
-    public static final int TIPO_CYBER = 6;
-    public static final int TIPO_UPA = 7;
-
-    public static final int TIPO_CANCHA = 1010;
-    public static final int TIPO_QUINCHO = 1011;
 
     public static final String TYPE_RANGE = "type_range";
 
     public static final String MONSERRAT = "Montserrat-Regular.ttf";
     public static final String MONTSERRAT_BOLD = "Montserrat-Black.ttf";
 
-    public static final String BECA_NAME = "dato_deporte";
-    public static final String BARCODE = "dato_barcode";
-    public static final String TORNEO = "dato_torneo";
-    public static final String NOTICIA = "dato_noticias";
     public static final String RESERVA = "reserva";
     public static final String DATA_RESERVA = "dato_reserva";
     public static final String ALUMNO_NAME = "dato_alumno";
-    public static final String USER_NAME = "dato_user";
-    public static final String NUM_INST = "num_inst";
     public static final int LIST_RESET = 0;
-    public static final int LIST_LEGAJO = 1;
     public static final int LIST_DNI = 2;
     public static final int LIST_NOMBRE = 3;
 
-    public static final int GET_FROM_GALLERY = 1011;
-    public static final int GET_FROM_DNI = 1010;
+    public static final String IS_TOKEN = "is_token_firebase";
 
     private static final String IP = "bienestar.unse.edu.ar";
     //USUARIO
@@ -182,6 +130,7 @@ public class Utils {
     public static final String URL_RESERVA_USUARIO = "http://" + IP + "/bienestar/comedor/reserva/getReservaByUser.php";
 
     public static final String URL_DATOS = "http://" + IP + "/bienestar/comedor/getReportes.php";
+    public static final String URL_DATOS_RESERVA_MENSUAL = "http://" + IP + "/bienestar/comedor/getReporteMensualReservas.php";
 
 
     public static final String[] facultad = {"FAyA", "FCEyT", "FCF", "FCM", "FHCSyS"};
@@ -784,14 +733,17 @@ public class Utils {
             if (!file.exists()) {
                 file.mkdirs();
             }
-            File filePath = new File(getNameFile(directory_path));
-            if (!file.exists()) {
+            File filePath = new File(getNameFile(directory_path, 1, ""));
+            if (!file.exists())
                 file.createNewFile();
             }
 
             fileOutputStream = new FileOutputStream(filePath);
             PdfWriter pdfWriter = new PdfWriter(fileOutputStream);
             document = new Document(new PdfDocument(pdfWriter));
+            PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+            addHeadder(document, font);
+            document.add(getText("LISTADO DE USUARIOS", 10, true).setFont(font));
             Image image = loadImage(context, R.drawable.encabezado, 179, 79);
             document.add(image.setTextAlignment(TextAlignment.CENTER));
             //image = loadImage(context, R.drawable.logo_unse, 179, 76);
@@ -816,21 +768,18 @@ public class Utils {
             })
                     .setWidth(UnitValue.createPercentValue(100))
                     .setMarginTop(10).setMarginBottom(10);
-            table.addHeaderCell(createCell("Apellido y Nombre", true, 9));
-            table.addHeaderCell(createCell("D.N.I", true, 9));
-            table.addHeaderCell(createCell("Lunes", true, 9));
-            table.addHeaderCell(createCell("Martes", true, 9));
-            table.addHeaderCell(createCell("Miércoles", true, 9));
-            table.addHeaderCell(createCell("Jueves", true, 9));
-            table.addHeaderCell(createCell("Viernes", true, 9));
-            table.addHeaderCell(createCell("Sábado", true, 9));
-            table.addHeaderCell(createCell("Domingo", true, 9));
+            table.addHeaderCell(createCell("Apellido y Nombre", true, 8).setFont(font));
+            table.addHeaderCell(createCell("D.N.I", true, 8).setFont(font));
+            table.addHeaderCell(createCell("Lunes", true, 8).setFont(font));
+            table.addHeaderCell(createCell("Martes", true, 8).setFont(font));
+            table.addHeaderCell(createCell("Miércoles", true, 8).setFont(font));
+            table.addHeaderCell(createCell("Jueves", true, 8).setFont(font));
+            table.addHeaderCell(createCell("Viernes", true, 8).setFont(font));
+            table.addHeaderCell(createCell("Sábado", true, 8).setFont(font));
+            table.addHeaderCell(createCell("Domingo", true, 8).setFont(font));
             for (Usuario usuario : usuarios) {
                 table.addCell(getText(String.format("%s %s", usuario.getApellido(), usuario.getNombre()),
                         8, true));
-                //table.addCell(createCell(String.format("%s %s", usuario.getApellido(), usuario.getNombre()),
-                //      true, 8));
-                //table.addCell(createCell(String.valueOf(usuario.getIdUsuario()), true));
                 table.addCell(getText(String.valueOf(usuario.getIdUsuario()), 8, true));
                 table.addCell(createCell("          ", true, 9));
                 table.addCell(createCell("          ", true, 9));
@@ -841,9 +790,7 @@ public class Utils {
                 table.addCell(createCell("          ", true, 9));
             }
             document.add(table);
-            document.add(getText("Generado desde App Comedor Universitario", 11, false).setTextAlignment(TextAlignment.RIGHT));
-            document.add(getText("Fecha de Generación: " +
-                    getFechaOrder(new Date(System.currentTimeMillis())), 10, false).setTextAlignment(TextAlignment.RIGHT));
+            addFooter(document, font);
             document.close();
 
 
@@ -851,6 +798,93 @@ public class Utils {
             e.printStackTrace();
             showToast(context, context.getString(R.string.errorPDF));
         }
+
+    }
+
+    public static void createReportMensualPDF(List<Usuario> usuarios, Context context, String mes, int dias) {
+        Document document = null;
+        FileOutputStream fileOutputStream = null;
+        try {
+            String directory_path = Environment.getExternalStorageDirectory().getPath() + "/BIENESTAR_ESTUDIANTIL_COMEDOR/";
+            File file = new File(directory_path);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            File filePath = new File(getNameFile(directory_path, 2, mes.toUpperCase()));
+            if (!file.exists())
+                file.createNewFile();
+            fileOutputStream = new FileOutputStream(filePath);
+            PdfWriter pdfWriter = new PdfWriter(fileOutputStream);
+            document = new Document(new PdfDocument(pdfWriter));
+            PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
+            addHeadder(document, font);
+            document.add(getText(String.format("REPORTE MENSUAL: %s", mes.toUpperCase()), 10, true).setFont(font));
+            UnitValue[] columnas = new UnitValue[2 + dias + 1];
+            columnas[0] = new UnitValue(UnitValue.PERCENT, 18f);
+            columnas[1] = new UnitValue(UnitValue.PERCENT, 6f);
+            for (int i = 2; i < 11; i++) {
+                columnas[i] = new UnitValue(UnitValue.PERCENT, 1.6f);
+            }
+            for (int i = 11; i < (dias + 2); i++) {
+                columnas[i] = new UnitValue(UnitValue.PERCENT, 2f);
+            }
+            columnas[columnas.length - 1] = new UnitValue(UnitValue.PERCENT, 3f);
+            Table table = new Table(columnas)
+                    .setWidth(UnitValue.createPercentValue(100))
+                    .setMarginTop(10)
+                    .setMarginBottom(10);
+            table.addHeaderCell(createCell("Apellido y Nombre", true, 8).setFont(font));
+            table.addHeaderCell(createCell("D.N.I", true, 8).setFont(font));
+            for (int i = 1; i <= dias; i++) {
+                table.addHeaderCell(createCell(String.valueOf(i), true, 8).setFont(font));
+            }
+            table.addHeaderCell(createCell("T", true, 8).setFont(font));
+            for (Usuario usuario : usuarios) {
+                table.addCell(getText(String.format("%s %s", usuario.getApellido(), usuario.getNombre()),
+                        8, true));
+                table.addCell(getText(String.valueOf(usuario.getIdUsuario()), 8, true));
+                int total = 0;
+                for (int i = 1; i <= dias; i++) {
+                    if (new Random().nextInt(3) == 1)
+                        table.addCell(createCell(" ", true, 7));
+                    else {
+                        table.addCell(createCell("X", true, 7));
+                        total++;
+                    }
+                }
+                table.addCell(createCell(String.valueOf(total), true, 7));
+            }
+           /* table.addCell(createCell("TOTAL", true, 7).setFont(font));
+            table.addCell(createCell("     ", true, 7).setFont(font));
+            for (int i = 1; i <= dias; i++) {
+                table.addCell(createCell(String.valueOf(new Random().nextInt(30)), true, 7));
+            }*/
+            document.add(table);
+            addFooter(document, font);
+            document.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showToast(context, context.getString(R.string.errorPDF));
+        }
+
+    }
+
+    public static void addHeadder(Document document, PdfFont font) {
+        document.add(getText("BIENESTAR ESTUDIANTIL", 12, true).setFont(font));
+        document.add(getText("SISTEMA DE GESTIÓN - COMEDOR UNIVERSITARIO", 11, true).setFont(font));
+
+    }
+
+    public static void addFooter(Document document, PdfFont font) {
+        document.add(getText("Generado desde App Comedor Universitario", 10, false)
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setFont(font));
+        document.add(getText("Fecha de Generación: " +
+                getFechaOrder(new Date(System.currentTimeMillis())), 10, false)
+                .setTextAlignment(TextAlignment.RIGHT));
+
 
     }
 
@@ -875,8 +909,8 @@ public class Utils {
                 : new Paragraph(text).setFontSize(size);
     }
 
-    public static String getNameFile(String directory_path) {
-        return directory_path + "LISTADO_USUARIOS_" +
+    public static String getNameFile(String directory_path, int tipo, String extra) {
+        return directory_path + (tipo == 1 ? "LISTADO_USUARIOS_" : String.format("REPORTE_MENSUAL_%s_", extra)) +
                 getFechaName(new Date(System.currentTimeMillis())) + ".pdf";
     }
 
