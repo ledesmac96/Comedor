@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -56,9 +57,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -104,6 +105,7 @@ public class Utils {
 
     public static final String IS_TOKEN = "is_token_firebase";
     public static final String MESNAME = "mes_name";
+    public static final String NUMERO_MES = "numero_mes";
 
     private static final String IP = "bienestar.unse.edu.ar";
     //USUARIO
@@ -114,6 +116,7 @@ public class Utils {
     public static final String URL_USUARIO_TEST = "http://" + IP + "/bienestar/comedor/menu/test.php";
     public static final String URL_USUARIOS_LISTA = "http://" + IP + "/bienestar/comedor/beneficiario/getUsuarios.php";
     public static final String URL_USUARIO_BY_ID = "http://" + IP + "/bienestar/comedor/beneficiario/getUsuario.php";
+    public static final String URL_USUARIO_BY_ID_REDUCE = "http://" + IP + "/bienestar/comedor/beneficiario/getUsuarioReduce.php";
     public static final String URL_USUARIO_ELIMINAR = "http://" + IP + "/bienestar/comedor/beneficiario/eliminarUsuario.php";
 
     public static final String URL_MENU_BY_RANGE = "http://" + IP + "/bienestar/comedor/menu/getMenuByRange.php";
@@ -125,6 +128,8 @@ public class Utils {
     public static final String URL_RESERVA_HOY = "http://" + IP + "/bienestar/comedor/reserva/getReservaByDay.php";
     public static final String URL_RESERVA_BY_ID = "http://" + IP + "/bienestar/comedor/reserva/getReserva.php";
     public static final String URL_RESERVA_INSERTAR = "http://" + IP + "/bienestar/comedor/reserva/insertarReserva.php";
+    public static final String URL_RESERVA_INSERTAR_ALUMNO = "http://" + IP + "/bienestar/comedor/reserva/insertarReservaAlumno.php";
+    public static final String URL_RESERVA_INSERTAR_ESPECIAL = "http://" + IP + "/bienestar/comedor/reserva/insertarReservaEspecial.php";
     public static final String URL_RESERVA_CANCELAR = "http://" + IP + "/bienestar/comedor/reserva/cancelarReservaById.php";
     public static final String URL_RESERVA_ACTUALIZAR = "http://" + IP + "/bienestar/comedor/reserva/actualizarReserva.php";
     public static final String URL_RESERVA_HISTORIAL = "http://" + IP + "/bienestar/comedor/reserva/getReservas.php";
@@ -191,7 +196,8 @@ public class Utils {
 
         matrix.postScale(newWidth / width, newHeight / height);
 
-        return Bitmap.createBitmap(bitmapToScale, 0, 0, bitmapToScale.getWidth(), bitmapToScale.getHeight(), matrix, true);
+        return Bitmap.createBitmap(bitmapToScale, 0, 0, bitmapToScale.getWidth(),
+                bitmapToScale.getHeight(), matrix, true);
     }
 
     /**
@@ -789,7 +795,32 @@ public class Utils {
 
     }
 
-    public static void createReportMensualPDF(List<Usuario> usuarios, Context context, String mes, int dias) {
+    public static Bitmap getBitmapFromView(View layout) {
+        Bitmap returnBitmap = null;
+        if (layout != null) {
+            if (layout.getMeasuredHeight() < 0) {
+                returnBitmap = Bitmap.createBitmap(layout.getLayoutParams().width,
+                        layout.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+            } else {
+                //layout.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                returnBitmap = Bitmap.createBitmap(layout.getMeasuredWidth(),
+                        layout.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+            }
+            Canvas canvas = new Canvas(returnBitmap);
+            canvas.drawColor(Color.TRANSPARENT);
+            if (layout.getMeasuredHeight() > 0)
+                layout.layout(layout.getLeft(), layout.getTop(), layout.getRight(), layout.getBottom());
+            else
+                layout.layout(0, 0, layout.getMeasuredWidth(), layout.getMeasuredWidth());
+            layout.draw(canvas);
+        }
+        return returnBitmap;
+    }
+
+
+    public static void createReportMensualPDF(List<Usuario> usuarios, Context context, String mes,
+                                              int dias, HashMap<String, Integer[]> reservasAlumnosDias,
+                                              Bitmap graficoBarra, Bitmap graficoTorta) {
         Document document = null;
         FileOutputStream fileOutputStream = null;
         try {
@@ -832,12 +863,17 @@ public class Utils {
                         8, true));
                 table.addCell(getText(String.valueOf(usuario.getIdUsuario()), 8, true));
                 int total = 0;
+                Integer[] reservas = reservasAlumnosDias.get(String.valueOf(usuario.getIdUsuario()));
                 for (int i = 1; i <= dias; i++) {
-                    if (new Random().nextInt(3) == 1)
+                    if (reservas != null) {
+                        if (reservas[i - 1] == 1) {
+                            table.addCell(createCell("X", true, 7));
+                            total++;
+                        } else {
+                            table.addCell(createCell(" ", true, 7));
+                        }
+                    } else {
                         table.addCell(createCell(" ", true, 7));
-                    else {
-                        table.addCell(createCell("X", true, 7));
-                        total++;
                     }
                 }
                 table.addCell(createCell(String.valueOf(total), true, 7));
@@ -848,6 +884,40 @@ public class Utils {
                 table.addCell(createCell(String.valueOf(new Random().nextInt(30)), true, 7));
             }*/
             document.add(table);
+
+            document.add(getText("TOTAL DE RESERVAS POR DÍA", 10, true).setFont(font));
+            columnas = new UnitValue[7];
+
+            for (int i = 1; i < 7; i++) {
+                columnas[i] = new UnitValue(UnitValue.PERCENT, 3f);
+            }
+            table = new Table(columnas)
+                    .setWidth(UnitValue.createPercentValue(100))
+                    .setMarginTop(10)
+                    .setMarginBottom(10);
+            for (int i = 1; i <= 7; i++) {
+                table.addCell(createCell(String.valueOf(i), true, 8).setFont(font));
+                //table.addHeaderCell(createCell(String.valueOf(i), true, 8).setFont(font));
+            }
+            for (int i = 1; i <= 7; i++) {
+                table.addCell(createCell(" 10 ", true, 8).setFont(font));
+                //table.addHeaderCell(createCell(String.valueOf(i), true, 8).setFont(font));
+            }
+            for (int i = 1; i <= 7; i++) {
+                table.addCell(createCell(String.valueOf(i), true, 8).setFont(font));
+            }
+            document.add(table);
+
+            document.add(getText("GRÁFICA TOTAL DE RESERVAS", 10, true).setFont(font));
+            if (graficoBarra != null) {
+                Image image = loadImage(context, graficoBarra, 250, 238);
+                document.add(image.setTextAlignment(TextAlignment.CENTER));
+            }
+            document.add(getText("GRÁFICA DE RESERVAS POR FACULTAD", 10, true).setFont(font));
+            if (graficoTorta != null) {
+                Image image = loadImage(context, graficoTorta, 250, 229);
+                document.add(image.setTextAlignment(TextAlignment.CENTER));
+            }
             addFooter(document, font);
             document.close();
 
@@ -888,6 +958,16 @@ public class Utils {
         // bitmap = resize(bitmap, width, height);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);
+        Image image = null;
+        byte[] bytes = stream.toByteArray();
+        image = new Image(ImageDataFactory.create(bytes));
+        return image;
+    }
+
+    private static Image loadImage(Context context, Bitmap bitmap, int width, int height) {
+        bitmap = resize(bitmap, width, height);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         Image image = null;
         byte[] bytes = stream.toByteArray();
         image = new Image(ImageDataFactory.create(bytes));

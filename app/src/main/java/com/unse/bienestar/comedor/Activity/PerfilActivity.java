@@ -137,7 +137,7 @@ public class PerfilActivity extends AppCompatActivity
         }
         mRolViewModel = new RolViewModel(getApplicationContext());
         Rol rol = mRolViewModel.getByPermission(301);
-        if (rol != null) {
+        if (rol != null || !isAdminMode) {
             latInfoUser.setVisibility(VISIBLE);
         } else {
             latInfoUser.setVisibility(View.GONE);

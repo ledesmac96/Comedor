@@ -31,6 +31,7 @@
         <activity android:name=".Activity.HistorialReservasActivity" />
         <activity android:name=".Activity.ListadoReservaActivity" />
         <activity android:name=".Activity.AboutActivity" />
+        <activity android:name=".Activity.NuevaReservaEspecialActivity" />
         <activity android:name=".Activity.FaqsActivity" />
 
         <meta-data

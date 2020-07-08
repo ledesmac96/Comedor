@@ -1,12 +1,14 @@
 package com.unse.bienestar.comedor.Utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Usuario;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GeneratePDFTask extends AsyncTask<String, String, String> {
 
@@ -14,6 +16,26 @@ public class GeneratePDFTask extends AsyncTask<String, String, String> {
     DialogoProcesamiento dialogoProcesamiento;
     private Context mContext;
     int tipo = 0;
+
+    String mes;
+    int diasMes;
+    HashMap<String, Integer[]> reservasAlumnosDias;
+    Bitmap graficoBarra, graficoTorta;
+
+    public GeneratePDFTask(int tipo, ArrayList<Usuario> usuarios, String mes,
+                           Bitmap graficoBarra, Bitmap graficoTorta,
+                           int diasMes, HashMap<String, Integer[]> reservasAlumnosDias,
+                           DialogoProcesamiento dialogoProcesamiento, Context context) {
+        this.tipo = tipo;
+        mUsuarios = usuarios;
+        this.graficoBarra = graficoBarra;
+        this.graficoTorta = graficoTorta;
+        this.mes = mes;
+        this.dialogoProcesamiento = dialogoProcesamiento;
+        mContext = context;
+        this.diasMes = diasMes;
+        this.reservasAlumnosDias = reservasAlumnosDias;
+    }
 
     public GeneratePDFTask(int tipo, ArrayList<Usuario> usuarios, DialogoProcesamiento dialogoProcesamiento, Context context) {
         mUsuarios = usuarios;
@@ -44,7 +66,7 @@ public class GeneratePDFTask extends AsyncTask<String, String, String> {
         if (tipo == 1)
             Utils.createPDF(mUsuarios, mContext);
         else if (tipo == 2)
-            Utils.createReportMensualPDF(mUsuarios, mContext, "Julio", 31);
+            Utils.createReportMensualPDF(mUsuarios, mContext, mes, diasMes, reservasAlumnosDias, graficoBarra, graficoTorta);
         return null;
 
     }

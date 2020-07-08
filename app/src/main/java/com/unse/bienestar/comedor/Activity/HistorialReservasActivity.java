@@ -23,6 +23,7 @@ import com.unse.bienestar.comedor.Modelo.ItemFecha;
 import com.unse.bienestar.comedor.Modelo.Menu;
 import com.unse.bienestar.comedor.Modelo.Opciones;
 import com.unse.bienestar.comedor.Modelo.Reserva;
+import com.unse.bienestar.comedor.Modelo.Usuario;
 import com.unse.bienestar.comedor.R;
 import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
 import com.unse.bienestar.comedor.Utils.OnClickOptionListener;
@@ -59,6 +60,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     ImageView imgIcono;
     ProgressBar mProgressBar;
     String mes = "";
+    int numberMes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -314,6 +316,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
     }
 
     private void procesarClickMes(int pos) {
+        numberMes = pos;
         PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
         String key = manager.getValueString(Utils.TOKEN);
         int id = manager.getValueInt(Utils.MY_ID);
@@ -393,7 +396,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
 
                 jsonArray = jsonObject.getJSONArray("alumnos");
 
-                ArrayList<Alumno> alumnos = new ArrayList<>();
+                ArrayList<Usuario> alumnos = new ArrayList<>();
 
                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -401,9 +404,14 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
 
                     String id = o.getString("idalumno");
                     String facultad = o.getString("facultad");
+                    String nombre = o.getString("nombre");
+                    String apellido = o.getString("apellido");
                     Alumno alumno = new Alumno();
                     alumno.setIdAlumno(Integer.parseInt(id));
                     alumno.setFacultad(facultad);
+                    alumno.setNombre(nombre);
+                    alumno.setApellido(apellido);
+                    alumno.setIdUsuario(alumno.getIdAlumno());
 
                     alumnos.add(alumno);
                 }
@@ -435,12 +443,13 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
         }
     }
 
-    private void openActivity(ArrayList<Menu> menus, ArrayList<Alumno> alumnos, ArrayList<Reserva> reservas) {
+    private void openActivity(ArrayList<Menu> menus, ArrayList<Usuario> alumnos, ArrayList<Reserva> reservas) {
         Intent intent = new Intent(getApplicationContext(), PDFMonthActivity.class);
         intent.putExtra(Utils.ID_MENU, menus);
         intent.putExtra(Utils.ALUMNO_NAME, alumnos);
         intent.putExtra(Utils.RESERVA, reservas);
         intent.putExtra(Utils.MESNAME, mes);
+        intent.putExtra(Utils.NUMERO_MES, numberMes);
         startActivity(intent);
     }
 }

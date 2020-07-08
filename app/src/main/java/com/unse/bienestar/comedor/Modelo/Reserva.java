@@ -27,6 +27,8 @@ public class Reserva implements Parcelable {
     @Ignore
     public static final int REPORTE_MENSUAL = 6;
     @Ignore
+    public static final int ESPECIALES = 7;
+    @Ignore
     public static final String TABLE = "reserva";
     @Ignore
     public static final String KEY_ID_ALU = "idReserva";
@@ -316,6 +318,20 @@ public class Reserva implements Parcelable {
                     reserva = new Reserva(idReserva, idUsuario, 0,
                             idMenu, 0, 0, "",
                             "", -1, estadoDescripcion, "");
+                    break;
+                case ESPECIALES:
+                    idReserva = Integer.parseInt(object.getString("idreservaespecial"));
+                    idUsuario = Integer.parseInt(object.getString("idusuario"));
+                    idMenu = Integer.parseInt(object.getString("idmenu"));
+                    fechaReserva = object.getString("fechareserva");
+                    fechaModificacion = object.getString("fechamodificacion");
+                    estadoDescripcion = object.getString("descripcion");
+                    porcion = Integer.parseInt(object.getString("porcion"));
+                    estado = Integer.parseInt(object.getString("estado"));
+                    reserva = new Reserva(idReserva, idUsuario, 0,
+                            idMenu, estado, porcion, fechaReserva,
+                            fechaModificacion, -1, estadoDescripcion, "");
+                    reserva.setNombre(estadoDescripcion);
                     break;
             }
         } catch (JSONException e) {

@@ -52,6 +52,7 @@
     <string name="cancelarReserva">¿Estás seguro que deseas cancelar la reserva?</string>
     <string name="reservaNoExiste">¡Reserva no existente!</string>
     <string name="yaReservo">¡Ya se reservó en este menú!</string>
+    <string name="yaReservoEspecial">¡El usuario ya reservó en este menú!</string>
     <string name="errorActualizar">¡Error al intentar confirmar!</string>
     <string name="confirmado">¡CONFIRMADO!</string>
     <string name="confirmadoReserva">La reserva fue confirmada exitosamente</string>
@@ -60,6 +61,7 @@
     <string name="sinDatos">¡No existen datos!</string>
     <string name="reservado">¡Reservado!</string>
     <string name="reservaExito">Tu reserva #%s fue registrada exitosamente. Entrá en \"Mis Reservas\" para más información</string>
+    <string name="reservaAdminExito">La reserva #%s fue registrada y retirada exitosamente.</string>
     <string name="reservaError">Hubo un inconveniente con tu reserva, intentá nuevamente</string>
     <string name="salioMal">¡Algo salió mal!</string>
     <string name="dirigeReserva">Entrá en la opción \"Mis Reservas\" para visualizar tu reserva</string>
@@ -71,6 +73,7 @@
 
     <string name="txtAddAlumno">Complete OBLIGATORIAMENTE todos los datos del alumno.</string>
     <string name="txtNotaMenu">NOTA: en caso de no ofrecer cena y/o postre, dejar en blanco.</string>
+    <string name="txtNotaEspecial">NOTA: en caso de ser más de una persona, completar con 0 el campo DNI.</string>
     <string name="slide1">Esta es la nueva aplicación de Bienestar Estudiantil para las reservas del Comedor Universitario de la Universidad Nacional de Santiago del Estero.</string>
     <string name="slide2">Entrá y mirá el menú del día, y al mismo tiempo vas a poder realizar la reserva y también cancelarla en caso de ser necesario.</string>
     <string name="slide3">Cuando vayas a retirar el menú del día, procurá tener a mano el código QR que se asignó luego de la reserva.</string>
@@ -127,5 +130,21 @@
     <string-array name="text_q5">
         <item>Contáctate inmediatamente con la Secretaría de Bienestar Estudiantil mediante los medios establecidos.</item>
     </string-array>
+
+    <string name="text_q1"> ¿Qué es "MicroSDE"?</string>
+
+    <string name="text_q2"> ¿Qué pasa si no tengo activada mi ubicación?</string>
+
+    <string name="text_q3"> ¿Puedo enviar información sobre cambios de recorridos, puntos de cargas, etc?</string>
+    <string name="text_q4"> Algo de la aplicación no funciona, ¿qué hago?</string>
+
+    <string name="text_q5"> ¿La aplicación recolecta datos de sus usuarios?</string>
+
+    <!--activity_about-->
+
+    <string name="text_q6"> ¿Es necesario instalar las actualizaciones? ¿Qué pasa si no lo hago?</string>
+    <string name="primeroBuscar">Primero busque un usuario</string>
+    <string name="usuarioYaReservo">El usuario ingreso ya reservó  éste menú</string>
+    <string name="elegirMenu">El menú no fue seleccionado</string>
 
 </resources>

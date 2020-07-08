@@ -362,8 +362,8 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         MultiFormatWriter formatWriter = new MultiFormatWriter();
         try {
             StringBuilder builder = new StringBuilder();
-            builder.append("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL");
-            builder.append("\n");
+           // builder.append("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL");
+            //builder.append("\n");
             builder.append("¡MUCHAS GRACIAS POR RESERVAR!");
             builder.append("\n");
             String[] dni = new String[String.valueOf(reserva.getIdUsuario()).length()];

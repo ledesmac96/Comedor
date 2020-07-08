@@ -455,6 +455,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item_inicio:
                 fragmentoGenerico = new InicioFragment();
                 ((InicioFragment) fragmentoGenerico).setActivity(MainActivity.this);
+                ((InicioFragment) fragmentoGenerico).setContext(getApplicationContext());
+                ((InicioFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
                 break;
             case R.id.item_reservas:
                 fragmentoGenerico = new GestionReservasFragment();

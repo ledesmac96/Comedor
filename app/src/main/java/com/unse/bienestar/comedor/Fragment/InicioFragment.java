@@ -1,6 +1,8 @@
 package com.unse.bienestar.comedor.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +16,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.unse.bienestar.comedor.Activity.NuevaReservaEspecialActivity;
 import com.unse.bienestar.comedor.Database.MenuViewModel;
 import com.unse.bienestar.comedor.Database.ReservaViewModel;
 import com.unse.bienestar.comedor.Database.RolViewModel;
+import com.unse.bienestar.comedor.Dialogos.DialogoBuscaUsuario;
 import com.unse.bienestar.comedor.Dialogos.DialogoGeneral;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Menu;
@@ -31,8 +35,10 @@ import com.unse.bienestar.comedor.Utils.YesNoDialogListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class InicioFragment extends Fragment implements View.OnClickListener {
 
@@ -40,7 +46,8 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     ProgressBar mProgressBar;
     LinearLayout latAdmin;
     TextView txtMenu, txtTerminarDia, txtRestringirReservas;
-    CardView cardInicio, cardReservar, cardNo, cardScanear, cardTerminar, cardRestringir;
+    CardView cardInicio, cardReservar, cardNo, cardScanear,
+            cardTerminar, cardRestringir, cardNuevaReserva, cardReservaEspecial;
     DialogoProcesamiento dialog;
     Menu mMenu;
     PreferenciasManager mPreferenciasManager;
@@ -48,6 +55,24 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     Activity mActivity;
     RolViewModel mRolViewModel;
     ReservaViewModel mReservaViewModel;
+    Context mContext;
+    FragmentManager mFragmentManager;
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        return mContext;
+    }
+
+    public void setContext(Context context) {
+        mContext = context;
+    }
+
+
+    public void setFragmentManager(FragmentManager fragmentManager) {
+        mFragmentManager = fragmentManager;
+    }
+
     boolean isAdmin = false;
 
     public InicioFragment() {
@@ -74,9 +99,13 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         cardScanear.setOnClickListener(this);
         cardTerminar.setOnClickListener(this);
         cardRestringir.setOnClickListener(this);
+        cardReservaEspecial.setOnClickListener(this);
+        cardNuevaReserva.setOnClickListener(this);
     }
 
     private void loadViews() {
+        cardNuevaReserva = view.findViewById(R.id.cardReservarAlumno);
+        cardReservaEspecial = view.findViewById(R.id.cardEspecial);
         cardRestringir = view.findViewById(R.id.cardCortar);
         txtRestringirReservas = view.findViewById(R.id.txtCortar);
         txtTerminarDia = view.findViewById(R.id.txtTerminar);
@@ -221,9 +250,9 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
             if (exist == null)
                 mMenuViewModel.insert(menu);
             mMenu = menu;
-            if ((isAdmin || mMenu.getDisponible() == 1) && Utils.isShowByHour(isAdmin ? 17 : 14)) {
+            if ((isAdmin || mMenu.getDisponible() == 1) && Utils.isShowByHour(isAdmin ? 27 : 24)) {
                 loadInfoCardView(menu);
-            } else if (isAdmin && Utils.isShowByHour(17)) {
+            } else if (isAdmin && Utils.isShowByHour(27)) {
                 loadInfoCardView(menu);
             } else {
                 cardNo.setVisibility(View.VISIBLE);
@@ -279,7 +308,27 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
             case R.id.cardCortar:
                 restringirDialogo();
                 break;
+            case R.id.cardEspecial:
+                reservaEspecial();
+                break;
+            case R.id.cardReservarAlumno:
+                reservaAlumno();
+                break;
         }
+    }
+
+    private void reservaAlumno() {
+        DialogoBuscaUsuario dialogoBuscaUsuario = new DialogoBuscaUsuario();
+        dialogoBuscaUsuario.setContext(getContext());
+        dialogoBuscaUsuario.setFragmentManager(mFragmentManager);
+        dialogoBuscaUsuario.setIdMenu(mMenu.getIdMenu());
+        dialogoBuscaUsuario.show(mFragmentManager, "dialogo_buscar");
+    }
+
+    private void reservaEspecial() {
+        Intent intent = new Intent(getContext(), NuevaReservaEspecialActivity.class);
+        intent.putExtra(Utils.ID_MENU, mMenu.getIdMenu());
+        mActivity.startActivity(intent);
     }
 
     private void restringirDialogo() {
@@ -350,7 +399,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
                     if (mensaje.contains("permite")) {
 
                         mMenu.setDisponible(1);
-                        updateButton(mMenu.getValidez() == 1, mMenu.getDisponible() == 1);
+                        //updateButton(mMenu.getValidez() == 1, mMenu.getDisponible() == 1);
                     } else if (mensaje.contains("restringido")) {
                         mMenu.setDisponible(0);
                         //updateButton(false);

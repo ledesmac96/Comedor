@@ -1,6 +1,7 @@
 package com.unse.bienestar.comedor.Activity;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -23,13 +24,19 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Alumno;
 import com.unse.bienestar.comedor.Modelo.Menu;
 import com.unse.bienestar.comedor.Modelo.Reserva;
+import com.unse.bienestar.comedor.Modelo.Usuario;
 import com.unse.bienestar.comedor.R;
+import com.unse.bienestar.comedor.Utils.GeneratePDFTask;
 import com.unse.bienestar.comedor.Utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,11 +51,13 @@ public class PDFMonthActivity extends AppCompatActivity implements View.OnClickL
     PieChart pieFacultad;
     LinearLayout latDatos;
     ArrayList<Menu> menus;
-    ArrayList<Alumno> alumnos;
+    ArrayList<Usuario> alumnos;
     ArrayList<Reserva> reservas;
     ProgressBar mProgressBar;
     String mes;
     HashMap<String, Menu> menusHash;
+    HashMap<String, Integer[]> reservasAlumnosDias;
+    int numberMes = 0, days = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +74,7 @@ public class PDFMonthActivity extends AppCompatActivity implements View.OnClickL
         loadData();
 
         setToolbar();
+
     }
 
     private void loadIntent() {
@@ -72,7 +82,7 @@ public class PDFMonthActivity extends AppCompatActivity implements View.OnClickL
             menus = (ArrayList<Menu>) getIntent().getSerializableExtra(Utils.ID_MENU);
         }
         if (getIntent().getSerializableExtra(Utils.ALUMNO_NAME) != null) {
-            alumnos = (ArrayList<Alumno>) getIntent().getSerializableExtra(Utils.ALUMNO_NAME);
+            alumnos = (ArrayList<Usuario>) getIntent().getSerializableExtra(Utils.ALUMNO_NAME);
         }
         if (getIntent().getSerializableExtra(Utils.RESERVA) != null) {
             reservas = (ArrayList<Reserva>) getIntent().getSerializableExtra(Utils.RESERVA);
@@ -80,9 +90,15 @@ public class PDFMonthActivity extends AppCompatActivity implements View.OnClickL
         if (getIntent().getStringExtra(Utils.MESNAME) != null) {
             mes = getIntent().getStringExtra(Utils.MESNAME);
         }
+        if (getIntent().getIntExtra(Utils.NUMERO_MES, -1) != -1) {
+            numberMes = getIntent().getIntExtra(Utils.NUMERO_MES, -1);
+        }
     }
 
     private void loadData() {
+        Calendar calendar = new GregorianCalendar(2020, numberMes, 1);
+        days = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        reservasAlumnosDias = new HashMap<>();
         txtMes.setText(mes.toUpperCase());
         loadEstadisticas();
         txtTotalReservas.setText(String.valueOf(reservas.size()));
@@ -98,14 +114,15 @@ public class PDFMonthActivity extends AppCompatActivity implements View.OnClickL
 
     private void loadMenus() {
         menusHash = new HashMap<>();
-        for (Menu menu : menus){
+        for (Menu menu : menus) {
             menusHash.put(String.valueOf(menu.getIdMenu()), menu);
         }
     }
 
     private void loadEstadisticasFacultad() {
         int[] facultades = new int[5];
-        for (Alumno alumno : alumnos) {
+        for (Usuario usuario : alumnos) {
+            Alumno alumno = (Alumno) usuario;
             switch (alumno.getFacultad()) {
                 case "FAyA":
                     facultades[0] = facultades[0] + 1;
@@ -197,23 +214,31 @@ public class PDFMonthActivity extends AppCompatActivity implements View.OnClickL
         for (Reserva reserva : reservas) {
 
             Menu menu = menusHash.get(String.valueOf(reserva.getIdMenu()));
-            if (menu != null){
-                porciones = porciones + menu.getPorcion();
+            if (menu != null) {
+                int dia = menu.getDia();
+                if (reservasAlumnosDias.containsKey(String.valueOf(reserva.getIdUsuario()))) {
+                    reservasAlumnosDias.get(String.valueOf(reserva.getIdUsuario()))[dia - 1] = 1;
+                } else {
+                    Integer[] reser = new Integer[days];
+                    Arrays.fill(reser, 0);
+                    reser[dia - 1] = 1;
+                    reservasAlumnosDias.put(String.valueOf(reserva.getIdUsuario()), reser);
+                }
             }
-
             if (reserva.getDescripcion().equals("RESERVADO")) {
                 cantidadRes++;
             } else if (reserva.getDescripcion().equals("CANCELADO")) {
                 cantidadCancelado++;
             } else if (reserva.getDescripcion().equals("RETIRADO")) {
-
+                if (menu != null)
+                    porciones = porciones + menu.getPorcion();
                 cantidadReti++;
             } else if (reserva.getDescripcion().equals("NO RETIRADO")) {
 
                 cantidadNoRetirados++;
             }
         }
-        txtTotalPorciones.setText(String.valueOf(porciones));
+        txtTotalPorciones.setText(String.valueOf(cantidadReti));
         entries.add(new BarEntry(1, reservas.size()));
         entryLabels.add("Total");
         entries.add(new BarEntry(2, cantidadReti));
@@ -287,6 +312,12 @@ public class PDFMonthActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void generatePDF() {
-        Utils.showToast(getApplicationContext(), "GENERAR AHRE ");
+        Bitmap graficoBarra = Utils.getBitmapFromView(findViewById(R.id.cardReservas));
+        Bitmap graficoTorta = Utils.getBitmapFromView(findViewById(R.id.cardPorFacultad));
+        DialogoProcesamiento dialogoProcesamiento = new DialogoProcesamiento();
+        new GeneratePDFTask(2, alumnos, mes, graficoBarra, graficoTorta, days,
+                reservasAlumnosDias, dialogoProcesamiento, getApplicationContext()).execute();
+        dialogoProcesamiento.show(getSupportFragmentManager(), "jeje");
+
     }
 }

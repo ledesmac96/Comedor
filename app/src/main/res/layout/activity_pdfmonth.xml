@@ -118,158 +118,169 @@
                                 android:fontFamily="@font/montserrat_black"
                                 android:layout_height="wrap_content" />
 
-                            <com.github.mikephil.charting.charts.BarChart
-                                android:id="@+id/barMeses"
-                                android:layout_width="match_parent"
-                                android:layout_marginBottom="10dp"
-                                android:layout_height="300dp">
-                            </com.github.mikephil.charting.charts.BarChart>
-
                             <LinearLayout
-                                android:layout_marginBottom="10dp"
-                                android:gravity="center"
-                                android:layout_gravity="center"
                                 android:orientation="vertical"
+                                android:id="@+id/cardReservas"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
+                                <com.github.mikephil.charting.charts.BarChart
+                                    android:id="@+id/barMeses"
+                                    android:layout_width="match_parent"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_height="300dp">
+                                </com.github.mikephil.charting.charts.BarChart>
+
                                 <LinearLayout
+                                    android:layout_marginBottom="10dp"
                                     android:gravity="center"
-                                    android:orientation="horizontal"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
 
                                     <LinearLayout
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
 
-                                        <View
+                                        <LinearLayout
                                             android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorLightBlue" />
-
-                                        <TextView
-                                            android:textSize="12sp"
+                                            android:gravity="start"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginStart="5dp"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="Total" />
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorLightBlue" />
+
+                                            <TextView
+                                                android:textSize="12sp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="5dp"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="Total" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_marginStart="10dp"
+                                            android:layout_gravity="center"
+                                            android:gravity="start"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorOrange" />
+
+                                            <TextView
+                                                android:textSize="12sp"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="Reservados" />
+
+                                        </LinearLayout>
 
                                     </LinearLayout>
 
                                     <LinearLayout
-                                        android:layout_marginStart="10dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
 
-                                        <View
+                                        <LinearLayout
+                                            android:layout_marginStart="10dp"
                                             android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorOrange" />
-
-                                        <TextView
-                                            android:textSize="12sp"
-                                            android:layout_marginStart="5dp"
+                                            android:gravity="start"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="Reservados" />
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorGreen" />
+
+                                            <TextView
+                                                android:textSize="12sp"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="Retirados" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_marginStart="10dp"
+                                            android:layout_gravity="center"
+                                            android:gravity="start"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorRed" />
+
+                                            <TextView
+                                                android:textSize="12sp"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="Cancelados" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_marginStart="10dp"
+                                            android:layout_gravity="center"
+                                            android:gravity="start"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorPink" />
+
+                                            <TextView
+                                                android:textSize="12sp"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="No Retirados" />
+
+                                        </LinearLayout>
 
                                     </LinearLayout>
 
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:gravity="center"
-                                    android:orientation="horizontal"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <LinearLayout
-                                        android:layout_marginStart="10dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <View
-                                            android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorGreen" />
-
-                                        <TextView
-                                            android:textSize="12sp"
-                                            android:layout_marginStart="5dp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="Retirados" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_marginStart="10dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <View
-                                            android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorRed" />
-
-                                        <TextView
-                                            android:textSize="12sp"
-                                            android:layout_marginStart="5dp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="Cancelados" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_marginStart="10dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <View
-                                            android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorPink" />
-
-                                        <TextView
-                                            android:textSize="12sp"
-                                            android:layout_marginStart="5dp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="No Retirados" />
-
-                                    </LinearLayout>
 
                                 </LinearLayout>
 
 
                             </LinearLayout>
+
+
 
                         </LinearLayout>
 
@@ -308,157 +319,167 @@
                                 android:fontFamily="@font/montserrat_black"
                                 android:textSize="20sp"/>
 
-                            <com.github.mikephil.charting.charts.PieChart
-                                android:id="@+id/pieFacultad"
-                                android:layout_width="match_parent"
-                                android:layout_marginBottom="10dp"
-                                android:layout_height="300dp">
-                            </com.github.mikephil.charting.charts.PieChart>
-
                             <LinearLayout
-                                android:gravity="center"
-                                android:layout_gravity="center"
+                                android:id="@+id/cardPorFacultad"
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
-                                <LinearLayout
+                                <com.github.mikephil.charting.charts.PieChart
+                                    android:id="@+id/pieFacultad"
+                                    android:layout_width="match_parent"
                                     android:layout_marginBottom="10dp"
-                                    android:layout_marginStart="10dp"
-                                    android:gravity="start"
-                                    android:orientation="horizontal"
+                                    android:layout_height="300dp">
+                                </com.github.mikephil.charting.charts.PieChart>
+
+                                <LinearLayout
+                                    android:gravity="center"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
 
                                     <LinearLayout
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <View
-                                            android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorRed" />
-
-                                        <TextView
-                                            android:id="@+id/txtTotalFaya"
-                                            android:textSize="12sp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginStart="5dp"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="100" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
+                                        android:layout_marginBottom="10dp"
                                         android:layout_marginStart="10dp"
-                                        android:layout_gravity="center"
                                         android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
 
-                                        <View
+                                        <LinearLayout
                                             android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorFCEyT" />
-
-                                        <TextView
-                                            android:id="@+id/txtTotalFCeT"
-                                            android:textSize="12sp"
-                                            android:layout_marginStart="5dp"
+                                            android:gravity="start"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="100" />
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorRed" />
+
+                                            <TextView
+                                                android:id="@+id/txtTotalFaya"
+                                                android:textSize="12sp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="5dp"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="100" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_marginStart="10dp"
+                                            android:layout_gravity="center"
+                                            android:gravity="start"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorFCEyT" />
+
+                                            <TextView
+                                                android:id="@+id/txtTotalFCeT"
+                                                android:textSize="12sp"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="100" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_marginStart="10dp"
+                                            android:layout_gravity="center"
+                                            android:gravity="start"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorGreen" />
+
+                                            <TextView
+                                                android:id="@+id/txtTotalFCF"
+                                                android:textSize="12sp"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="100" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_marginStart="10dp"
+                                            android:layout_gravity="center"
+                                            android:gravity="start"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorLightBlue" />
+
+                                            <TextView
+                                                android:id="@+id/txtTotalFCM"
+                                                android:textSize="12sp"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="100" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_marginStart="10dp"
+                                            android:layout_gravity="center"
+                                            android:gravity="start"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <View
+                                                android:layout_gravity="center"
+                                                android:layout_width="10dp"
+                                                android:layout_height="10dp"
+                                                android:background="@color/colorYellow" />
+
+                                            <TextView
+                                                android:id="@+id/txtTotalFHS"
+                                                android:textSize="12sp"
+                                                android:layout_marginStart="5dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/montserrat_regular"
+                                                android:text="100" />
+
+                                        </LinearLayout>
 
                                     </LinearLayout>
 
-                                    <LinearLayout
-                                        android:layout_marginStart="10dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
 
-                                        <View
-                                            android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorGreen" />
-
-                                        <TextView
-                                            android:id="@+id/txtTotalFCF"
-                                            android:textSize="12sp"
-                                            android:layout_marginStart="5dp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="100" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_marginStart="10dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <View
-                                            android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorLightBlue" />
-
-                                        <TextView
-                                            android:id="@+id/txtTotalFCM"
-                                            android:textSize="12sp"
-                                            android:layout_marginStart="5dp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="100" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_marginStart="10dp"
-                                        android:layout_gravity="center"
-                                        android:gravity="start"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal">
-
-                                        <View
-                                            android:layout_gravity="center"
-                                            android:layout_width="10dp"
-                                            android:layout_height="10dp"
-                                            android:background="@color/colorYellow" />
-
-                                        <TextView
-                                            android:id="@+id/txtTotalFHS"
-                                            android:textSize="12sp"
-                                            android:layout_marginStart="5dp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/montserrat_regular"
-                                            android:text="100" />
-
-                                    </LinearLayout>
 
                                 </LinearLayout>
 
-
-
                             </LinearLayout>
+
+
 
                         </LinearLayout>
 
