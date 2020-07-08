@@ -17,11 +17,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.unse.bienestar.comedor.Activity.InfoMenuActivity;
+import com.unse.bienestar.comedor.Activity.InfoReservaActivity;
 import com.unse.bienestar.comedor.Activity.NuevoMenuActivity;
 import com.unse.bienestar.comedor.Adapter.MenuAdapter;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Menu;
 import com.unse.bienestar.comedor.R;
+import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
 import com.unse.bienestar.comedor.Utils.PreferenciasManager;
 import com.unse.bienestar.comedor.Utils.Utils;
 import com.unse.bienestar.comedor.Utils.VolleySingleton;
@@ -91,6 +94,16 @@ public class GestionMenuFragment extends Fragment implements View.OnClickListene
     private void loadListener() {
         fabAdd.setOnClickListener(this);
         btnBuscar.setOnClickListener(this);
+
+        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
+        itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView parent, View view, int position, long id) {
+                Intent i = new Intent(getContext(), InfoMenuActivity.class);
+                i.putExtra(Utils.ID_MENU, mMenus.get(position));
+                startActivity(i);
+            }
+        });
     }
 
     private void loadView() {

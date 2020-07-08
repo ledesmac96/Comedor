@@ -106,6 +106,12 @@
     <string name="mision1">La estructura funcional de la Secretaría se conforma con las siguientes Áreas de gestión que abarca el Bienestar Universitario: Becas, Salud, Deportes, Bienestar, Accesibilidad, Servicios de Salud, Complejo Polideportivo y Residencia Universitaria.</string>
     <string name="vision">Ser un área que diseñe e implemente proyectos, programas y acciones, innovadoras y sostenibles orientadas a las problemáticas, necesidades, intereses y expectativas de los estudiantes que contribuyan a su formación integral y al ejercicio de la ciudadanía que les permita lograr su realización personal y social.</string>
 
+    <string name="text_q1"> ¿Qué debo llevar para retirar mi ración? </string>
+    <string name="text_q2"> ¿Qué pasa si reservo, no cancelo y no lo voy a retirar?</string>
+    <string name="text_q3"> ¿Puede ir otra persona a retirar mi ración? </string>
+    <string name="text_q4"> ¿Puedo retirar raciones para dos o más personas con el mismo código QR?</string>
+    <string name="text_q5"> Algo de la aplicación no funciona, ¿qué hago?</string>
+
     <string-array name="text_q1">
         <item>Para retirar tu ración, tan solo debes realizar la reserva en el día (hasta el horario establecido) y tener a mano el código QR para que el encargado pueda escanearlo cuando llegues al Comedor Universitario. La reserva estará en "Mis reservas" en el menú izquierdo.</item>
     </string-array>
@@ -121,11 +127,5 @@
     <string-array name="text_q5">
         <item>Contáctate inmediatamente con la Secretaría de Bienestar Estudiantil mediante los medios establecidos.</item>
     </string-array>
-
-    <string name="text_q1"> ¿Qué debo llevar para retirar mi ración? </string>
-    <string name="text_q2"> ¿Qué pasa si reservo, no cancelo y no lo voy a retirar?</string>
-    <string name="text_q3"> ¿Puede ir otra persona a retirar mi ración? </string>
-    <string name="text_q4"> ¿Puedo retirar raciones para dos o más personas con el mismo código QR?</string>
-    <string name="text_q5"> Algo de la aplicación no funciona, ¿qué hago?</string>
 
 </resources>
