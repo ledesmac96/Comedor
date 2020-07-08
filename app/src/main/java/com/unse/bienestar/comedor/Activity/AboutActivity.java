@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.unse.bienestar.comedor.R;
 
@@ -18,7 +17,7 @@ import androidx.cardview.widget.CardView;
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imgIcono;
-    CardView cardInsta, cardWhats;
+    CardView cardInsta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
     private void loadListener() {
         imgIcono.setOnClickListener(this);
-        cardWhats.setOnClickListener(this);
         cardInsta.setOnClickListener(this);
     }
 
@@ -52,7 +50,6 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     private void loadViews() {
         imgIcono = findViewById(R.id.imgFlecha);
         cardInsta = findViewById(R.id.cardInsta);
-        cardWhats = findViewById(R.id.cardWhats);
     }
 
     public static Intent newInstagramProfileIntent(PackageManager pm, String url) {
@@ -63,11 +60,12 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                     url = url.substring(0, url.length() - 1);
                 }
                 final String username = url.substring(url.lastIndexOf("/") + 1);
-                intent.setData(Uri.parse("http://instagram.com/_u/" + username));
+                intent.setData(Uri.parse("https://instagram.com/_u/" + username));
                 intent.setPackage("com.instagram.android");
                 return intent;
             }
         } catch (PackageManager.NameNotFoundException ignored) {
+
         }
         intent.setData(Uri.parse(url));
         return intent;
@@ -81,12 +79,9 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 onBackPressed();
                 break;
             case R.id.cardInsta:
-                String url = "https://www.instagram.com/bienestarestudiantilunse/";
-                Intent openInsta = newInstagramProfileIntent(getPackageManager(), url);
-                startActivity(openInsta);
-                break;
-            case R.id.cardWhats:
-                Toast.makeText(this, "No hago nada todavía.", Toast.LENGTH_SHORT).show();
+//                String url = "https://www.instagram.com/bienestarestudiantilunse/";
+//                Intent openInsta = newInstagramProfileIntent(getPackageManager(), url);
+//                startActivity(openInsta);
                 break;
 
         }

@@ -106,7 +106,7 @@
             android:layout_alignParentEnd="true"
             android:tint="@color/whiteTextColor"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_add"/>
+            app:srcCompat="@drawable/ic_add"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabPDF"
@@ -118,7 +118,7 @@
             android:layout_alignParentEnd="true"
             android:tint="@color/whiteTextColor"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_pdf"/>
+            app:srcCompat="@drawable/ic_pdf"/>
 
     </RelativeLayout>
 

@@ -1,16 +1,18 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:width="841.9dp"
-    android:height="595.3dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="400dp"
+    android:height="300dp"
     android:viewportWidth="841.9"
-    android:viewportHeight="595.3">
+    android:viewportHeight="595.3"
+    tools:ignore="VectorRaster">
   <group>
     <clip-path
         android:pathData="M535.1,401.5c8.4,-35.4 16.9,-70.7 25.3,-106.1c-5.9,-67.7 -105.6,-99 -174.1,-92.8c-97.5,8.8 -190.8,49.4 -260.9,28c11.1,23.2 27,46.1 47.7,68.5c-12.4,20.7 -30.4,39.3 -56.1,54.9c142.2,27.6 181.4,-13.6 278,-17.8C442.6,334.2 537.9,355.5 535.1,401.5"/>
     <path
         android:pathData="M116.9,196.5h443.5v205.1h-443.5z">
       <aapt:attr name="android:fillColor">
-        <gradient 
+        <gradient
             android:startY="330.4669"
             android:startX="76.2617"
             android:endY="267.3569"
@@ -31,7 +33,7 @@
     <path
         android:pathData="M580.8,181.2h127.6v145.9h-127.6z">
       <aapt:attr name="android:fillColor">
-        <gradient 
+        <gradient
             android:startY="275.1902"
             android:startX="570.6898"
             android:endY="234.9502"
@@ -61,7 +63,7 @@
     <path
         android:pathData="M314,216.2h411v173.7h-411z">
       <aapt:attr name="android:fillColor">
-        <gradient 
+        <gradient
             android:startY="319.0661"
             android:startX="347.249"
             android:endY="287.5661"

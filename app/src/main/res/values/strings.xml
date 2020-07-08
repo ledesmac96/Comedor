@@ -101,36 +101,30 @@
     <string name="reservaNoCancelada">¡Error al cancelar!</string>
     <string name="reservaAnterior">Reserva anterior ¡fue cancelada!</string>
 
+    <string name="mision0">Desarrollar acciones orientadas a la mejora de la calidad de vida en relación a la actividad universitaria, contribuyendo al acceso, permanencia y egreso, el esparcimiento, la orientación y la información de los estudiantes.</string>
+    <string name="mision1">La estructura funcional de la Secretaría se conforma con las siguientes Áreas de gestión que abarca el Bienestar Universitario: Becas, Salud, Deportes, Bienestar, Accesibilidad, Servicios de Salud, Complejo Polideportivo y Residencia Universitaria.</string>
+    <string name="vision">Ser un área que diseñe e implemente proyectos, programas y acciones, innovadoras y sostenibles orientadas a las problemáticas, necesidades, intereses y expectativas de los estudiantes que contribuyan a su formación integral y al ejercicio de la ciudadanía que les permita lograr su realización personal y social.</string>
+
     <string-array name="text_q1">
-        <item>"MicroSDE" es la aplicación más completa sobre los recorridos de colectivos urbanos y algunos interurbanos de la ciudad Capital de Santiago del Estero. Encontrarás recorridos como por ejemplo, La Banda a Capital, Capital a Vuelta La Barranca, etc.</item>
+        <item>Para retirar tu ración, tan solo debes realizar la reserva en el día (hasta el horario establecido) y tener a mano el código QR para que el encargado pueda escanearlo cuando llegues al Comedor Universitario. La reserva estará en "Mis reservas" en el menú izquierdo.</item>
     </string-array>
     <string-array name="text_q2">
-        <item>Si no activas tú ubicación, no podrás ubicarte a tí mismo/a en el mapa a la hora de querer orientarte en el mismo.</item>
+        <item>Si realizas la reserva, pero luego decides que no la vas a retirar, debes cancelarla. Pero, en caso de que reserves, no canceles y no vayas a retirarla, se podría aplicar una sanción a determinar.</item>
     </string-array>
     <string-array name="text_q3">
-        <item>Claro, como también cualquier información que creas importante respecto a los colectivos. Información puedes mandarla al ícono de la carta arriba a la derecha en el Inicio. Puntos de carga y paradas, puedes acceder a las secciones del menú lateral izquierdo. Será cargado en la aplicación tan pronto como se pueda.</item>
+        <item>En caso de que por algún motivo no puedas ir a retirar la ración del día, puedes realizar la reserva resde tú casa, realizá la captura donde está el código QR y envíasela a la persona encargada de retirar tú ración.</item>
     </string-array>
     <string-array name="text_q4">
-        <item>Contáctate inmediatamente con nosotros y trataremos de solucionar el problema.</item>
+        <item>No. Los códigos QR son personales, únicos e instransferibles. Finalizado el día, el código QR deja de tener validez.</item>
     </string-array>
     <string-array name="text_q5">
-        <item>"MicroSDE" no recolecta información alguna sobre sus usuarios y no puede saber la ubicación de ellos. Solo se tienen estadísticas que ofrece Google Play Store al momento que descargas la aplicación. Úsala tranquilo/a.</item>
-    </string-array>
-    <string-array name="text_q6">
-        <item>Las actualizaciones son necesarias para corregir fallos y para agregar mejoras. Si no instalas las actualizaciones, es posible que no puedas ver algunos contenidos, y que persistan algunos fallos.</item>
+        <item>Contáctate inmediatamente con la Secretaría de Bienestar Estudiantil mediante los medios establecidos.</item>
     </string-array>
 
-    <string name="text_q1"> ¿Qué es "MicroSDE"?</string>
-
-    <string name="text_q2"> ¿Qué pasa si no tengo activada mi ubicación?</string>
-
-    <string name="text_q3"> ¿Puedo enviar información sobre cambios de recorridos, puntos de cargas, etc?</string>
-    <string name="text_q4"> Algo de la aplicación no funciona, ¿qué hago?</string>
-
-    <string name="text_q5"> ¿La aplicación recolecta datos de sus usuarios?</string>
-
-    <!--activity_about-->
-
-    <string name="text_q6"> ¿Es necesario instalar las actualizaciones? ¿Qué pasa si no lo hago?</string>
+    <string name="text_q1"> ¿Qué debo llevar para retirar mi ración? </string>
+    <string name="text_q2"> ¿Qué pasa si reservo, no cancelo y no lo voy a retirar?</string>
+    <string name="text_q3"> ¿Puede ir otra persona a retirar mi ración? </string>
+    <string name="text_q4"> ¿Puedo retirar raciones para dos o más personas con el mismo código QR?</string>
+    <string name="text_q5"> Algo de la aplicación no funciona, ¿qué hago?</string>
 
 </resources>

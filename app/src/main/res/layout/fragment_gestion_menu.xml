@@ -89,7 +89,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:src="@drawable/ic_menu_2" />
+                    app:srcCompat="@drawable/ic_menu_2" />
 
                 <TextView
                     android:gravity="center"
@@ -124,7 +124,7 @@
             android:layout_alignParentRight="true"
             android:tint="@color/whiteTextColor"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_add"/>
+            app:srcCompat="@drawable/ic_add"/>
 
     </RelativeLayout>
 

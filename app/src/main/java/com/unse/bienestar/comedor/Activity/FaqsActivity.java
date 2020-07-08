@@ -3,8 +3,9 @@ package com.unse.bienestar.comedor.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.unse.bienestar.comedor.Adapter.ExpandablePreguntasAdapter;
 import com.unse.bienestar.comedor.R;
@@ -17,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class FaqsActivity extends AppCompatActivity {
 
-    private Button btnBack;
+    ImageView btnBack;
 
     private ExpandableListView expandableListView;
     private ExpandablePreguntasAdapter mExpandablePreguntasAdapter;
@@ -36,6 +37,12 @@ public class FaqsActivity extends AppCompatActivity {
 
         loadListener();
 
+        setToolbar();
+
+    }
+
+    private void setToolbar() {
+        ((TextView) findViewById(R.id.txtTitulo)).setText("Preguntas frecuentes");
     }
 
     private void loadListener() {
@@ -49,6 +56,7 @@ public class FaqsActivity extends AppCompatActivity {
 
     private void loadViews() {
         expandableListView = findViewById(R.id.expandableListView);
+        btnBack = findViewById(R.id.imgFlecha);
     }
 
     private void initListeners() {
@@ -76,7 +84,6 @@ public class FaqsActivity extends AppCompatActivity {
         listDataGroup.add(getString(R.string.text_q3));
         listDataGroup.add(getString(R.string.text_q4));
         listDataGroup.add(getString(R.string.text_q5));
-        listDataGroup.add(getString(R.string.text_q6));
 
         String[] array;
         List<String> q1 = new ArrayList<>();
@@ -107,20 +114,13 @@ public class FaqsActivity extends AppCompatActivity {
             q5.add(item);
         }
 
-        List<String> q6 = new ArrayList<>();
-        array = getResources().getStringArray(R.array.text_q6);
-        for (String item : array) {
-            q6.add(item);
-        }
         listDataChild.put(listDataGroup.get(0), q1);
         listDataChild.put(listDataGroup.get(1), q2);
         listDataChild.put(listDataGroup.get(2), q3);
         listDataChild.put(listDataGroup.get(3), q4);
         listDataChild.put(listDataGroup.get(4), q5);
-        listDataChild.put(listDataGroup.get(5), q6);
 
         mExpandablePreguntasAdapter.notifyDataSetChanged();
     }
-
 
 }

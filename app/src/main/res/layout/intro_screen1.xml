@@ -56,27 +56,19 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="0.3"
+                android:layout_height="100dp"
+                android:layout_weight="0.5"
                 android:layout_gravity="center"
                 android:paddingTop="20dp"
-                android:src="@drawable/aniversario47"/>
+                app:srcCompat="@drawable/ic_logo_200"/>
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="0.3"
+                android:layout_height="100dp"
+                android:layout_weight="0.5"
                 android:layout_gravity="center"
                 android:paddingTop="20dp"
-                android:src="@drawable/doscientos"/>
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_weight="0.4"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"
-                android:src="@drawable/logo_unse"/>
+                app:srcCompat="@drawable/logo_unse"/>
 
         </LinearLayout>
 

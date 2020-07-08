@@ -459,6 +459,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item_about:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 break;
+            case R.id.item_faqs:
+                startActivity(new Intent(getApplicationContext(), FaqsActivity.class));
+                break;
             case R.id.item_logout:
                 logout();
                 break;

@@ -52,7 +52,6 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_gravity="center"
-                        android:textStyle="bold"
                         android:textColor="@color/whiteTextColor"
                         android:text="RETIRADO"
                         android:fontFamily="@font/montserrat_black"

@@ -46,9 +46,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.1"
                     android:textStyle="bold"
-                    android:textColor="@color/blackTextColor"
                     android:text="ACTIVO"
-                    android:fontFamily="@font/montserrat_black"
+                    android:fontFamily="@font/montserrat_regular"
                     android:textSize="16sp"/>
 
             </LinearLayout>

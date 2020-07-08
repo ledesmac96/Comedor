@@ -24,7 +24,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:id="@+id/imgIcon"
-                android:src="@drawable/ic_salida" />
+                app:srcCompat="@drawable/ic_salida" />
 
             <TextView
                 android:gravity="center"

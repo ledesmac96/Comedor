@@ -144,7 +144,7 @@ public class PerfilActivity extends AppCompatActivity
     }
 
     private void setToolbar() {
-        ((TextView) findViewById(R.id.txtTitulo)).setText("");
+        ((TextView) findViewById(R.id.txtTitulo)).setText("Mi perfil");
     }
 
     private void loadListener() {

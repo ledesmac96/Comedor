@@ -47,7 +47,7 @@
                             android:layout_height="60dp"
                             android:tint="@color/whiteTextColor"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_qr"/>
+                            app:srcCompat="@drawable/ic_qr"/>
 
                     </LinearLayout>
 
@@ -87,7 +87,7 @@
                             android:text="RESTRINGIR\nRESERVAS"
                             android:gravity="center"
                             android:textStyle="bold"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
                             android:fontFamily="@font/montserrat_black"
                             android:textColor="@color/colorWhite"/>
 
@@ -129,7 +129,7 @@
                             android:text="FINALIZAR\nDÍA"
                             android:gravity="center"
                             android:textStyle="bold"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
                             android:fontFamily="@font/montserrat_black"
                             android:textColor="@color/colorWhite"/>
 

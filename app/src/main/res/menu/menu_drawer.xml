@@ -43,6 +43,10 @@
                 android:icon="@drawable/ic_b_bienestar"
                 android:title="Sobre nosotros"/>
             <item
+                android:id="@+id/item_faqs"
+                android:icon="@drawable/ic_faqs"
+                android:title="Preguntas frecuentes"/>
+            <item
                 android:id="@+id/item_logout"
                 android:icon="@drawable/ic_salida"
                 android:title="Salir"/>

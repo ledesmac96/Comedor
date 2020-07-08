@@ -87,9 +87,8 @@ public class ExpandablePreguntasAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.item_list_expand, null);
         }
 
-        TextView textViewGroup = convertView
-                .findViewById(R.id.textViewGroup);
-        textViewGroup.setTypeface(null, Typeface.BOLD);
+        TextView textViewGroup = convertView.findViewById(R.id.textViewGroup);
+        //textViewGroup.setTypeface(null, Typeface.BOLD);
         textViewGroup.setText(headerTitle);
 
         return convertView;

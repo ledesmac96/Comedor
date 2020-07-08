@@ -87,7 +87,7 @@
                                 android:fontFamily="@font/montserrat_black"
                                 android:text="Plato"
                                 android:textColor="@color/colorWhite"
-                                android:textSize="30sp" />
+                                android:textSize="26sp" />
 
                             <TextView
                                 android:id="@+id/txtPlato"
@@ -97,7 +97,7 @@
                                 android:gravity="center"
                                 android:text="Milanesa de Pollo con ensalada"
                                 android:textColor="@color/whiteTextColor"
-                                android:textSize="20sp" />
+                                android:textSize="18sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                                 android:fontFamily="@font/montserrat_black"
                                 android:text="Postre"
                                 android:textColor="@color/colorWhite"
-                                android:textSize="30sp" />
+                                android:textSize="26sp" />
 
                             <TextView
                                 android:id="@+id/txtPostre"
@@ -116,7 +116,7 @@
                                 android:gravity="center"
                                 android:text="Fruta, flan"
                                 android:textColor="@color/whiteTextColor"
-                                android:textSize="20sp" />
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 
