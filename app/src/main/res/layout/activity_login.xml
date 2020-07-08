@@ -127,25 +127,17 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
-                android:layout_weight="0.3"
-                android:padding="10dp"
-                android:src="@drawable/aniversario47" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_weight="0.3"
+                android:layout_weight="0.5"
                 android:padding="12dp"
-                android:src="@drawable/doscientos" />
+                app:srcCompat="@drawable/ic_logo_200" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
-                android:layout_weight="0.4"
+                android:layout_weight="0.5"
                 android:paddingTop="5dp"
                 android:src="@drawable/logo_unse"
                 android:tint="@color/whiteTextColor" />

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -23,11 +24,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
@@ -782,11 +785,18 @@ public class Utils {
                 file.mkdirs();
             }
             File filePath = new File(getNameFile(directory_path));
-            if (!file.exists())
+            if (!file.exists()) {
                 file.createNewFile();
+            }
+
             fileOutputStream = new FileOutputStream(filePath);
             PdfWriter pdfWriter = new PdfWriter(fileOutputStream);
             document = new Document(new PdfDocument(pdfWriter));
+            Image image = loadImage(context, R.drawable.encabezado, 179, 79);
+            document.add(image.setTextAlignment(TextAlignment.CENTER));
+            //image = loadImage(context, R.drawable.logo_unse, 179, 76);
+            //document.add(image.setTextAlignment(TextAlignment.RIGHT));
+
             //PdfFont font = PdfFontFactory.createFont();
             //PdfFont font = PdfFontFactory.createFont("assets/product_sans_regular.ttf", PdfEncodings.IDENTITY_H, true);
             document.add(getText("BIENESTAR ESTUDIANTIL", 12, true));
@@ -844,13 +854,29 @@ public class Utils {
 
     }
 
+    private static Image loadImage(Context context, int img, int width, int height) {
+        Drawable drawable = context.getResources().getDrawable(img);
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+       // bitmap = resize(bitmap, width, height);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);
+        Image image = null;
+        byte[] bytes = stream.toByteArray();
+        image = new Image(ImageDataFactory.create(bytes));
+        return image;
+    }
+
     private static Paragraph getText(String text, float size, boolean center) {
         return center ? new Paragraph(text).setFontSize(size).setTextAlignment(TextAlignment.CENTER)
                 : new Paragraph(text).setFontSize(size);
     }
 
     public static String getNameFile(String directory_path) {
-        return directory_path + "LISTADO_USUARIOS" +
+        return directory_path + "LISTADO_USUARIOS_" +
                 getFechaName(new Date(System.currentTimeMillis())) + ".pdf";
     }
 

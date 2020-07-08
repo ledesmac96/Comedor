@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
             checkInfo();
 
-           //decodeQR("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL\n¡MUCHAS GRACIAS POR RESERVAR!\n#TMW57W77-10#");
+            //decodeQR("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL\n¡MUCHAS GRACIAS POR RESERVAR!\n#TMW57W77-10#");
 
         }
     }
@@ -435,6 +435,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentoGenerico = new GestionUsuarioFragment();
                 ((GestionUsuarioFragment) fragmentoGenerico).setContext(getApplicationContext());
                 ((GestionUsuarioFragment) fragmentoGenerico).setFragmentManager(getSupportFragmentManager());
+                ((GestionUsuarioFragment) fragmentoGenerico).setActivity(MainActivity.this);
                 break;
             case R.id.item_mis_reservas:
                 fragmentoGenerico = new MisReservasFragment();

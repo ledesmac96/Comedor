@@ -1,5 +1,7 @@
 package com.unse.bienestar.comedor.Fragment;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +18,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unse.bienestar.comedor.Activity.NuevoAlumnoActivity;
 import com.unse.bienestar.comedor.Activity.PerfilActivity;
 import com.unse.bienestar.comedor.Adapter.UsuariosAdapter;
 import com.unse.bienestar.comedor.Database.RolViewModel;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Alumno;
-import com.unse.bienestar.comedor.Modelo.Rol;
 import com.unse.bienestar.comedor.Modelo.Usuario;
 import com.unse.bienestar.comedor.R;
 import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
@@ -30,7 +32,6 @@ import com.unse.bienestar.comedor.Utils.GeneratePDFTask;
 import com.unse.bienestar.comedor.Utils.PreferenciasManager;
 import com.unse.bienestar.comedor.Utils.Utils;
 import com.unse.bienestar.comedor.Utils.VolleySingleton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +41,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,6 +51,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class GestionUsuarioFragment extends Fragment implements View.OnClickListener {
 
     View view;
+    Activity mActivity;
     FloatingActionButton fabAdd, fabPDF;
     ArrayList<Usuario> mUsuarios;
     RecyclerView.LayoutManager mLayoutManager;
@@ -126,6 +130,15 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
             }
         }
 
+    }
+
+    @Nullable
+    public Activity getFActivity() {
+        return mActivity;
+    }
+
+    public void setActivity(Activity activity) {
+        mActivity = activity;
     }
 
     private void loadInfo() {
@@ -352,9 +365,19 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.fabPDF:
                 if (mUsuarios != null && mUsuarios.size() > 0) {
-                    DialogoProcesamiento dialogoProcesamiento = new DialogoProcesamiento();
-                    dialogoProcesamiento.show(getManagerFragment(), "jeje");
-                    new GeneratePDFTask(mUsuarios, dialogoProcesamiento, getContext()).execute();
+                    if (Utils.isPermissionGranted(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        if (Utils.isPermissionGranted(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            DialogoProcesamiento dialogoProcesamiento = new DialogoProcesamiento();
+                            dialogoProcesamiento.show(getManagerFragment(), "jeje");
+                            new GeneratePDFTask(mUsuarios, dialogoProcesamiento, getContext()).execute();
+                        } else {
+                            showPermission();
+                        }
+
+                    } else {
+                        showPermission();
+                    }
+
                 } else {
                     Utils.showToast(getContext(), getString(R.string.noUsuarios));
                 }
@@ -362,5 +385,11 @@ public class GestionUsuarioFragment extends Fragment implements View.OnClickList
                 break;
 
         }
+    }
+
+    private void showPermission() {
+        ActivityCompat.requestPermissions(mActivity,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},100);
     }
 }
