@@ -14,15 +14,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.unse.bienestar.comedor.Adapter.ReservasAdapter;
-import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
-import com.unse.bienestar.comedor.Modelo.Menu;
-import com.unse.bienestar.comedor.Modelo.Reserva;
-import com.unse.bienestar.comedor.R;
-import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
-import com.unse.bienestar.comedor.Utils.PreferenciasManager;
-import com.unse.bienestar.comedor.Utils.Utils;
-import com.unse.bienestar.comedor.Utils.VolleySingleton;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,6 +22,16 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.unse.bienestar.comedor.Adapter.ReservasAdapter;
+import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
+import com.unse.bienestar.comedor.Modelo.Menu;
+import com.unse.bienestar.comedor.Modelo.Reserva;
+import com.unse.bienestar.comedor.Modelo.ReservaEspecial;
+import com.unse.bienestar.comedor.R;
+import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
+import com.unse.bienestar.comedor.Utils.PreferenciasManager;
+import com.unse.bienestar.comedor.Utils.Utils;
+import com.unse.bienestar.comedor.Utils.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,12 +49,12 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
     TextView txtDescripcion;
     DialogoProcesamiento dialog;
     Menu mMenus;
-    RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
-    LinearLayout latVacio;
+    RecyclerView mRecyclerView, mRecyclerViewEspecial;
+    RecyclerView.LayoutManager mLayoutManager, mLayoutManagerEspecial;
+    LinearLayout latVacio, latEspeciales;
     CardView cardEstadisticas;
-    ReservasAdapter mReservasAdapter;
-    ArrayList<Reserva> mReservas;
+    ReservasAdapter mReservasAdapter, mReservasAdapterEspecial;
+    ArrayList<Reserva> mReservas, mReservasEspeciales;
     ImageView imgIcono;
     ProgressBar mProgressBar;
     BarChart barCantidad;
@@ -86,7 +87,7 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
-               // Intent i = new Intent(getApplicationContext(), InfoReservaActivity.class);
+                // Intent i = new Intent(getApplicationContext(), InfoReservaActivity.class);
                 //i.putExtra(Utils.RESERVA, mReservas.get(position));
                 //startActivity(i);
             }
@@ -96,14 +97,20 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
 
     private void loadData() {
         mReservas = new ArrayList<>();
+        mReservasEspeciales = new ArrayList<>();
         latVacio.setVisibility(View.GONE);
         cardEstadisticas.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
         mReservasAdapter = new ReservasAdapter(mReservas, getApplicationContext(), ReservasAdapter.ADMIN);
+        mReservasAdapterEspecial = new ReservasAdapter(mReservasEspeciales, getApplicationContext(), ReservasAdapter.ESPECIAL);
         mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+        mLayoutManagerEspecial = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         mRecyclerView.setNestedScrollingEnabled(true);
+        mRecyclerViewEspecial.setNestedScrollingEnabled(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerViewEspecial.setLayoutManager(mLayoutManagerEspecial);
         mRecyclerView.setAdapter(mReservasAdapter);
+        mRecyclerViewEspecial.setAdapter(mReservasAdapterEspecial);
 
         loadInfo();
 
@@ -152,7 +159,6 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
                     break;
                 case 1:
                     //Exito
-
                     loadInfo(jsonObject);
                     break;
                 case 2:
@@ -200,11 +206,36 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
                     mReservas.add(reserva);
 
                 }
+
+                mReservasEspeciales = new ArrayList<>();
+
+                jsonArray = jsonObject.getJSONArray("especial");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject o = jsonArray.getJSONObject(i);
+
+                    ReservaEspecial reserva = ReservaEspecial.mapper(o, ReservaEspecial.MEDIUM);
+
+                    mReservasEspeciales.add(reserva);
+
+                }
+
                 if (mReservas.size() > 0) {
                     mReservasAdapter.change(mReservas);
                     loadEstadisticas();
-                } else{
+                } else {
                     latVacio.setVisibility(View.VISIBLE);
+                }
+
+                if (mReservasEspeciales.size() > 0) {
+                    mReservasAdapterEspecial.change(mReservasEspeciales);
+                } else {
+                    latEspeciales.setVisibility(View.GONE);
+                }
+
+                if (mReservasEspeciales.size() > 0 || mReservas.size() > 0) {
+                    latVacio.setVisibility(View.GONE);
                 }
             }
         } catch (JSONException e) {
@@ -214,6 +245,8 @@ public class ReservaDiaActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void loadView() {
+        latEspeciales = findViewById(R.id.latEspecial);
+        mRecyclerViewEspecial = findViewById(R.id.recyclerEspecial);
         barCantidad = findViewById(R.id.barCantidad);
         txtDescripcion = findViewById(R.id.txtDescripcion);
         imgIcono = findViewById(R.id.imgFlecha);

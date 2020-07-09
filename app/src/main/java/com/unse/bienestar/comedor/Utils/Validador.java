@@ -5,6 +5,7 @@ import android.widget.EditText;
 
 import com.unse.bienestar.comedor.R;
 
+@SuppressWarnings("ALL")
 public class Validador {
 
     private Context mContext;
@@ -196,12 +197,12 @@ public class Validador {
 
     }
 
-    public boolean validarContraseña(EditText editText) {
+    public boolean validarContrasena(EditText editText) {
         if (noVacio(editText.getText().toString().trim())) {
             editText.setError(mContext.getString(R.string.campoVacio));
             return false;
         }
-        if (!validarContraseña(editText.getText().toString().trim())) {
+        if (!validarContrasena(editText.getText().toString().trim())) {
             editText.setError(mContext.getString(R.string.contraseniaMinimo));
             return false;
         }
@@ -289,7 +290,7 @@ public class Validador {
         return string.length() >= 3;
     }
 
-    public boolean validarContraseña(String c) {
+    public boolean validarContrasena(String c) {
         return c.length() >= 4;
     }
 

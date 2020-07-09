@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.unse.bienestar.comedor.Modelo.ReservaEspecial;
 import com.unse.bienestar.comedor.Modelo.Reserva;
 import com.unse.bienestar.comedor.R;
 import com.unse.bienestar.comedor.Utils.Utils;
@@ -26,6 +27,7 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
 
     public static final int USER = 1;
     public static final int ADMIN = 2;
+    public static final int ESPECIAL = 3;
 
     public ReservasAdapter(ArrayList<Reserva> list, Context ctx, int tipo) {
         this.mReservas = list;
@@ -48,28 +50,51 @@ public class ReservasAdapter extends RecyclerView.Adapter<ReservasAdapter.Evento
     public void onBindViewHolder(@NonNull ReservasAdapter.EventosViewHolder holder, int position) {
         Reserva reserva = mReservas.get(position);
 
-        holder.idReserva.setText(String.format("RESERVA #%s", reserva.getIdReserva()));
-        holder.fecha.setText(Utils.getFechaOrder(Utils.getFechaDateWithHour(reserva.getFechaReserva())));
-        holder.estado.setText(reserva.getDescripcion());
-        if (reserva.getDescripcion().equals("RESERVADO")) {
-            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#E64A19"), PorterDuff.Mode.SRC_OVER);
+        if (tipo == ESPECIAL) {
+            holder.idReserva.setText(String.format("RESERVA #%s - %s", reserva.getIdReserva(), reserva.getPorcion()));
+            holder.fecha.setText(Utils.getFechaOrder(Utils.getFechaDateWithHour(reserva.getFechaReserva())));
+            holder.estado.setText(reserva.getDescripcion());
+            if (reserva.getDescripcion().equals("RESERVADO")) {
+                holder.mBackg.getBackground().setColorFilter(Color.parseColor("#E64A19"), PorterDuff.Mode.SRC_OVER);
 
-        } else if (reserva.getDescripcion().equals("RETIRADO")) {
-            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#32AC37"), PorterDuff.Mode.SRC_OVER);
+            } else if (reserva.getDescripcion().equals("RETIRADO")) {
+                holder.mBackg.getBackground().setColorFilter(Color.parseColor("#32AC37"), PorterDuff.Mode.SRC_OVER);
 
-        } else if (reserva.getDescripcion().equals("CANCELADO")) {
-            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#DF1A1A"), PorterDuff.Mode.SRC_OVER);
+            } else if (reserva.getDescripcion().equals("CANCELADO")) {
+                holder.mBackg.getBackground().setColorFilter(Color.parseColor("#DF1A1A"), PorterDuff.Mode.SRC_OVER);
 
-        }else if (reserva.getDescripcion().equals("NO RETIRADO")) {
-            holder.mBackg.getBackground().setColorFilter(Color.parseColor("#A30E49"), PorterDuff.Mode.SRC_OVER);
+            } else if (reserva.getDescripcion().equals("NO RETIRADO")) {
+                holder.mBackg.getBackground().setColorFilter(Color.parseColor("#A30E49"), PorterDuff.Mode.SRC_OVER);
 
-        }
-        if (tipo == ADMIN) {
+            }
             holder.nombre.setVisibility(View.VISIBLE);
-            holder.nombre.setText(String.format("%s %s", reserva.getNombre(), reserva.getApellido()));
+            holder.nombre.setText(((ReservaEspecial) reserva).getDescripcionEspecial());
+
         } else {
-            holder.fecha.setVisibility(View.VISIBLE);
-            holder.nombre.setVisibility(View.GONE);
+
+            holder.idReserva.setText(String.format("RESERVA #%s", reserva.getIdReserva()));
+            holder.fecha.setText(Utils.getFechaOrder(Utils.getFechaDateWithHour(reserva.getFechaReserva())));
+            holder.estado.setText(reserva.getDescripcion());
+            if (reserva.getDescripcion().equals("RESERVADO")) {
+                holder.mBackg.getBackground().setColorFilter(Color.parseColor("#E64A19"), PorterDuff.Mode.SRC_OVER);
+
+            } else if (reserva.getDescripcion().equals("RETIRADO")) {
+                holder.mBackg.getBackground().setColorFilter(Color.parseColor("#32AC37"), PorterDuff.Mode.SRC_OVER);
+
+            } else if (reserva.getDescripcion().equals("CANCELADO")) {
+                holder.mBackg.getBackground().setColorFilter(Color.parseColor("#DF1A1A"), PorterDuff.Mode.SRC_OVER);
+
+            } else if (reserva.getDescripcion().equals("NO RETIRADO")) {
+                holder.mBackg.getBackground().setColorFilter(Color.parseColor("#A30E49"), PorterDuff.Mode.SRC_OVER);
+
+            }
+            if (tipo == ADMIN) {
+                holder.nombre.setVisibility(View.VISIBLE);
+                holder.nombre.setText(String.format("%s %s", reserva.getNombre(), reserva.getApellido()));
+            } else {
+                holder.fecha.setVisibility(View.VISIBLE);
+                holder.nombre.setVisibility(View.GONE);
+            }
         }
     }
 

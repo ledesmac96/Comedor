@@ -1,7 +1,5 @@
 package com.unse.bienestar.comedor.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,6 +27,8 @@ import com.unse.bienestar.comedor.Utils.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class InfoMenuActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -75,12 +74,16 @@ public class InfoMenuActivity extends AppCompatActivity implements View.OnClickL
         btnGuardar.setVisibility(View.GONE);
         String[] comida = null;
         comida = Utils.getComidas(mMenu.getDescripcion());
-        String fecha = mMenu.getDia() + "/" + mMenu.getMes() + "/" + mMenu.getAnio();
-        edtFecha.setText(fecha);
+        //String fecha = mMenu.getDia() + "/" + mMenu.getMes() + "/" + mMenu.getAnio();
+        edtFecha.setText(String.format("%s-%02d-%02d", mMenu.getAnio(), mMenu.getMes(), mMenu.getDia()));
+        ;
         edtPorcion.setText(String.valueOf(mMenu.getPorcion()));
         edtAlmuerzo.setText(comida[0]);
         edtCena.setText(comida[1]);
         edtPostre.setText(comida[2]);
+        diaF = mMenu.getDia();
+        mesF = mMenu.getMes();
+        anioF = mMenu.getAnio();
     }
 
     private void loadListener() {
@@ -112,20 +115,21 @@ public class InfoMenuActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnEditar:
                 btnGuardar.setVisibility(View.VISIBLE);
                 btnEditar.setVisibility(View.GONE);
                 activateEditMode();
                 break;
             case R.id.btnGuardar:
+                activateEditMode();
                 btnGuardar.setVisibility(View.GONE);
                 btnEditar.setVisibility(View.VISIBLE);
                 break;
             case R.id.edtFecha:
                 elegirFecha();
                 break;
-            case R.id.imgIcon:
+            case R.id.imgFlecha:
                 onBackPressed();
                 break;
         }
@@ -188,8 +192,8 @@ public class InfoMenuActivity extends AppCompatActivity implements View.OnClickL
 
     private void activateEditMode() {
         if (isEdit) {
-            Toast.makeText(this, "FUNCO", Toast.LENGTH_SHORT).show();
-            //save();
+            //Toast.makeText(this, "FUNCO", Toast.LENGTH_SHORT).show();
+            save();
             return;
         }
         if (mode == 0)
@@ -216,12 +220,10 @@ public class InfoMenuActivity extends AppCompatActivity implements View.OnClickL
             if (diaF != -1 && mesF != -1 && anioF != -1) {
                 sendServer(descripcion, porcion, diaF, mesF, anioF);
             } else {
-                //Utils.showToast(getApplicationContext(), getString(R.string.eligeFecha));
                 Utils.showCustomToast(InfoMenuActivity.this, getApplicationContext(),
                         getString(R.string.eligeFecha), R.drawable.ic_advertencia);
             }
         } else {
-            //Utils.showToast(getApplicationContext(), getString(R.string.camposInvalidos));
             Utils.showCustomToast(InfoMenuActivity.this, getApplicationContext(),
                     getString(R.string.camposInvalidos), R.drawable.ic_error);
         }
@@ -233,8 +235,10 @@ public class InfoMenuActivity extends AppCompatActivity implements View.OnClickL
         PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
         String key = manager.getValueString(Utils.TOKEN);
         int idLocal = manager.getValueInt(Utils.MY_ID);
-        String URL = String.format("%s?key=%s&idU=%s&d=%s&m=%s&a=%s&de=%s&p=%s", Utils.URL_MENU_NUEVO
-                , key, idLocal, diaF, mesF, anioF, descripcion, porcion);
+        String URL = String.format("%s?key=%s&idU=%s&d=%s&m=%s&a=%s&de=%s&id=%s&fr=%s&v=%s&dis=%s&p=%s",
+                Utils.URL_MENU_ACTUALIZAR
+                , key, idLocal, diaF, mesF, anioF, descripcion, mMenu.getIdMenu(), mMenu.getFechaRegistro(),
+                mMenu.getValidez(), mMenu.getDisponible(), porcion);
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -272,11 +276,13 @@ public class InfoMenuActivity extends AppCompatActivity implements View.OnClickL
                     //Exito
                     Utils.showCustomToast(InfoMenuActivity.this, getApplicationContext(),
                             getString(R.string.menuCreado), R.drawable.ic_exito);
-                    finish();
+                    mode = 0;
+                    isEdit = false;
+                    editMode(mode);
                     break;
                 case 2:
                     Utils.showCustomToast(InfoMenuActivity.this, getApplicationContext(),
-                            getString(R.string.menuError), R.drawable.ic_error);
+                            getString(R.string.menuActualizarError), R.drawable.ic_error);
                     break;
                 case 4:
                     Utils.showCustomToast(InfoMenuActivity.this, getApplicationContext(),

@@ -84,7 +84,6 @@
             android:textSize="18dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:layout_below="@+id/imageView"
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="20dp"

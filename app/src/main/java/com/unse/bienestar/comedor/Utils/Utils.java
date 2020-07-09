@@ -124,6 +124,7 @@ public class Utils {
     public static final String URL_MENU_TERMINAR = "http://" + IP + "/bienestar/comedor/menu/terminarMenu.php";
     public static final String URL_MENU_RESTRINGIR = "http://" + IP + "/bienestar/comedor/menu/restringirMenu.php";
     public static final String URL_MENU_NUEVO = "http://" + IP + "/bienestar/comedor/menu/insertarMenu.php";
+    public static final String URL_MENU_ACTUALIZAR = "http://" + IP + "/bienestar/comedor/menu/actualizarMenu.php";
 
     public static final String URL_RESERVA_HOY = "http://" + IP + "/bienestar/comedor/reserva/getReservaByDay.php";
     public static final String URL_RESERVA_BY_ID = "http://" + IP + "/bienestar/comedor/reserva/getReserva.php";
@@ -885,7 +886,7 @@ public class Utils {
             }*/
             document.add(table);
 
-            document.add(getText("TOTAL DE RESERVAS POR DÍA", 10, true).setFont(font));
+           /* document.add(getText("TOTAL DE RESERVAS POR DÍA", 10, true).setFont(font));
             columnas = new UnitValue[7];
 
             for (int i = 1; i < 7; i++) {
@@ -917,7 +918,7 @@ public class Utils {
             if (graficoTorta != null) {
                 Image image = loadImage(context, graficoTorta, 250, 229);
                 document.add(image.setTextAlignment(TextAlignment.CENTER));
-            }
+            }*/
             addFooter(document, font);
             document.close();
 
@@ -1008,7 +1009,7 @@ public class Utils {
         } catch (NumberFormatException e) {
 
         }
-        return (horaNum < max && horaNum > 0);
+        return (horaNum < max && horaNum >= 0);
     }
 
     public static char encode(char charAt) {

@@ -119,7 +119,7 @@
         <item>Para retirar tu ración, tan solo debes realizar la reserva en el día (hasta el horario establecido) y tener a mano el código QR para que el encargado pueda escanearlo cuando llegues al Comedor Universitario. La reserva estará en "Mis reservas" en el menú izquierdo.</item>
     </string-array>
     <string-array name="text_q2">
-        <item>Si realizas la reserva, pero luego decides que no la vas a retirar, debes cancelarla. Pero, en caso de que reserves, no canceles y no vayas a retirarla, se podría aplicar una sanción a determinar.</item>
+        <item>Si realizas la reserva, pero luego decides que no la vas a retirar, debes cancelarla. Pero, en caso de que reserves, no canceles y no vayas a retirarla, se hará un llamado de atención.</item>
     </string-array>
     <string-array name="text_q3">
         <item>En caso de que por algún motivo no puedas ir a retirar la ración del día, puedes realizar la reserva resde tú casa, realizá la captura donde está el código QR y envíasela a la persona encargada de retirar tú ración.</item>
@@ -130,21 +130,13 @@
     <string-array name="text_q5">
         <item>Contáctate inmediatamente con la Secretaría de Bienestar Estudiantil mediante los medios establecidos.</item>
     </string-array>
-
-    <string name="text_q1"> ¿Qué es "MicroSDE"?</string>
-
-    <string name="text_q2"> ¿Qué pasa si no tengo activada mi ubicación?</string>
-
-    <string name="text_q3"> ¿Puedo enviar información sobre cambios de recorridos, puntos de cargas, etc?</string>
-    <string name="text_q4"> Algo de la aplicación no funciona, ¿qué hago?</string>
-
-    <string name="text_q5"> ¿La aplicación recolecta datos de sus usuarios?</string>
-
     <!--activity_about-->
 
     <string name="text_q6"> ¿Es necesario instalar las actualizaciones? ¿Qué pasa si no lo hago?</string>
     <string name="primeroBuscar">Primero busque un usuario</string>
     <string name="usuarioYaReservo">El usuario ingreso ya reservó  éste menú</string>
     <string name="elegirMenu">El menú no fue seleccionado</string>
+    <string name="menuActualizarError">¡Error al actualizar el menú!</string>
+    <string name="noReservasHistorial">¡No existen reservas!</string>
 
 </resources>

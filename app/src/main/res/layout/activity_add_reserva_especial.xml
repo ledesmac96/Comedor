@@ -52,7 +52,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 android:padding="15dp"
-                android:inputType="number"
+                android:inputType="text|textCapWords"
                 android:background="@drawable/edit_text_logreg"
                 android:textSize="16sp"
                 android:fontFamily="@font/montserrat_regular"/>

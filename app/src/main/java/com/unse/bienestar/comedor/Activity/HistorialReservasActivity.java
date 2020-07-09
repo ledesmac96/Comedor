@@ -140,7 +140,7 @@ public class HistorialReservasActivity extends AppCompatActivity implements View
                     break;
                 case 2:
                     Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),
-                            getString(R.string.noData), R.drawable.ic_error);
+                            getString(R.string.noReservasHistorial), R.drawable.ic_error);
                     break;
                 case 3:
                     Utils.showCustomToast(HistorialReservasActivity.this, getApplicationContext(),

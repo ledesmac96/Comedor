@@ -805,7 +805,7 @@ public class PerfilActivity extends AppCompatActivity
                 && !validador.validarNombresEdt(edtNombre, edtApellido, edtPais,
                 edtProvincia, edtLocalidad, edtBarrio)) {
             switch (tipoUsuer) {
-                case 0:
+                case 1:
                     if (!validador.noVacio(faculta) && !validador.noVacio(carrera) &&
                             validador.validarAnio(edtAnioIngresoAlu) && validador.validarLegajo(edtLegajoAlu)) {
                         sendServer(processString(dni, nombre, apellido, fecha, pais, provincia, localidad,

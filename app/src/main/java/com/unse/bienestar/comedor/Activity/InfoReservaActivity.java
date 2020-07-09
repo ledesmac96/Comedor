@@ -152,7 +152,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
             generateQR(mReserva);
         } else if (mReserva.getDescripcion().equals("NO RETIRADO")) {
             latRetiro.setVisibility(View.VISIBLE);
-            txtFechaResDescripcion.setText("Fecha de Cancelación");
+            txtFechaResDescripcion.setText("Fecha de Cancelación: ");
             txtFechaRetirada.setText(mReserva.getFechaModificacion() != null ?
                     Utils.getFechaOrder(Utils.getFechaDateWithHour(mReserva.getFechaModificacion())) :
                     "NO FECHA");
@@ -306,6 +306,8 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                             getString(R.string.reservaAnterior), R.drawable.ic_advertencia);
                     latQR.setVisibility(View.GONE);
                     btnCancelar.setVisibility(View.GONE);
+                    txtEstado.setText("CANCELADO");
+                    break;
                 case 100:
                     //No autorizado
                     Utils.showCustomToast(InfoReservaActivity.this, getApplicationContext(),

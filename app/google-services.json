@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "775644630316-jum8d9nrng5fjdnk1qd6umn2rn94cqu5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unse.bienestar.comedor",
+            "certificate_hash": "1f8ec5f4234e6d249e44b18a34b4815d71d81029"
+          }
+        },
+        {
           "client_id": "775644630316-82buh8oamcnd10dfrr26tv7pu5p8vp9p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

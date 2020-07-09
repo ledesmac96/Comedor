@@ -45,15 +45,16 @@
                         <LinearLayout
                             android:layout_margin="10dp"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_qr"/>
+                            app:srcCompat="@drawable/ic_qr">
 
-                            <ImageView
+                            <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:tint="@color/whiteTextColor"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_qr"/>
+                                app:srcCompat="@drawable/ic_qr"/>
 
                         </LinearLayout>
 
@@ -172,12 +173,12 @@
                             android:layout_gravity="center"
                             android:layout_height="wrap_content">
 
-                            <ImageView
+                            <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:tint="@color/whiteTextColor"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_qr"/>
+                                app:srcCompat="@drawable/ic_qr"/>
 
                         </LinearLayout>
 
@@ -197,11 +198,14 @@
                         app:cardElevation="5dp">
 
                         <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textStyle="bold"
                             android:textSize="14sp"
                             android:fontFamily="@font/montserrat_black"
-                            android:textColor="@color/colorWhite"/>
+                            android:textColor="@color/colorWhite">
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="35dp"
@@ -238,7 +242,7 @@
                         app:cardElevation="5dp">
 
                         <LinearLayout
-                            android:gravity="center"
+                            android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:orientation="vertical"
                             android:layout_width="match_parent"
@@ -248,7 +252,7 @@
                             android:textStyle="bold"
                             android:textSize="14sp"
                             android:fontFamily="@font/montserrat_black"
-                            android:textColor="@color/colorWhite"/>
+                            android:textColor="@color/colorWhite">
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="35dp"

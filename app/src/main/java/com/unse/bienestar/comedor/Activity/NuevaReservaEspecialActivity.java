@@ -99,6 +99,7 @@ public class NuevaReservaEspecialActivity extends AppCompatActivity implements V
     private void save() {
         String descripcion = edtDescripcion.getText().toString();
         String dni = edtDNI.getText().toString();
+        if (dni.equals("0")) dni = "1";
         String porcion = edtPorcion.getText().toString();
         Validador validador = new Validador(getApplicationContext());
         String nombre = edtUsuario.getText().toString();

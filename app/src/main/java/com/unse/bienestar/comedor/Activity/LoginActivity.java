@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Validador validador = new Validador(getApplicationContext());
 
-        if (validador.validarContraseña(edtPass) && validador.validarDNI(edtUser)) {
+        if (validador.validarContrasena(edtPass) && validador.validarDNI(edtUser)) {
             sendServer(usuario, pass);
         } else {
             Utils.showCustomToast(LoginActivity.this, getApplicationContext(),

@@ -26,6 +26,7 @@ import com.unse.bienestar.comedor.Adapter.ReservasAdapter;
 import com.unse.bienestar.comedor.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedor.Modelo.Menu;
 import com.unse.bienestar.comedor.Modelo.Reserva;
+import com.unse.bienestar.comedor.Modelo.ReservaEspecial;
 import com.unse.bienestar.comedor.R;
 import com.unse.bienestar.comedor.RecyclerListener.ItemClickSupport;
 import com.unse.bienestar.comedor.Utils.PreferenciasManager;
@@ -46,13 +47,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ListadoReservaActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtAlmuerzo, txtCena, txtPostre, txtPorciones;
-    RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
-    ReservasAdapter mAdapter;
+    RecyclerView mRecyclerView, mRecyclerViewEspecial;
+    RecyclerView.LayoutManager mLayoutManager, mLayoutManagerEspecial;
+    ReservasAdapter mAdapter, mReservasAdapterEspecial;;
     CardView cardEstadisticas;
     Menu mMenu;
-    ArrayList<Reserva> mReservas;
-    LinearLayout latVacio;
+    ArrayList<Reserva> mReservas, mReservasEspeciales;;
+    LinearLayout latVacio, latEspeciales;;
     ImageView btnBack;
     BarChart barCantidad;
     ProgressBar mProgressBar;
@@ -96,11 +97,15 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
 
 
     private void loadData() {
+        mReservasEspeciales = new ArrayList<>();
         latVacio.setVisibility(View.GONE);
         cardEstadisticas.setVisibility(View.GONE);
         mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+        mLayoutManagerEspecial = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerViewEspecial.setLayoutManager(mLayoutManagerEspecial);
         mRecyclerView.setNestedScrollingEnabled(true);
+        mRecyclerViewEspecial.setNestedScrollingEnabled(true);
         loadInfo();
 
     }
@@ -197,14 +202,35 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
 
                 }
 
+                mReservasEspeciales = new ArrayList<>();
+
+                jsonArray = jsonObject.getJSONArray("especial");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject o = jsonArray.getJSONObject(i);
+
+                    ReservaEspecial reserva = ReservaEspecial.mapper(o, ReservaEspecial.MEDIUM);
+
+                    mReservasEspeciales.add(reserva);
+
+                }
+
                 mMenu = Menu.mapper(jsonObject.getJSONArray("mensaje").getJSONObject(0), Menu.COMPLETE);
                 mAdapter = new ReservasAdapter(mReservas, getApplicationContext(), ReservasAdapter.ADMIN);
+                mReservasAdapterEspecial = new ReservasAdapter(mReservasEspeciales, getApplicationContext(), ReservasAdapter.ESPECIAL);
                 if (mReservas.size() == 0) {
                     latVacio.setVisibility(View.VISIBLE);
                 } else {
                     loadEstadisticas();
                 }
                 mRecyclerView.setAdapter(mAdapter);
+                mRecyclerViewEspecial.setAdapter(mReservasAdapterEspecial);
+                if (mReservasEspeciales.size() > 0) {
+                    mReservasAdapterEspecial.change(mReservasEspeciales);
+                } else {
+                    latEspeciales.setVisibility(View.GONE);
+                }
                 if (mMenu != null) {
                     String[] comida = Utils.getComidas(mMenu.getDescripcion());
                     txtAlmuerzo.setText(comida[0]);
@@ -212,6 +238,8 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
                     txtPostre.setText(comida[2]);
                     txtPorciones.setText(String.valueOf(mMenu.getPorcion()));
                 }
+
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -299,6 +327,8 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
     }
 
     private void loadViews() {
+        latEspeciales = findViewById(R.id.latEspecial);
+        mRecyclerViewEspecial = findViewById(R.id.recyclerEspecial);
         barCantidad = findViewById(R.id.barCantidad);
         latVacio = findViewById(R.id.latVacio);
         cardEstadisticas = findViewById(R.id.cardEstadistica);

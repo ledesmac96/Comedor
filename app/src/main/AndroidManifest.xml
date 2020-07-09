@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.InfoMenuActivity"></activity>
+        <activity android:name=".Activity.InfoMenuActivity" />
         <activity android:name=".Activity.PDFMonthActivity" />
         <activity android:name=".Activity.InfoReservaActivity" />
         <activity android:name=".Activity.NuevoAlumnoActivity" />
