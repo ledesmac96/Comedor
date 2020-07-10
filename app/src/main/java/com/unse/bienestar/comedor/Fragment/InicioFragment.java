@@ -141,10 +141,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 procesarRespuesta(response);
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -153,8 +150,6 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
                 mProgressBar.setVisibility(View.GONE);
                 loadInternal();
                 dialog.dismiss();
-
-
             }
         });
         //Abro dialogo para congelar pantalla
@@ -202,7 +197,6 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 1:
                     //Exito
-
                     loadInfo(jsonObject);
                     break;
                 case 2:

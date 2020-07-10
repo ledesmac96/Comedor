@@ -63,7 +63,7 @@ public class NuevaReservaEspecialActivity extends AppCompatActivity implements V
     }
 
     private void setToolbar() {
-        ((TextView) findViewById(R.id.txtTitulo)).setText("");
+        ((TextView) findViewById(R.id.txtTitulo)).setText("Reserva especial");
     }
 
     private void loadListener() {

@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserrat_black"
-                android:text="Elija una opcion"
+                android:text="Elija una opción"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
