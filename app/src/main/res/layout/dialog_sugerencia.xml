@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/imgIcon"
+                        app:srcCompat="@drawable/ic_corazon" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="OPINIONES"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/montserrat_black"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:text="¿Te gustó la comida? ¿tienes una sugerencia o queja?"
+                        android:fontFamily="@font/montserrat_black"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:text="¡Háznoslo saber!"
+                        android:fontFamily="@font/montserrat_black"
+                        android:gravity="center" />
+
+
+                    <EditText
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/edtDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Mensaje"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="15dp"
+                        android:scrollbars="vertical"
+                        android:minLines="3"
+                        android:gravity="start"
+                        android:inputType="text|textCapWords|textMultiLine"
+                        android:background="@drawable/edit_text_logreg"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_regular"/>
+
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:padding="13dp"
+                            android:id="@+id/btnAceptar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ENVIAR"
+                            android:background="@drawable/button_border"
+                            android:textColor="@color/colorWhite"
+                            android:fontFamily="@font/montserrat_black"
+                            android:textSize="18sp"/>
+
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="¡Es totalmente anónimo!"
+                        android:fontFamily="@font/montserrat_black"
+                        android:gravity="center" />
+
+
+                    <View
+                        android:layout_width="300dp"
+                        android:layout_height="8dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

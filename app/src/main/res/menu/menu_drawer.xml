@@ -23,6 +23,10 @@
             android:icon="@drawable/ic_menu_2"
             android:title="Gestión de Menú"/>
         <item
+            android:id="@+id/item_sugerencias_gestion"
+            android:icon="@drawable/ic_corazon"
+            android:title="Gestión de Opiniones"/>
+        <item
             android:id="@+id/item_estad"
             android:icon="@drawable/ic_estadisticas"
             android:title="Estadísticas"/>
@@ -46,6 +50,10 @@
                 android:id="@+id/item_faqs"
                 android:icon="@drawable/ic_faqs"
                 android:title="Preguntas frecuentes"/>
+            <item
+                android:id="@+id/item_sugerencias"
+                android:icon="@drawable/ic_corazon"
+                android:title="Opiniones"/>
             <item
                 android:id="@+id/item_logout"
                 android:icon="@drawable/ic_salida"

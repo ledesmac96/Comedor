@@ -8,34 +8,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:775644630316:android:88ae2afe273a649ae7b089",
+        "mobilesdk_app_id": "1:775644630316:android:5e80f3133b557e91e7b089",
         "android_client_info": {
-          "package_name": "com.unse.bienestar.comedor"
+          "package_name": "com.unse.bienestar.comedordos"
         }
       },
       "oauth_client": [
         {
-          "client_id": "775644630316-jum8d9nrng5fjdnk1qd6umn2rn94cqu5.apps.googleusercontent.com",
+          "client_id": "775644630316-515djgibtcbg1umu9sh5mdp7r7tce20l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.unse.bienestar.comedor",
-            "certificate_hash": "1f8ec5f4234e6d249e44b18a34b4815d71d81029"
+            "package_name": "com.unse.bienestar.comedordos",
+            "certificate_hash": "e84175de622ddad372377dcaedd6b86554514622"
           }
         },
         {
-          "client_id": "775644630316-82buh8oamcnd10dfrr26tv7pu5p8vp9p.apps.googleusercontent.com",
+          "client_id": "775644630316-mq84odd7mus2alvg8db433vdrl5h08sa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.unse.bienestar.comedor",
-            "certificate_hash": "4ffccae6b2953ee3be0e06afa28dab3d5b1cdc38"
-          }
-        },
-        {
-          "client_id": "775644630316-0edsjteo22tc2km17qhlgukosji3bvm7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.unse.bienestar.comedor",
+            "package_name": "com.unse.bienestar.comedordos",
             "certificate_hash": "4e542e148ceffe98cbfe4c1f86f159ac30aa868f"
+          }
+        },
+        {
+          "client_id": "775644630316-ho5lfngjlhjii0qgcpomn0aqdsad7tef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unse.bienestar.comedordos",
+            "certificate_hash": "4ffccae6b2953ee3be0e06afa28dab3d5b1cdc38"
           }
         },
         {

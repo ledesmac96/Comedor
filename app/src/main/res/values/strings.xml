@@ -138,5 +138,7 @@
     <string name="elegirMenu">El menú no fue seleccionado</string>
     <string name="menuActualizarError">¡Error al actualizar el menú!</string>
     <string name="noReservasHistorial">¡No existen reservas!</string>
+    <string name="enviado">¡Sugerencia enviada!</string>
+    <string name="errorSugerencia">¡Error al enviar la sugerencia!</string>
 
 </resources>

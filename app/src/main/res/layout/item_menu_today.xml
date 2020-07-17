@@ -95,7 +95,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_regular"
                                 android:gravity="center"
-                                android:text="Milanesa de Pollo con ensalada"
+                                android:text="Milanesa de Pollo con ensaladaMilanesa de Pollo con ensaladaMilanesa de Pollo con ensalada"
                                 android:textColor="@color/whiteTextColor"
                                 android:textSize="18sp" />
 

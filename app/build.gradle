@@ -5,7 +5,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.unse.bienestar.comedor"
+        applicationId "com.unse.bienestar.comedordos"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 2

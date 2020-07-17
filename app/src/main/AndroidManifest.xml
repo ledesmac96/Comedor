@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.unse.bienestar.comedor">
+    package="com.unse.bienestar.comedordos">
 
     <application
         android:allowBackup="true"
@@ -11,28 +11,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.InfoMenuActivity" />
-        <activity android:name=".Activity.PDFMonthActivity" />
-        <activity android:name=".Activity.InfoReservaActivity" />
-        <activity android:name=".Activity.NuevoAlumnoActivity" />
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.SlideWelcomeActivity">
+        <activity android:name="com.unse.bienestar.comedordos.Activity.InfoMenuActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.PDFMonthActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.InfoReservaActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.NuevoAlumnoActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.MainActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.LoginActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.SlideWelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.PerfilActivity" />
-        <activity android:name=".Activity.LockedActivity" />
-        <activity android:name=".Activity.NuevoMenuActivity" />
-        <activity android:name=".Activity.ReservaDiaActivity" />
-        <activity android:name=".Activity.HistorialReservasActivity" />
-        <activity android:name=".Activity.ListadoReservaActivity" />
-        <activity android:name=".Activity.AboutActivity" />
-        <activity android:name=".Activity.NuevaReservaEspecialActivity" />
-        <activity android:name=".Activity.FaqsActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.PerfilActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.LockedActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.NuevoMenuActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.ReservaDiaActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.HistorialReservasActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.ListadoReservaActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.AboutActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.NuevaReservaEspecialActivity" />
+        <activity android:name="com.unse.bienestar.comedordos.Activity.FaqsActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -41,12 +41,12 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorWhite" />
 
-        <service android:name=".Firebase.FirebaseMessagingSDEService">
+        <service android:name="com.unse.bienestar.comedordos.Firebase.FirebaseMessagingSDEService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service> <!-- Info Configuración Firebase -->
-        <service android:name=".Firebase.FCMInstanceIdService">
+        <service android:name="com.unse.bienestar.comedordos.Firebase.FCMInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
