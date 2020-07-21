@@ -4,31 +4,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/item_inicio"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_b_bienestar"
             android:title="Inicio"/>
         <item
             android:id="@+id/item_reservas"
-            android:icon="@drawable/ic_reserva"
+            android:icon="@drawable/ic_b_bienestar"
             android:title="Gestión de Reservas"/>
         <item
             android:id="@+id/item_mis_reservas"
-            android:icon="@drawable/ic_reserva"
+            android:icon="@drawable/ic_b_bienestar"
             android:title="Mis Reservas"/>
         <item
             android:id="@+id/item_users"
-            android:icon="@drawable/ic_users"
+            android:icon="@drawable/ic_b_bienestar"
             android:title="Gestión de Usuarios"/>
         <item
             android:id="@+id/item_menu"
-            android:icon="@drawable/ic_menu_2"
+            android:icon="@drawable/ic_b_bienestar"
             android:title="Gestión de Menú"/>
         <item
             android:id="@+id/item_sugerencias_gestion"
-            android:icon="@drawable/ic_corazon"
+            android:icon="@drawable/ic_b_bienestar"
             android:title="Gestión de Opiniones"/>
         <item
             android:id="@+id/item_estad"
-            android:icon="@drawable/ic_estadisticas"
+            android:icon="@drawable/ic_b_bienestar"
             android:title="Estadísticas"/>
 
     </group>
@@ -40,7 +40,7 @@
         <menu>
             <item
                 android:id="@+id/item_perfil"
-                android:icon="@drawable/ic_perfil"
+                android:icon="@drawable/ic_b_bienestar"
                 android:title="Mi perfil"/>
             <item
                 android:id="@+id/item_about"
@@ -48,15 +48,15 @@
                 android:title="Sobre nosotros"/>
             <item
                 android:id="@+id/item_faqs"
-                android:icon="@drawable/ic_faqs"
+                android:icon="@drawable/ic_b_bienestar"
                 android:title="Preguntas frecuentes"/>
             <item
                 android:id="@+id/item_sugerencias"
-                android:icon="@drawable/ic_corazon"
+                android:icon="@drawable/ic_b_bienestar"
                 android:title="Opiniones"/>
             <item
                 android:id="@+id/item_logout"
-                android:icon="@drawable/ic_salida"
+                android:icon="@drawable/ic_b_bienestar"
                 android:title="Salir"/>
 
         </menu>

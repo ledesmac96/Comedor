@@ -45,7 +45,6 @@
                         android:fontFamily="@font/montserrat_regular"
                         android:textColor="@color/colorTextDefault"
                         android:layout_gravity="center"
-                        android:drawableLeft="@drawable/ic_search"
                         android:hint="Buscar..."
                         android:textStyle="bold"
                         android:textSize="18sp"

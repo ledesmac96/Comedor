@@ -25,7 +25,7 @@
                 android:layout_height="200dp"
                 android:orientation="vertical">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgvIcon"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
@@ -276,11 +276,11 @@
                 android:text="Desarrollado por: "
                 android:fontFamily="@font/montserrat_regular"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:src="@drawable/mozzafiato2_logo_black"/>
+                app:srcCompat="@drawable/mozzafiato2_logo_black"/>
 
         </LinearLayout>
 

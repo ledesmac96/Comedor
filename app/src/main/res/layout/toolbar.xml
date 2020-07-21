@@ -19,13 +19,12 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgFlecha"
                     android:layout_width="24dp"
-                    android:src="@drawable/ic_flecha_atras"
+                    app:srcCompat="@drawable/ic_flecha_atras"
                     android:focusable="true"
                     android:clickable="true"
-                    android:foreground="?attr/selectableItemBackground"
                     android:layout_height="24dp" />
 
                 <TextView

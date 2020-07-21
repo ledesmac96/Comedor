@@ -44,7 +44,6 @@
                                 android:layout_height="150dp"
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
-                                android:src="@drawable/ic_user"
                                 app:civ_border_color="#FFFFFF"
                                 app:civ_border_width="2dp" />
 
@@ -72,14 +71,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:layout_margin="15dp"
-                            android:id="@+id/fab"
+                       <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fabEditar"
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_edit_"
-                            app:backgroundTint="@color/colorPrimaryDark"
-                            android:layout_gravity="end" />
+                            android:layout_margin="16dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:tint="@color/whiteTextColor"
+                            android:layout_gravity="end"
+                            app:srcCompat="@drawable/ic_edit"/>-->
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/fabEditar"
+                            android:visibility="visible"
+                            app:cardCornerRadius="100dp"
+                            android:layout_gravity="end"
+                            android:layout_margin="16dp"
+                            app:cardBackgroundColor="@color/colorPrimaryDark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/imgEditar"
+                                android:layout_width="43dp"
+                                android:padding="7dp"
+                                android:layout_margin="10dp"
+                                android:layout_height="43dp"
+                                app:srcCompat="@drawable/ic_edit" />
+
+                        </androidx.cardview.widget.CardView>
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -100,11 +122,33 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
+                                        android:layout_gravity="center"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="10dp"
+                                        android:gravity="center"
                                         android:background="@color/colorGrey"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:id="@+id/fabEditar2"
+                                            app:cardCornerRadius="50dp"
+                                            android:layout_margin="10dp"
+                                            android:layout_gravity="center"
+                                            app:cardBackgroundColor="@color/colorPrimaryDark"
+                                            android:layout_width="60dp"
+                                            android:layout_height="60dp">
+
+                                            <androidx.appcompat.widget.AppCompatImageView
+                                                android:id="@+id/imgEditar2"
+                                                android:layout_gravity="center"
+                                                android:layout_width="43dp"
+                                                android:padding="5dp"
+                                                android:layout_margin="5dp"
+                                                android:layout_height="43dp"
+                                                app:srcCompat="@drawable/ic_edit" />
+
+                                        </androidx.cardview.widget.CardView>
 
                                         <TextView
                                             android:layout_width="match_parent"

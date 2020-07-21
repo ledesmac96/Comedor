@@ -2,6 +2,7 @@ package com.unse.bienestar.comedordos.Activity;
 
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,8 +24,8 @@ import com.unse.bienestar.comedordos.Dialogos.DialogoGeneral;
 import com.unse.bienestar.comedordos.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedordos.Modelo.Reserva;
 import com.unse.bienestar.comedordos.R;
-import com.unse.bienestar.comedordos.Utils.PreferenciasManager;
 import com.unse.bienestar.comedordos.Utils.ABC;
+import com.unse.bienestar.comedordos.Utils.PreferenciasManager;
 import com.unse.bienestar.comedordos.Utils.VolleySingleton;
 import com.unse.bienestar.comedordos.Utils.YesNoDialogListener;
 
@@ -49,7 +50,10 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil_reserva);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            setContentView(R.layout.activity_perfil_reserva);
+        else
+            setContentView(R.layout.activity_perfil_reserva_21);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         if (getIntent().getParcelableExtra(ABC.RESERVA) != null) {
@@ -364,7 +368,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
         MultiFormatWriter formatWriter = new MultiFormatWriter();
         try {
             StringBuilder builder = new StringBuilder();
-           // builder.append("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL");
+            // builder.append("COMEDOR UNIVERSITARIO - BIENESTAR ESTUDIANTIL");
             //builder.append("\n");
             builder.append("¡MUCHAS GRACIAS POR RESERVAR!");
             builder.append("\n");

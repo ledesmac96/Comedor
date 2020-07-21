@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,7 +33,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unse.bienestar.comedordos.Adapter.ReservasAdapter;
 import com.unse.bienestar.comedordos.Database.AlumnoViewModel;
 import com.unse.bienestar.comedordos.Database.RolViewModel;
@@ -44,8 +45,8 @@ import com.unse.bienestar.comedordos.Modelo.Reserva;
 import com.unse.bienestar.comedordos.Modelo.Rol;
 import com.unse.bienestar.comedordos.Modelo.Usuario;
 import com.unse.bienestar.comedordos.R;
-import com.unse.bienestar.comedordos.Utils.PreferenciasManager;
 import com.unse.bienestar.comedordos.Utils.ABC;
+import com.unse.bienestar.comedordos.Utils.PreferenciasManager;
 import com.unse.bienestar.comedordos.Utils.Validador;
 import com.unse.bienestar.comedordos.Utils.VolleySingleton;
 import com.unse.bienestar.comedordos.Utils.YesNoDialogListener;
@@ -59,6 +60,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,9 +73,10 @@ public class PerfilActivity extends AppCompatActivity
         implements View.OnClickListener, TextWatcher {
 
     ImageView btnBack;
+    AppCompatImageView imgEditar, imgEditar2;
     CircleImageView imgUser;
     LinearLayout latGeneral, latAlumno, latAdmin, latUser, latVacio, latEstadisticas, latReserva, latInfoUser;
-    FloatingActionButton fabEditar;
+    CardView fabEditar, fabEditar2;
     EditText edtNombre, edtApellido, edtDNI, edtMail, edtAnioIngresoAlu, edtLegajoAlu, edtDomicilio,
             edtProvincia, edtTelefono, edtPais, edtLocalidad, edtBarrio, edtRegistro, edtModificacion,
             edtFechaNac;
@@ -95,7 +99,7 @@ public class PerfilActivity extends AppCompatActivity
     FragmentManager manager = null;
     Object tipoUsuario;
 
-    boolean isEditMode = false, isAdminMode = false;
+    boolean isEditMode = false, isAdminMode = false, isOtherViste = false;
     int facultadUser = 0, carreraUser = 0, mode = 0, tipoUsuer = -1, idUser = 0, validez = -1;
 
     @Override
@@ -151,6 +155,7 @@ public class PerfilActivity extends AppCompatActivity
     private void loadListener() {
         edtFechaNac.setOnClickListener(this);
         fabEditar.setOnClickListener(this);
+        fabEditar2.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnAltaBaja.setOnClickListener(this);
         if (tipoUsuer == 0 || mUsuario.getIdUsuario() == 40657677) {
@@ -227,6 +232,10 @@ public class PerfilActivity extends AppCompatActivity
     }
 
     private void loadViews() {
+        fabEditar = findViewById(R.id.fabEditar);
+        fabEditar2 = findViewById(R.id.fabEditar2);
+        imgEditar = findViewById(R.id.imgEditar);
+        imgEditar2 = findViewById(R.id.imgEditar2);
         latInfoUser = findViewById(R.id.latInfoUser);
         barCantidad = findViewById(R.id.barCantidad);
         latReserva = findViewById(R.id.latReserva);
@@ -249,7 +258,7 @@ public class PerfilActivity extends AppCompatActivity
         edtPais = findViewById(R.id.edtPais);
         edtBarrio = findViewById(R.id.edtBarrio);
         edtFechaNac = findViewById(R.id.edtFecha);
-        fabEditar = findViewById(R.id.fab);
+
         latGeneral = findViewById(R.id.layRango);
         latUser = findViewById(R.id.latDatos);
         latAlumno = findViewById(R.id.layAlumno);
@@ -261,6 +270,18 @@ public class PerfilActivity extends AppCompatActivity
     }
 
     private void loadData() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            isOtherViste = true;
+        } else {
+            isOtherViste = false;
+        }
+        if (isOtherViste) {
+            fabEditar2.setVisibility(VISIBLE);
+            fabEditar.setVisibility(View.GONE);
+        } else {
+            fabEditar2.setVisibility(View.GONE);
+            fabEditar.setVisibility(VISIBLE);
+        }
         mRolViewModel = new RolViewModel(getApplicationContext());
         mLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -275,7 +296,11 @@ public class PerfilActivity extends AppCompatActivity
             latAdmin.setVisibility(VISIBLE);
             latUser.setVisibility(VISIBLE);
             edtRegistro.setEnabled(false);
-            fabEditar.setVisibility(View.INVISIBLE);
+            if (isOtherViste) {
+                fabEditar2.setVisibility(VISIBLE);
+            } else {
+                fabEditar.setVisibility(View.GONE);
+            }
             loadInfoReservas();
         }
         campos = new EditText[]{edtNombre, edtApellido, edtMail, edtAnioIngresoAlu, edtProvincia,
@@ -294,6 +319,7 @@ public class PerfilActivity extends AppCompatActivity
                 spinnerCarrera.setAdapter(carreraAdapter);
             }
         }).start();
+        Glide.with(imgUser.getContext()).load(R.drawable.ic_user).into(imgUser);
         loadInfo();
     }
 
@@ -597,7 +623,8 @@ public class PerfilActivity extends AppCompatActivity
             case R.id.edtFecha:
                 elegirFechaNacimiento();
                 break;
-            case R.id.fab:
+            case R.id.fabEditar:
+            case R.id.fabEditar2:
                 openModeEditor();
                 break;
         }
@@ -748,19 +775,31 @@ public class PerfilActivity extends AppCompatActivity
 
     private void editMode(int mode) {
         if (mode != 0) {
-            fabEditar.setImageResource(R.drawable.ic_save);
+            if (isOtherViste) {
+                //Drawable drawable = AppCompatResources.getDrawable(getApplicationContext(), R.drawable.ic_save);
+                Glide.with(imgEditar2.getContext()).load(R.drawable.ic_save).into(imgEditar2);
+            } else {
+                Glide.with(imgEditar.getContext()).load(R.drawable.ic_save).into(imgEditar);
+            }
+            //fabEditar.setImageResource(R.drawable.ic_save);
             edtFechaNac.setOnClickListener(this);
             edtFechaNac.setEnabled(true);
             spinnerFacultad.setEnabled(true);
             spinnerCarrera.setEnabled(true);
         } else {
-            fabEditar.setImageResource(R.drawable.ic_edit_);
+            if (isOtherViste) {
+                // Drawable drawable = AppCompatResources.getDrawable(getApplicationContext(), R.drawable.ic_edit);
+                //fabEditar2.setBackgroundDrawable(drawable);
+                Glide.with(imgEditar2.getContext()).load(R.drawable.ic_edit).into(imgEditar2);
+            } else {
+                Glide.with(imgEditar.getContext()).load(R.drawable.ic_edit).into(imgEditar);
+            }
+            //fabEditar.setImageResource(R.drawable.ic_edit);
             edtFechaNac.setOnClickListener(null);
             edtFechaNac.setEnabled(false);
             spinnerFacultad.setEnabled(false);
             spinnerCarrera.setEnabled(false);
         }
-
         for (EditText e : campos) {
             if (mode == 0) {
                 e.setEnabled(false);
@@ -843,6 +882,7 @@ public class PerfilActivity extends AppCompatActivity
         String key = manager.getValueString(ABC.TOKEN);
         int idLocal = manager.getValueInt(ABC.MY_ID);
         String URL = String.format("%s%s&key=%s&id=%s", ABC.URL_USUARIO_ACTUALIZAR, data, key, idLocal);
+        //URL = URL.replaceAll(" ","%20");
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -857,7 +897,10 @@ public class PerfilActivity extends AppCompatActivity
                 dialog.dismiss();
 
             }
-        });
+
+        }
+        ){
+        };
         //Abro dialogo para congelar pantalla
         dialog = new DialogoProcesamiento();
         dialog.setCancelable(false);
