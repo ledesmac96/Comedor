@@ -132,7 +132,7 @@
 
                                         <androidx.cardview.widget.CardView
                                             android:id="@+id/fabEditar2"
-                                            app:cardCornerRadius="50dp"
+                                            app:cardCornerRadius="40dp"
                                             android:layout_margin="10dp"
                                             android:layout_gravity="center"
                                             app:cardBackgroundColor="@color/colorPrimaryDark"
