@@ -37,6 +37,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class InfoReservaActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imgIcono, imgQR;
+    TextView txtCodigoQR;
     Button btnCancelar;
     TextView txtIdRes, txtAlmuerzo, txtCena, txtPostre, txtFechaRes, txtEstado,
             txtFechaRetirada, txtPorcion, txtFechaResDescripcion;
@@ -173,6 +174,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadViews() {
+        txtCodigoQR = findViewById(R.id.txtQR);
         txtFechaResDescripcion = findViewById(R.id.txtFechaRet);
         txtPorcion = findViewById(R.id.txtPorcion);
         latRetiro = findViewById(R.id.latFechaRetirada);
@@ -382,6 +384,7 @@ public class InfoReservaActivity extends AppCompatActivity implements View.OnCli
                 dniModif.append(dni[i]);
             }
             builder.append(String.format("#%s-%s#", dniModif, reserva.getIdReserva()));
+            txtCodigoQR.setText(String.format("COM-%s-%s", dniModif, reserva.getIdReserva()));
             BitMatrix matrix = formatWriter.encode(builder.toString(), BarcodeFormat.QR_CODE, 300, 300);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(matrix);

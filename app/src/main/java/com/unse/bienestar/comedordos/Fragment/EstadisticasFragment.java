@@ -14,15 +14,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.unse.bienestar.comedordos.Dialogos.DialogoProcesamiento;
-import com.unse.bienestar.comedordos.Modelo.Alumno;
-import com.unse.bienestar.comedordos.Modelo.Menu;
-import com.unse.bienestar.comedordos.Modelo.Reserva;
-import com.unse.bienestar.comedordos.Modelo.Usuario;
-import com.unse.bienestar.comedordos.R;
-import com.unse.bienestar.comedordos.Utils.PreferenciasManager;
-import com.unse.bienestar.comedordos.Utils.ABC;
-import com.unse.bienestar.comedordos.Utils.VolleySingleton;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -37,6 +28,15 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.unse.bienestar.comedordos.Dialogos.DialogoProcesamiento;
+import com.unse.bienestar.comedordos.Modelo.Alumno;
+import com.unse.bienestar.comedordos.Modelo.Menu;
+import com.unse.bienestar.comedordos.Modelo.Reserva;
+import com.unse.bienestar.comedordos.Modelo.Usuario;
+import com.unse.bienestar.comedordos.R;
+import com.unse.bienestar.comedordos.Utils.ABC;
+import com.unse.bienestar.comedordos.Utils.PreferenciasManager;
+import com.unse.bienestar.comedordos.Utils.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,7 +62,7 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
     ArrayList<Alumno> mAlumnos;
     ArrayList<Reserva> mReservas;
     ArrayList<Menu> mMenus;
-    TextView txtCarreras, txtCantidad, txtCantidadReservas, txtPorciones;
+    TextView txtCarreras, txtCantidad, txtCantidadReservas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -214,11 +214,11 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
     private void loadEstadisticas() {
         int[] facultades = new int[5];
         int totalSinCompletar = 0, totalCompleto = 0;
-        int cantidadTotal = 0;
+        int cantidadTotalUsuarios = 0;
         HashMap<String, Integer> carreras = new HashMap<>();
         for (Alumno alumno : mAlumnos) {
             if (!alumno.getCarrera().equals("null")) {
-                cantidadTotal++;
+                cantidadTotalUsuarios++;
                 if (alumno.getFechaModificacion().equals("null")) {
                     totalSinCompletar++;
                 } else {
@@ -290,15 +290,15 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
 
         }
         loadResults(facultades, carreras, totalSinCompletar,
-                totalCompleto, cantidadTotal, fechasSiete, reservasPorMenu, idMenus, cantidadPorciones,
+                totalCompleto, cantidadTotalUsuarios, fechasSiete, reservasPorMenu, idMenus, cantidadPorciones,
                 reservasMensuales, horasReserva, horasRetirada);
 
     }
 
     private void loadResults(int[] facultades, HashMap<String, Integer> carreras,
-                             int incompleto, int completo, int total, String[] fechas,
-                             HashMap<String, Integer> reservasMenu,
-                             int[] menus, int cantidadPorciones,
+                             int incompleto, int completo, int cantidadTotalUsuarios,
+                             String[] fechas, HashMap<String, Integer> reservasMenu, int[] menus,
+                             int cantidadPorciones,
                              int[] reservasMensuales,
                              ArrayList<String> horaReserva,
                              ArrayList<String> horaRetirada) {
@@ -308,8 +308,14 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
         StringBuilder carrerasInfo = loadAlumnosPorCarrera(carreras);
 
         loadCapacidadInformacion(completo, incompleto);
-
-        if (!fechas[0].equals("") && reservasMenu.size() > 0)
+        boolean isOne = false;
+        for (String fech : fechas) {
+            if (!fech.equals("")) {
+                isOne = true;
+                break;
+            }
+        }
+        if (isOne && reservasMenu.size() > 0)
             loadReservasSieteDias(fechas, reservasMenu, menus);
 
         boolean isData = false;
@@ -325,9 +331,8 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
 
 
         txtCarreras.setText(carrerasInfo.toString());
-        txtPorciones.setText(String.valueOf(cantidadPorciones));
-        txtCantidad.setText(String.valueOf(total));
         txtCantidadReservas.setText(String.valueOf(mReservas.size()));
+        txtCantidad.setText(String.valueOf(cantidadTotalUsuarios));
         latProcesamiento.setVisibility(View.GONE);
         latDatos.setVisibility(View.VISIBLE);
         latReserva.setVisibility(View.VISIBLE);
@@ -580,7 +585,7 @@ public class EstadisticasFragment extends Fragment implements View.OnClickListen
     private void loadView() {
         latVacio = view.findViewById(R.id.latVacio);
         barMeses = view.findViewById(R.id.barMeses);
-        txtPorciones = view.findViewById(R.id.txtCantidadPorciones);
+        //txtPorciones = view.findViewById(R.id.txtCantidadPorciones);
         txtCantidadReservas = view.findViewById(R.id.txtCantidadReservas);
         txtCantidad = view.findViewById(R.id.txtCantidad);
         latDatos = view.findViewById(R.id.latDatos);
