@@ -89,14 +89,16 @@
                 android:layout_marginTop="20dp">
 
                 <Button
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:id="@+id/sesionOn"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:text="Iniciar sesión"
-                    android:textColor="@color/whiteTextColor"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:background="@drawable/corners_rounded_green"
+                    android:textStyle="bold"
+                    android:padding="12dp"
+                    android:textColor="@color/colorWhite"
+                    android:background="@drawable/button_border"
                     android:layout_margin="5dp"
                     android:fontFamily="@font/montserrat_black"/>
 

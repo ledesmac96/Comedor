@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -55,9 +56,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -98,6 +103,7 @@ public class PerfilActivity extends AppCompatActivity
 
     FragmentManager manager = null;
     Object tipoUsuario;
+    HashMap<String, String> params;
 
     boolean isEditMode = false, isAdminMode = false, isOtherViste = false;
     int facultadUser = 0, carreraUser = 0, mode = 0, tipoUsuer = -1, idUser = 0, validez = -1;
@@ -297,7 +303,7 @@ public class PerfilActivity extends AppCompatActivity
             latUser.setVisibility(VISIBLE);
             edtRegistro.setEnabled(false);
             if (isOtherViste) {
-                fabEditar2.setVisibility(VISIBLE);
+                fabEditar2.setVisibility(View.GONE);
             } else {
                 fabEditar.setVisibility(View.GONE);
             }
@@ -632,7 +638,7 @@ public class PerfilActivity extends AppCompatActivity
 
 
     private void openModeEditor() {
-        ObjectAnimator.ofFloat(fabEditar, "rotation", 0f, 360f).setDuration(600).start();
+        ObjectAnimator.ofFloat(isOtherViste ? fabEditar2 : fabEditar, "rotation", 0f, 360f).setDuration(600).start();
         activateEditMode();
     }
 
@@ -873,15 +879,31 @@ public class PerfilActivity extends AppCompatActivity
         resp = String.format(ABC.dataAlumno, dni, nombre, apellido, fecha, pais, provincia,
                 localidad, domicilio, carrera, facultad,
                 anioIng, legajo, mail, telefono, barrio);
-
+        params = new HashMap<>();
+        params.put("idU", dni);
+        params.put("nom", nombre);
+        params.put("ape", apellido);
+        params.put("fechan", fecha);
+        params.put("pais", pais);
+        params.put("prov", provincia);
+        params.put("local", localidad);
+        params.put("dom", domicilio);
+        params.put("car", carrera);
+        params.put("fac", facultad);
+        params.put("anio", anioIng);
+        params.put("leg", legajo);
+        params.put("mail", mail);
+        params.put("tel", telefono);
+        params.put("barr", barrio);
         return resp;
     }
 
     public void sendServer(String data) {
         PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
-        String key = manager.getValueString(ABC.TOKEN);
-        int idLocal = manager.getValueInt(ABC.MY_ID);
-        String URL = String.format("%s%s&key=%s&id=%s", ABC.URL_USUARIO_ACTUALIZAR, data, key, idLocal);
+        final String key = manager.getValueString(ABC.TOKEN);
+        final int idLocal = manager.getValueInt(ABC.MY_ID);
+        String URL = String.format("%s", ABC.URL_USUARIO_ACTUALIZAR);
+        /*%s&key=%s&id=%s*/
         //URL = URL.replaceAll(" ","%20");
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -900,6 +922,17 @@ public class PerfilActivity extends AppCompatActivity
 
         }
         ){
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                params.put("key", key);
+                params.put("id", String.valueOf(idLocal));
+                return params;
+            }
         };
         //Abro dialogo para congelar pantalla
         dialog = new DialogoProcesamiento();

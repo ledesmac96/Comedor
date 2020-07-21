@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -47,6 +49,8 @@ import com.unse.bienestar.comedordos.Utils.YesNoDialogListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -451,6 +455,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         navigationView.setCheckedItem(R.id.item_inicio);
+        changeMenuIcon();
+    }
+
+    private void changeMenuIcon() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.item_inicio).setIcon(R.drawable.ic_home);
+            menu.findItem(R.id.item_reservas).setIcon(R.drawable.ic_reserva);
+            menu.findItem(R.id.item_mis_reservas).setIcon(R.drawable.ic_reserva);
+            menu.findItem(R.id.item_users).setIcon(R.drawable.ic_users);
+            menu.findItem(R.id.item_menu).setIcon(R.drawable.ic_menu_2);
+            menu.findItem(R.id.item_sugerencias_gestion).setIcon(R.drawable.ic_corazon);
+            menu.findItem(R.id.item_estad).setIcon(R.drawable.ic_estadisticas);
+            menu.findItem(R.id.item_perfil).setIcon(R.drawable.ic_perfil);
+            menu.findItem(R.id.item_about).setIcon(R.drawable.ic_b_bienestar);
+            menu.findItem(R.id.item_faqs).setIcon(R.drawable.ic_faqs);
+            menu.findItem(R.id.item_sugerencias).setIcon(R.drawable.ic_corazon);
+            menu.findItem(R.id.item_logout).setIcon(R.drawable.ic_salida);
+        }
     }
 
     @Override
@@ -560,12 +583,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void sendOpinion(String descripcion) {
+    private void sendOpinion(final String descripcion) {
         PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
-        String key = manager.getValueString(ABC.TOKEN);
-        int id = manager.getValueInt(ABC.MY_ID);
-        String URL = String.format("%s?idU=%s&key=%s&iu=%s&d=%s", ABC.URL_SUGERENCIA_INSERTAR,
-                id, key, id, descripcion);
+        final String key = manager.getValueString(ABC.TOKEN);
+        final int id = manager.getValueInt(ABC.MY_ID);
+        String URL = String.format("%s", ABC.URL_SUGERENCIA_INSERTAR);
+        //?idU=%s&key=%s&iu=%s&d=%s
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -582,7 +605,22 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
 
             }
-        });
+        }){
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("key", key);
+                params.put("iu", String.valueOf(id));
+                params.put("d", descripcion);
+                params.put("idU", String.valueOf(id));
+                return params;
+            }
+        };
         //Abro dialogo para congelar pantalla
         dialog = new DialogoProcesamiento();
         dialog.setCancelable(false);
