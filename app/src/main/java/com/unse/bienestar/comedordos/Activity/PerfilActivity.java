@@ -280,6 +280,7 @@ public class PerfilActivity extends AppCompatActivity
             isOtherViste = false;
         }
         if (isOtherViste) {
+            fabEditar2.setCardBackgroundColor(getApplicationContext().getResources().getColor(R.color.colorPrimaryDark));
             fabEditar2.setVisibility(VISIBLE);
             fabEditar.setVisibility(View.GONE);
         } else {
