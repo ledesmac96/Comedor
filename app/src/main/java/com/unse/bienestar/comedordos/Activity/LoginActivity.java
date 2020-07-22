@@ -1,11 +1,15 @@
 package com.unse.bienestar.comedordos.Activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -32,6 +36,7 @@ import org.json.JSONObject;
 import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText edtUser, edtPass;
     PreferenciasManager mPreferenciasManager;
     TextView txtWelcome;
+    RelativeLayout login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +90,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void loadListener() {
         mInicio.setOnClickListener(this);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(v);
+            }
+        });
     }
 
     private void loadViews() {
@@ -91,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtPass = findViewById(R.id.edtPass);
         edtUser = findViewById(R.id.edtUser);
         txtWelcome = findViewById(R.id.txtWelcome);
+        login = findViewById(R.id.nestedLogin);
     }
 
 
@@ -103,6 +117,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.txtPassMissed:
                 //startActivity(new Intent(LoginActivity.this, RecuperarContraseniaActivity.class));
                 break;
+        }
+    }
+
+    public void hideKeyboard(View view) {
+        try {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            // TODO: handle exception
         }
     }
 

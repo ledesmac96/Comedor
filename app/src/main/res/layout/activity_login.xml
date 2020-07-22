@@ -4,13 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     android:fillViewport="true"
-    android:background="@mipmap/img_unse2">
+    android:background="@mipmap/img_unse2"
+    android:focusable="true">
 
     <RelativeLayout
+        android:id="@+id/nestedLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp">
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,7 +25,7 @@
                 android:id="@+id/txtWelcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:text="¡Buenas noches!"
                 android:textColor="@color/whiteTextColor"
                 android:textSize="35sp"

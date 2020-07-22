@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     private void sendTokenToServer() {
         if (mPreferenciasManager.getValue(ABC.IS_TOKEN)) {
             String fcmToken = FirebaseInstanceId.getInstance().getToken();
-            if (!fcmToken.equals("")) {
+            if (fcmToken != null && !fcmToken.equals("")) {
                 PreferenciasManager manager = new PreferenciasManager(getApplicationContext());
                 final int idLocal = manager.getValueInt(ABC.MY_ID);
                 String URL = String.format("%s?tok=%s&id=%s", ABC.URL_USUARIO_TEST, fcmToken, idLocal);

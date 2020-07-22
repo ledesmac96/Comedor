@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="100dp"
-    android:paddingTop="100dp"
+    android:paddingTop="90dp"
     android:background="@color/bienestarCeleste">
 
     <TextView
@@ -39,12 +39,6 @@
             android:layout_margin="20dp"
             android:fontFamily="@font/montserrat_black"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginTop="100dp"
-            app:srcCompat="@drawable/ic_contrasena"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +55,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_alignParentBottom="true"

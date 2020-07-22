@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="100dp"
-    android:paddingTop="100dp"
+    android:paddingTop="90dp"
     android:background="@color/bienestarVerde">
 
     <TextView
@@ -42,16 +42,16 @@
             android:gravity="center"
             android:textStyle="bold"
             android:layout_below="@+id/imageView"
+            android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:fontFamily="@font/montserrat_regular"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -59,7 +59,7 @@
                 android:layout_height="100dp"
                 android:layout_weight="0.5"
                 android:layout_gravity="center"
-                android:paddingTop="20dp"
+                android:paddingTop="0dp"
                 app:srcCompat="@drawable/ic_logo_200"/>
 
             <ImageView
@@ -67,7 +67,7 @@
                 android:layout_height="100dp"
                 android:layout_weight="0.5"
                 android:layout_gravity="center"
-                android:paddingTop="20dp"
+                android:paddingTop="10dp"
                 app:srcCompat="@drawable/logo_unse"/>
 
         </LinearLayout>
