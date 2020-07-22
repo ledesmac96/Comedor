@@ -58,20 +58,20 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
     public static Intent newInstagramProfileIntent(PackageManager pm, String url) {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
-        try {
+        //final String username = url.substring(url.lastIndexOf("/") + 1);
+        intent.setData(Uri.parse(url));
+        //intent.setPackage("com.instagram.android");
+        /*try {
             if (pm.getPackageInfo("com.instagram.android", 0) != null) {
                 if (url.endsWith("/")) {
                     url = url.substring(0, url.length() - 1);
                 }
-                final String username = url.substring(url.lastIndexOf("/") + 1);
-                intent.setData(Uri.parse("https://instagram.com/_u/" + username));
-                intent.setPackage("com.instagram.android");
-                return intent;
+
             }
         } catch (PackageManager.NameNotFoundException ignored) {
 
-        }
-        intent.setData(Uri.parse(url));
+        }*/
+        //intent.setData(Uri.parse(url));
         return intent;
     }
 
