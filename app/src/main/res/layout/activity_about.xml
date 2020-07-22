@@ -299,6 +299,7 @@
                 android:fontFamily="@font/montserrat_regular"/>
 
             <TextView
+                android:id="@+id/txtVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center"

@@ -56,8 +56,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -276,7 +274,7 @@ public class PerfilActivity extends AppCompatActivity
     }
 
     private void loadData() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
             isOtherViste = true;
         } else {
             isOtherViste = false;
@@ -285,6 +283,7 @@ public class PerfilActivity extends AppCompatActivity
             fabEditar2.setVisibility(VISIBLE);
             fabEditar.setVisibility(View.GONE);
         } else {
+            fabEditar.setCardBackgroundColor(getApplicationContext().getResources().getColor(R.color.colorPrimaryDark));
             fabEditar2.setVisibility(View.GONE);
             fabEditar.setVisibility(VISIBLE);
         }
@@ -921,7 +920,7 @@ public class PerfilActivity extends AppCompatActivity
             }
 
         }
-        ){
+        ) {
             @Override
             public String getBodyContentType() {
                 return "application/x-www-form-urlencoded; charset=UTF-8";

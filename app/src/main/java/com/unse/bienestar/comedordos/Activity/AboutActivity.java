@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.unse.bienestar.comedordos.BuildConfig;
 import com.unse.bienestar.comedordos.R;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import androidx.cardview.widget.CardView;
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imgIcono;
+    TextView txtVersion;
     CardView cardInsta;
 
     @Override
@@ -36,6 +38,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loadData() {
+        txtVersion.setText(String.valueOf(BuildConfig.VERSION_NAME));
     }
 
     private void loadListener() {
@@ -48,6 +51,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loadViews() {
+        txtVersion = findViewById(R.id.txtVersion);
         imgIcono = findViewById(R.id.imgFlecha);
         cardInsta = findViewById(R.id.cardInsta);
     }
@@ -74,14 +78,14 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imgFlecha:
                 onBackPressed();
                 break;
             case R.id.cardInsta:
-//                String url = "https://www.instagram.com/bienestarestudiantilunse/";
-//                Intent openInsta = newInstagramProfileIntent(getPackageManager(), url);
-//                startActivity(openInsta);
+                String url = "https://www.instagram.com/bienestarestudiantilunse/";
+                Intent openInsta = newInstagramProfileIntent(getPackageManager(), url);
+                startActivity(openInsta);
                 break;
 
         }

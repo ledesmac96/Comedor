@@ -16,8 +16,8 @@ import com.unse.bienestar.comedordos.Dialogos.DialogoGeneral;
 import com.unse.bienestar.comedordos.Dialogos.DialogoProcesamiento;
 import com.unse.bienestar.comedordos.Modelo.Reserva;
 import com.unse.bienestar.comedordos.R;
-import com.unse.bienestar.comedordos.Utils.PreferenciasManager;
 import com.unse.bienestar.comedordos.Utils.ABC;
+import com.unse.bienestar.comedordos.Utils.PreferenciasManager;
 import com.unse.bienestar.comedordos.Utils.Validador;
 import com.unse.bienestar.comedordos.Utils.VolleySingleton;
 import com.unse.bienestar.comedordos.Utils.YesNoDialogListener;
@@ -205,11 +205,33 @@ public class NuevaReservaEspecialActivity extends AppCompatActivity implements V
         }
     }
 
-    private void dialogReserva(boolean b, Reserva reserva) {
+    private void dialogReserva(boolean b, final Reserva reserva) {
         DialogoGeneral.Builder builder = new DialogoGeneral.Builder(getApplicationContext())
                 .setTitulo(getString(b ? R.string.reservado : R.string.salioMal))
                 .setDescripcion(b ? String.format(getString(R.string.reservaAdminExito), String.valueOf(reserva.getIdReserva()))
                         : getString(R.string.reservaError))
+                .setListener(new YesNoDialogListener() {
+                    @Override
+                    public void yes() {
+                        openDialogInfo(reserva);
+                    }
+
+                    @Override
+                    public void no() {
+
+                    }
+                })
+                .setIcono(b ? R.drawable.ic_exito : R.drawable.ic_advertencia)
+                .setTipo(DialogoGeneral.TIPO_ACEPTAR);
+        DialogoGeneral dialogoGeneral = builder.build();
+        dialogoGeneral.show(getSupportFragmentManager(), "dialog_ad");
+    }
+
+    private void openDialogInfo(Reserva reserva) {
+        DialogoGeneral.Builder builder = new DialogoGeneral.Builder(getApplicationContext())
+                .setTitulo(getString(R.string.advertencia))
+                .setDescripcion(String.format("Su código de reserva es:\nCOM-%s-%s\n¡Anótelo!", ABC.getCode(reserva),
+                        reserva.getIdReserva()))
                 .setListener(new YesNoDialogListener() {
                     @Override
                     public void yes() {
@@ -221,9 +243,10 @@ public class NuevaReservaEspecialActivity extends AppCompatActivity implements V
 
                     }
                 })
-                .setIcono(b ? R.drawable.ic_exito : R.drawable.ic_advertencia)
+                .setIcono(R.drawable.ic_advertencia)
                 .setTipo(DialogoGeneral.TIPO_ACEPTAR);
         DialogoGeneral dialogoGeneral = builder.build();
+        dialogoGeneral.setCancelable(false);
         dialogoGeneral.show(getSupportFragmentManager(), "dialog_ad");
     }
 }

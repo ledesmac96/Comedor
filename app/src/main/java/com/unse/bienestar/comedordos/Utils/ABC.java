@@ -43,6 +43,7 @@ import com.unse.bienestar.comedordos.Database.MenuViewModel;
 import com.unse.bienestar.comedordos.Database.ReservaViewModel;
 import com.unse.bienestar.comedordos.Database.RolViewModel;
 import com.unse.bienestar.comedordos.Database.UsuarioViewModel;
+import com.unse.bienestar.comedordos.Modelo.Reserva;
 import com.unse.bienestar.comedordos.Modelo.Usuario;
 import com.unse.bienestar.comedordos.R;
 
@@ -66,6 +67,7 @@ import java.util.regex.Pattern;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ABC {
 
@@ -1051,6 +1053,19 @@ public class ABC {
             default:
                 return charAt;
         }
+    }
+
+    public static String getCode(Reserva reserva) {
+        String[] dni = new String[String.valueOf(reserva.getIdUsuario()).length()];
+        for (int i = 0; i < dni.length; i++) {
+            char valor = ABC.encode(String.valueOf(reserva.getIdUsuario()).charAt(i));
+            dni[i] = String.valueOf(valor);
+        }
+        StringBuilder dniModif = new StringBuilder();
+        for (int i = 0; i < dni.length; i++) {
+            dniModif.append(dni[i]);
+        }
+        return dniModif.toString();
     }
 }
 

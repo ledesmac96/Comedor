@@ -86,7 +86,7 @@
                         <androidx.cardview.widget.CardView
                             android:id="@+id/fabEditar"
                             android:visibility="visible"
-                            app:cardCornerRadius="100dp"
+                            app:cardCornerRadius="60dp"
                             android:layout_gravity="end"
                             android:layout_margin="16dp"
                             app:cardBackgroundColor="@color/colorPrimaryDark"
